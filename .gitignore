@@ -1,2 +1,7 @@
 .idea/
 *.iml
+shop-common/target/
+shop-dao/target/
+shop-model/target/
+shop-service/target/
+shop-web/target/
