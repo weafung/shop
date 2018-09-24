@@ -1,5 +1,7 @@
 package com.weafung.shop.service;
 
+import com.weafung.shop.model.dto.ResponseDTO;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -16,7 +18,7 @@ public interface WebsiteConfigService {
      * @param key
      * @return
      */
-    String getConfigValue(String key);
+    ResponseDTO<String> getConfigValue(String key);
 
     /**
      * 插入或更新配置
@@ -24,5 +26,5 @@ public interface WebsiteConfigService {
      * @param value
      * @return
      */
-    boolean insertOrUpdateConfig(String key, String value);
+    ResponseDTO<Boolean> insertOrUpdateConfig(String key, String value);
 }
