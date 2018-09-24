@@ -2,6 +2,7 @@ package com.weafung.shop.web.controller;
 
 import com.weafung.shop.service.WebsiteConfigService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +17,7 @@ import javax.annotation.Resource;
 @RequestMapping("/config")
 @Slf4j
 public class WebsiteConfigController {
-    @Resource
+    @Autowired
     private WebsiteConfigService websiteConfigService;
 
     @RequestMapping("/get")

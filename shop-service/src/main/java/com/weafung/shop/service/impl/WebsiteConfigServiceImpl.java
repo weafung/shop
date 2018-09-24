@@ -5,6 +5,8 @@ import com.weafung.shop.model.po.WebsiteConfig;
 import com.weafung.shop.model.po.WebsiteConfigExample;
 import com.weafung.shop.service.WebsiteConfigService;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,7 +20,7 @@ import java.util.Set;
 @Service
 public class WebsiteConfigServiceImpl implements WebsiteConfigService {
     @Resource
-    WebsiteConfigMapper websiteConfigMapper;
+    private WebsiteConfigMapper websiteConfigMapper;
 
     @Override
     public Map<String, String> listConfig(Set<String> keys) {
@@ -26,6 +28,7 @@ public class WebsiteConfigServiceImpl implements WebsiteConfigService {
     }
 
     @Override
+    @Cacheable(value = "websiteConfigCache", key = "#key")
     public String getConfigValue(String key) {
         WebsiteConfigExample websiteConfigExample = new WebsiteConfigExample();
         websiteConfigExample.createCriteria().andConfigKeyEqualTo(key);
@@ -37,6 +40,7 @@ public class WebsiteConfigServiceImpl implements WebsiteConfigService {
     }
 
     @Override
+    @CacheEvict(value = "websiteConfigCache", key = "#key")
     public boolean insertOrUpdateConfig(String key, String value) {
         WebsiteConfig websiteConfig = new WebsiteConfig();
         websiteConfig.setConfigKey(key);
