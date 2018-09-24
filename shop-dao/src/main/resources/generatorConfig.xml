@@ -52,7 +52,8 @@
 
         <!-- 列出要生成代码的所有表 -->
         <table tableName="website_config" domainObjectName="WebsiteConfig">
-                <property name="useActualColumnNames" value="false"/>
+            <property name="useActualColumnNames" value="false"/>
+            <columnOverride column="config_value" javaType="java.lang.String" jdbcType="VARCHAR" />
         </table>
     </context>
 </generatorConfiguration>
