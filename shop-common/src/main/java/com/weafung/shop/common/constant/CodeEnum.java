@@ -2,6 +2,10 @@ package com.weafung.shop.common.constant;
 
 import lombok.Getter;
 
+/**
+ * @author weifeng
+ */
+
 @Getter
 public enum CodeEnum {
     SUCCESS(CodeConstant.SUCCESS, "操作成功"),

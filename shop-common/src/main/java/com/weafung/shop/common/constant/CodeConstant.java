@@ -1,5 +1,8 @@
 package com.weafung.shop.common.constant;
 
+/**
+ * @author weifeng
+ */
 public interface CodeConstant {
     int SUCCESS = 200;
     int ERROR = 500;
