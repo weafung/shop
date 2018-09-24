@@ -1,6 +1,7 @@
 package com.weafung.shop.model.dto;
 
 import com.weafung.shop.common.constant.CodeConstant;
+import com.weafung.shop.common.constant.CodeEnum;
 import lombok.Data;
 
 /**
@@ -35,10 +36,18 @@ public class ResponseDTO<T> {
     }
 
     public static <T> ResponseDTO<T> buildSuccess(T data) {
-        return new ResponseDTO<>(data);
+        return new ResponseDTO<>(CodeEnum.SUCCESS.getCode(), data, CodeEnum.SUCCESS.getMsg());
     }
 
-    public static <T> ResponseDTO<T> buildFailure(Integer code, T data, String msg) {
+    public static <T> ResponseDTO<T> build(Integer code, T data, String msg) {
         return new ResponseDTO<>(code, data, msg);
+    }
+
+    public static <T> ResponseDTO<T> build(CodeEnum codeEnum) {
+        return new ResponseDTO<>(codeEnum.getCode(), null, codeEnum.getMsg());
+    }
+
+    public static <T> ResponseDTO<T> build(CodeEnum codeEnum, T data) {
+        return new ResponseDTO<>(codeEnum.getCode(), data, codeEnum.getMsg());
     }
 }

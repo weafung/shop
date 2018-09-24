@@ -13,14 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.util.Objects;
 
 /**
  * @author weifeng
  */
 @Controller
-@RequestMapping("/config")
+@RequestMapping("/api/config")
 @Slf4j
 public class WebsiteConfigController {
     @Autowired
@@ -37,7 +36,7 @@ public class WebsiteConfigController {
             if (Objects.equals(responseDTO.getCode(), CodeConstant.SUCCESS)) {
                 return ResponseVO.buildSuccess(responseDTO.getData());
             } else {
-                return ResponseVO.buildFailure(responseDTO.getCode(), responseDTO.getData(), responseDTO.getMsg());
+                return ResponseVO.build(responseDTO.getCode(), responseDTO.getData(), responseDTO.getMsg());
             }
         }
         return ResponseVO.build(CodeEnum.ERROR);
@@ -54,7 +53,7 @@ public class WebsiteConfigController {
             if (Objects.equals(responseDTO.getCode(), CodeConstant.SUCCESS)) {
                 return ResponseVO.buildSuccess(responseDTO.getData());
             } else {
-                return ResponseVO.buildFailure(responseDTO.getCode(), responseDTO.getData(), responseDTO.getMsg());
+                return ResponseVO.build(responseDTO.getCode(), responseDTO.getData(), responseDTO.getMsg());
             }
         }
         return ResponseVO.build(CodeEnum.ERROR);

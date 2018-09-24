@@ -40,7 +40,7 @@ public class WebsiteConfigServiceImpl implements WebsiteConfigService {
         if (CollectionUtils.isNotEmpty(list)) {
             return ResponseDTO.buildSuccess(list.get(0).getConfigValue());
         }
-        return ResponseDTO.buildFailure(CodeConstant.NOT_FOUND, null, "Config Key Not Found");
+        return ResponseDTO.build(CodeConstant.NOT_FOUND, null, "Config Key Not Found");
     }
 
     @Override
@@ -54,7 +54,7 @@ public class WebsiteConfigServiceImpl implements WebsiteConfigService {
                 return ResponseDTO.buildSuccess(Boolean.TRUE);
             } else {
                 log.warn("insert new config key and value failed. key:{}, value:{}", key, value);
-                return ResponseDTO.buildFailure(CodeConstant.ERROR, false, "更新失败");
+                return ResponseDTO.build(CodeConstant.ERROR, false, "更新失败");
             }
         }
         WebsiteConfigExample websiteConfigExample = new WebsiteConfigExample();
@@ -64,7 +64,7 @@ public class WebsiteConfigServiceImpl implements WebsiteConfigService {
             return ResponseDTO.buildSuccess(Boolean.TRUE);
         } else {
             log.warn("update new config key and value failed. key:{}, value:{}", key, value);
-            return ResponseDTO.buildFailure(CodeConstant.ERROR, false, "更新失败");
+            return ResponseDTO.build(CodeConstant.ERROR, false, "更新失败");
         }
     }
 }

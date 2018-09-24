@@ -1,6 +1,5 @@
 package com.weafung.shop.model.vo;
 
-import com.weafung.shop.common.constant.CodeConstant;
 import com.weafung.shop.common.constant.CodeEnum;
 import lombok.Data;
 
@@ -26,7 +25,7 @@ public class ResponseVO<T> {
         return new ResponseVO<>(CodeEnum.SUCCESS.getCode(), data, CodeEnum.SUCCESS.getMsg());
     }
 
-    public static <T> ResponseVO<T> buildFailure(Integer code, T data, String msg) {
+    public static <T> ResponseVO<T> build(Integer code, T data, String msg) {
         return new ResponseVO<>(code, data, msg);
     }
 

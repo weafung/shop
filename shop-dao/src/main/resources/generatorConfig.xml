@@ -55,5 +55,40 @@
             <property name="useActualColumnNames" value="false"/>
             <columnOverride column="config_value" javaType="java.lang.String" jdbcType="VARCHAR" />
         </table>
+        <table tableName="account_info" domainObjectName="AccountInfo">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="account_thirdpart" domainObjectName="AccountThirdparty">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="account_token" domainObjectName="AccountToken">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="address" domainObjectName="Address">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="category" domainObjectName="Category">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="goods" domainObjectName="Goods">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="goods_image" domainObjectName="GoodsImage">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="operation_log" domainObjectName="OperationLog">
+            <property name="useActualColumnNames" value="false"/>
+            <columnOverride column="old_data" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="new_data" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </table>
+        <table tableName="order" domainObjectName="Order">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="shop_income_detail" domainObjectName="ShopIncomeDetail">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="shop_info" domainObjectName="ShopInfo">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
     </context>
 </generatorConfiguration>
