@@ -1,6 +1,5 @@
 package com.weafung.shop.model.dto;
 
-import com.weafung.shop.common.constant.CodeConstant;
 import com.weafung.shop.common.constant.CodeEnum;
 import lombok.Data;
 
@@ -14,15 +13,15 @@ public class ResponseDTO<T> {
     private String msg;
 
     public ResponseDTO() {
-        this(CodeConstant.SUCCESS, null, "");
+        this(CodeEnum.SUCCESS.getCode(), null, CodeEnum.SUCCESS.getMsg());
     }
 
     public ResponseDTO(T data) {
-        this(CodeConstant.SUCCESS, data, "");
+        this(CodeEnum.SUCCESS.getCode(), data, CodeEnum.SUCCESS.getMsg());
     }
 
     public ResponseDTO(T data, String msg) {
-        this(CodeConstant.SUCCESS, data, msg);
+        this(CodeEnum.SUCCESS.getCode(), data, msg);
     }
 
     public ResponseDTO(Integer code, T data, String msg) {

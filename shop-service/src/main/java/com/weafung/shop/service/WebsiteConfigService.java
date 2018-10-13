@@ -11,7 +11,7 @@ public interface WebsiteConfigService {
      * @param keys
      * @return
      */
-    Map<String, String> listConfig(Set<String> keys);
+    ResponseDTO<Map<String, String>> listConfig(Set<String> keys);
 
     /**
      * 获取配置

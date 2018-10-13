@@ -1,6 +1,5 @@
 package com.weafung.shop.service.impl;
 
-import com.weafung.shop.common.constant.CodeConstant;
 import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.dao.GoodsImageMapper;
 import com.weafung.shop.dao.GoodsMapper;
@@ -41,7 +40,7 @@ public class GoodsServiceImpl implements GoodsService {
         goodsExample.createCriteria().andGoodsIdEqualTo(goodsId).andIsDeletedEqualTo(false);
         List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
         if (CollectionUtils.isEmpty(goodsList)) {
-            return ResponseDTO.build(CodeConstant.NOT_FOUND, null, "商品不存在");
+            return ResponseDTO.build(CodeEnum.GOODS_NOT_FOUND, null);
         }
 
         GoodsDTO goodsDTO = new GoodsDTO();
@@ -75,7 +74,7 @@ public class GoodsServiceImpl implements GoodsService {
         goodsExample.createCriteria().andIdEqualTo(goodsDTO.getGoodsId()).andIsDeletedEqualTo(false);
         List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
         if (CollectionUtils.isEmpty(goodsList)) {
-            return ResponseDTO.build(CodeConstant.NOT_FOUND, null, "商品不存在");
+            return ResponseDTO.build(CodeEnum.GOODS_NOT_FOUND, null);
         }
         Goods goods = goodsList.get(0);
         BeanUtils.copyProperties(goodsDTO, goods);

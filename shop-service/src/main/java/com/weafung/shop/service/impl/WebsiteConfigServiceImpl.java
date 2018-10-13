@@ -1,6 +1,7 @@
 package com.weafung.shop.service.impl;
 
-import com.weafung.shop.common.constant.CodeConstant;
+import com.google.common.collect.Maps;
+import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.dao.WebsiteConfigMapper;
 import com.weafung.shop.model.dto.ResponseDTO;
 import com.weafung.shop.model.po.WebsiteConfig;
@@ -27,20 +28,31 @@ public class WebsiteConfigServiceImpl implements WebsiteConfigService {
     private WebsiteConfigMapper websiteConfigMapper;
 
     @Override
-    public Map<String, String> listConfig(Set<String> keys) {
-        return null;
+    @Cacheable(value = "websiteConfigCache", key = "#keys")
+    public ResponseDTO<Map<String, String>> listConfig(Set<String> keys) {
+        Map<String, String> configMap = Maps.newHashMap();
+        if (CollectionUtils.isEmpty(keys)) {
+            return ResponseDTO.build(CodeEnum.PARAM_EMPTY, configMap);
+        }
+        keys.forEach(key -> {
+            WebsiteConfig websiteConfig = getWebsiteConfigByKey(key);
+            if (websiteConfig != null) {
+                configMap.put(key, websiteConfig.getConfigValue());
+            } else {
+                configMap.put(key, "");
+            }
+        });
+        return ResponseDTO.buildSuccess(configMap);
     }
 
     @Override
     @Cacheable(value = "websiteConfigCache", key = "#key")
     public ResponseDTO<String> getConfigValue(String key) {
-        WebsiteConfigExample websiteConfigExample = new WebsiteConfigExample();
-        websiteConfigExample.createCriteria().andConfigKeyEqualTo(key);
-        List<WebsiteConfig> list = websiteConfigMapper.selectByExample(websiteConfigExample);
-        if (CollectionUtils.isNotEmpty(list)) {
-            return ResponseDTO.buildSuccess(list.get(0).getConfigValue());
+        WebsiteConfig websiteConfig = getWebsiteConfigByKey(key);
+        if (websiteConfig != null) {
+            return ResponseDTO.buildSuccess(websiteConfig.getConfigValue());
         }
-        return ResponseDTO.build(CodeConstant.NOT_FOUND, null, "Config Key Not Found");
+        return ResponseDTO.build(CodeEnum.WEBSITE_CONFIG_NOT_FOUND, null);
     }
 
     @Override
@@ -54,7 +66,7 @@ public class WebsiteConfigServiceImpl implements WebsiteConfigService {
                 return ResponseDTO.buildSuccess(Boolean.TRUE);
             } else {
                 log.warn("insert new config key and value failed. key:{}, value:{}", key, value);
-                return ResponseDTO.build(CodeConstant.ERROR, false, "更新失败");
+                return ResponseDTO.build(CodeEnum.ERROR, false);
             }
         }
         WebsiteConfigExample websiteConfigExample = new WebsiteConfigExample();
@@ -64,7 +76,18 @@ public class WebsiteConfigServiceImpl implements WebsiteConfigService {
             return ResponseDTO.buildSuccess(Boolean.TRUE);
         } else {
             log.warn("update new config key and value failed. key:{}, value:{}", key, value);
-            return ResponseDTO.build(CodeConstant.ERROR, false, "更新失败");
+            return ResponseDTO.build(CodeEnum.ERROR, false);
         }
+    }
+
+    @Cacheable(value = "websiteConfigCache", key = "#key")
+    public WebsiteConfig getWebsiteConfigByKey(String key) {
+        WebsiteConfigExample websiteConfigExample = new WebsiteConfigExample();
+        websiteConfigExample.createCriteria().andConfigKeyEqualTo(key).andIsDeletedEqualTo(false);
+        List<WebsiteConfig> list = websiteConfigMapper.selectByExample(websiteConfigExample);
+        if (CollectionUtils.isEmpty(list)) {
+            return null;
+        }
+        return list.get(0);
     }
 }
