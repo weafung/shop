@@ -10,6 +10,7 @@
     <result column="sku_id" jdbcType="BIGINT" property="skuId" />
     <result column="first_category_id" jdbcType="BIGINT" property="firstCategoryId" />
     <result column="second_category_id" jdbcType="BIGINT" property="secondCategoryId" />
+    <result column="third_category_id" jdbcType="BIGINT" property="thirdCategoryId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="introduce" jdbcType="VARCHAR" property="introduce" />
     <result column="limit_per_order" jdbcType="INTEGER" property="limitPerOrder" />
@@ -75,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, gmt_create, gmt_modified, is_deleted, goods_id, sku_id, first_category_id, second_category_id, 
-    title, introduce, limit_per_order, free_delivery
+    third_category_id, title, introduce, limit_per_order, free_delivery
   </sql>
   <select id="selectByExample" parameterType="com.weafung.shop.model.po.GoodsExample" resultMap="BaseResultMap">
     select
@@ -100,14 +101,14 @@
   <insert id="insert" parameterType="com.weafung.shop.model.po.Goods">
     insert into goods (id, gmt_create, gmt_modified, 
       is_deleted, goods_id, sku_id, 
-      first_category_id, second_category_id, title, 
-      introduce, limit_per_order, free_delivery
-      )
+      first_category_id, second_category_id, third_category_id, 
+      title, introduce, limit_per_order, 
+      free_delivery)
     values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
       #{isDeleted,jdbcType=BIT}, #{goodsId,jdbcType=BIGINT}, #{skuId,jdbcType=BIGINT}, 
-      #{firstCategoryId,jdbcType=BIGINT}, #{secondCategoryId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
-      #{introduce,jdbcType=VARCHAR}, #{limitPerOrder,jdbcType=INTEGER}, #{freeDelivery,jdbcType=BIT}
-      )
+      #{firstCategoryId,jdbcType=BIGINT}, #{secondCategoryId,jdbcType=BIGINT}, #{thirdCategoryId,jdbcType=BIGINT}, 
+      #{title,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, #{limitPerOrder,jdbcType=INTEGER}, 
+      #{freeDelivery,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.weafung.shop.model.po.Goods">
     insert into goods
@@ -135,6 +136,9 @@
       </if>
       <if test="secondCategoryId != null">
         second_category_id,
+      </if>
+      <if test="thirdCategoryId != null">
+        third_category_id,
       </if>
       <if test="title != null">
         title,
@@ -173,6 +177,9 @@
       </if>
       <if test="secondCategoryId != null">
         #{secondCategoryId,jdbcType=BIGINT},
+      </if>
+      <if test="thirdCategoryId != null">
+        #{thirdCategoryId,jdbcType=BIGINT},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
@@ -221,6 +228,9 @@
       <if test="record.secondCategoryId != null">
         second_category_id = #{record.secondCategoryId,jdbcType=BIGINT},
       </if>
+      <if test="record.thirdCategoryId != null">
+        third_category_id = #{record.thirdCategoryId,jdbcType=BIGINT},
+      </if>
       <if test="record.title != null">
         title = #{record.title,jdbcType=VARCHAR},
       </if>
@@ -248,6 +258,7 @@
       sku_id = #{record.skuId,jdbcType=BIGINT},
       first_category_id = #{record.firstCategoryId,jdbcType=BIGINT},
       second_category_id = #{record.secondCategoryId,jdbcType=BIGINT},
+      third_category_id = #{record.thirdCategoryId,jdbcType=BIGINT},
       title = #{record.title,jdbcType=VARCHAR},
       introduce = #{record.introduce,jdbcType=VARCHAR},
       limit_per_order = #{record.limitPerOrder,jdbcType=INTEGER},

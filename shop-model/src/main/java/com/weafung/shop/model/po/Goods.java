@@ -20,6 +20,8 @@ public class Goods implements Serializable {
 
     private Long secondCategoryId;
 
+    private Long thirdCategoryId;
+
     private String title;
 
     private String introduce;
@@ -92,6 +94,14 @@ public class Goods implements Serializable {
 
     public void setSecondCategoryId(Long secondCategoryId) {
         this.secondCategoryId = secondCategoryId;
+    }
+
+    public Long getThirdCategoryId() {
+        return thirdCategoryId;
+    }
+
+    public void setThirdCategoryId(Long thirdCategoryId) {
+        this.thirdCategoryId = thirdCategoryId;
     }
 
     public String getTitle() {

@@ -90,6 +90,6 @@ public class GoodsServiceImpl implements GoodsService {
             goodsDTO.getGoodsImageList()
                     .forEach(newGoodsImage -> goodsImageMapper.insertSelective(newGoodsImage));
         }
-        return ResponseDTO.build(Boolean.TRUE);
+        return ResponseDTO.buildSuccess(Boolean.TRUE);
     }
 }

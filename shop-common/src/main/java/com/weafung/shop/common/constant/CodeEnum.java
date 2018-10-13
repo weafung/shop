@@ -22,6 +22,10 @@ public enum CodeEnum {
      */
     GOODS_NOT_FOUND(20404, "商品不存在"),
 
+    /**
+     * 商品类目相关 30***
+     */
+    CATEGORY_NOT_FOUND(30404, "类目不存在"),
 
     ;
 

@@ -585,6 +585,66 @@ public class GoodsExample {
             return (Criteria) this;
         }
 
+        public Criteria andThirdCategoryIdIsNull() {
+            addCriterion("third_category_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andThirdCategoryIdIsNotNull() {
+            addCriterion("third_category_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andThirdCategoryIdEqualTo(Long value) {
+            addCriterion("third_category_id =", value, "thirdCategoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andThirdCategoryIdNotEqualTo(Long value) {
+            addCriterion("third_category_id <>", value, "thirdCategoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andThirdCategoryIdGreaterThan(Long value) {
+            addCriterion("third_category_id >", value, "thirdCategoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andThirdCategoryIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("third_category_id >=", value, "thirdCategoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andThirdCategoryIdLessThan(Long value) {
+            addCriterion("third_category_id <", value, "thirdCategoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andThirdCategoryIdLessThanOrEqualTo(Long value) {
+            addCriterion("third_category_id <=", value, "thirdCategoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andThirdCategoryIdIn(List<Long> values) {
+            addCriterion("third_category_id in", values, "thirdCategoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andThirdCategoryIdNotIn(List<Long> values) {
+            addCriterion("third_category_id not in", values, "thirdCategoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andThirdCategoryIdBetween(Long value1, Long value2) {
+            addCriterion("third_category_id between", value1, value2, "thirdCategoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andThirdCategoryIdNotBetween(Long value1, Long value2) {
+            addCriterion("third_category_id not between", value1, value2, "thirdCategoryId");
+            return (Criteria) this;
+        }
+
         public Criteria andTitleIsNull() {
             addCriterion("title is null");
             return (Criteria) this;
