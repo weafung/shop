@@ -9,6 +9,7 @@
             <set>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="default" />
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="websiteConfigCache" />
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="goodsCategory" />
             </set>
         </property>
     </bean>

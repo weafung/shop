@@ -30,10 +30,6 @@ public class ResponseDTO<T> {
         this.msg = msg;
     }
 
-    public static <T> ResponseDTO<T> build(T data) {
-        return new ResponseDTO<>(null, data, null);
-    }
-
     public static <T> ResponseDTO<T> buildSuccess(T data) {
         return new ResponseDTO<>(CodeEnum.SUCCESS.getCode(), data, CodeEnum.SUCCESS.getMsg());
     }
