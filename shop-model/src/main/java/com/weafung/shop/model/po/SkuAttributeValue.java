@@ -3,7 +3,7 @@ package com.weafung.shop.model.po;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Category implements Serializable {
+public class SkuAttributeValue implements Serializable {
     private Long id;
 
     private Date gmtCreate;
@@ -12,13 +12,9 @@ public class Category implements Serializable {
 
     private Boolean isDeleted;
 
-    private Long categoryId;
+    private Long attributeValueId;
 
-    private Long parentId;
-
-    private String title;
-
-    private String image;
+    private String attributeValue;
 
     private static final long serialVersionUID = 1L;
 
@@ -54,35 +50,19 @@ public class Category implements Serializable {
         this.isDeleted = isDeleted;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public Long getAttributeValueId() {
+        return attributeValueId;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setAttributeValueId(Long attributeValueId) {
+        this.attributeValueId = attributeValueId;
     }
 
-    public Long getParentId() {
-        return parentId;
+    public String getAttributeValue() {
+        return attributeValue;
     }
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image == null ? null : image.trim();
+    public void setAttributeValue(String attributeValue) {
+        this.attributeValue = attributeValue == null ? null : attributeValue.trim();
     }
 }

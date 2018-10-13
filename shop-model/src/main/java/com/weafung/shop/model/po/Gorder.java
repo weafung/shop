@@ -3,7 +3,7 @@ package com.weafung.shop.model.po;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Order implements Serializable {
+public class Gorder implements Serializable {
     private Long id;
 
     private Date gmtCreate;
@@ -14,17 +14,15 @@ public class Order implements Serializable {
 
     private String gorderId;
 
-    private String orderId;
+    private String accountId;
 
-    private Long goodsId;
-
-    private Long skuId;
-
-    private Integer count;
-
-    private Long price;
+    private Long addressId;
 
     private Byte status;
+
+    private Long payTime;
+
+    private Long confirmTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -68,44 +66,20 @@ public class Order implements Serializable {
         this.gorderId = gorderId == null ? null : gorderId.trim();
     }
 
-    public String getOrderId() {
-        return orderId;
+    public String getAccountId() {
+        return accountId;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId == null ? null : orderId.trim();
+    public void setAccountId(String accountId) {
+        this.accountId = accountId == null ? null : accountId.trim();
     }
 
-    public Long getGoodsId() {
-        return goodsId;
+    public Long getAddressId() {
+        return addressId;
     }
 
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
-    }
-
-    public Long getSkuId() {
-        return skuId;
-    }
-
-    public void setSkuId(Long skuId) {
-        this.skuId = skuId;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
-    }
-
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
     }
 
     public Byte getStatus() {
@@ -114,5 +88,21 @@ public class Order implements Serializable {
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public Long getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(Long payTime) {
+        this.payTime = payTime;
+    }
+
+    public Long getConfirmTime() {
+        return confirmTime;
+    }
+
+    public void setConfirmTime(Long confirmTime) {
+        this.confirmTime = confirmTime;
     }
 }

@@ -24,17 +24,7 @@ public class Goods implements Serializable {
 
     private String introduce;
 
-    private Long salePrice;
-
-    private Long marketPrice;
-
-    private Integer bonusRatio;
-
     private Integer limitPerOrder;
-
-    private Boolean hidden;
-
-    private Boolean onsale;
 
     private Boolean freeDelivery;
 
@@ -120,52 +110,12 @@ public class Goods implements Serializable {
         this.introduce = introduce == null ? null : introduce.trim();
     }
 
-    public Long getSalePrice() {
-        return salePrice;
-    }
-
-    public void setSalePrice(Long salePrice) {
-        this.salePrice = salePrice;
-    }
-
-    public Long getMarketPrice() {
-        return marketPrice;
-    }
-
-    public void setMarketPrice(Long marketPrice) {
-        this.marketPrice = marketPrice;
-    }
-
-    public Integer getBonusRatio() {
-        return bonusRatio;
-    }
-
-    public void setBonusRatio(Integer bonusRatio) {
-        this.bonusRatio = bonusRatio;
-    }
-
     public Integer getLimitPerOrder() {
         return limitPerOrder;
     }
 
     public void setLimitPerOrder(Integer limitPerOrder) {
         this.limitPerOrder = limitPerOrder;
-    }
-
-    public Boolean getHidden() {
-        return hidden;
-    }
-
-    public void setHidden(Boolean hidden) {
-        this.hidden = hidden;
-    }
-
-    public Boolean getOnsale() {
-        return onsale;
-    }
-
-    public void setOnsale(Boolean onsale) {
-        this.onsale = onsale;
     }
 
     public Boolean getFreeDelivery() {

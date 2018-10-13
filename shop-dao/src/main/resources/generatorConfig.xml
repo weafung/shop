@@ -51,10 +51,7 @@
 
 
         <!-- 列出要生成代码的所有表 -->
-        <table tableName="website_config" domainObjectName="WebsiteConfig">
-            <property name="useActualColumnNames" value="false"/>
-            <columnOverride column="config_value" javaType="java.lang.String" jdbcType="VARCHAR" />
-        </table>
+
         <table tableName="account_info" domainObjectName="AccountInfo">
             <property name="useActualColumnNames" value="false"/>
         </table>
@@ -76,6 +73,9 @@
         <table tableName="goods_image" domainObjectName="GoodsImage">
             <property name="useActualColumnNames" value="false"/>
         </table>
+        <table tableName="gorder" domainObjectName="Gorder">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
         <table tableName="operation_log" domainObjectName="OperationLog">
             <property name="useActualColumnNames" value="false"/>
             <columnOverride column="old_data" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -84,11 +84,30 @@
         <table tableName="order" domainObjectName="Order">
             <property name="useActualColumnNames" value="false"/>
         </table>
+        <table tableName="shopping_cart" domainObjectName="ShoppingCart">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="shop_goods" domainObjectName="ShopGoods">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
         <table tableName="shop_income_detail" domainObjectName="ShopIncomeDetail">
             <property name="useActualColumnNames" value="false"/>
         </table>
         <table tableName="shop_info" domainObjectName="ShopInfo">
             <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="sku" domainObjectName="Sku">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="sku_attribute_name" domainObjectName="SkuAttributeName">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="sku_attribute_value" domainObjectName="SkuAttributeValue">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="website_config" domainObjectName="WebsiteConfig">
+            <property name="useActualColumnNames" value="false"/>
+            <columnOverride column="config_value" javaType="java.lang.String" jdbcType="VARCHAR" />
         </table>
     </context>
 </generatorConfiguration>

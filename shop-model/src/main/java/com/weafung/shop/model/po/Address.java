@@ -12,6 +12,8 @@ public class Address implements Serializable {
 
     private Boolean isDeleted;
 
+    private Long addressId;
+
     private String accountId;
 
     private String province;
@@ -58,6 +60,14 @@ public class Address implements Serializable {
 
     public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public Long getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
     }
 
     public String getAccountId() {

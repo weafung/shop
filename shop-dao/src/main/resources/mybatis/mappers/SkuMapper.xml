@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.weafung.shop.dao.AccountInfoMapper">
-  <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.AccountInfo">
+<mapper namespace="com.weafung.shop.dao.SkuMapper">
+  <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.Sku">
     <result column="id" jdbcType="BIGINT" property="id" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
-    <result column="account_id" jdbcType="VARCHAR" property="accountId" />
-    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="sex" jdbcType="TINYINT" property="sex" />
-    <result column="portrait" jdbcType="VARCHAR" property="portrait" />
-    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
+    <result column="attribute_name_id" jdbcType="BIGINT" property="attributeNameId" />
+    <result column="attribute_value_id" jdbcType="BIGINT" property="attributeValueId" />
+    <result column="store_count" jdbcType="BIGINT" property="storeCount" />
+    <result column="sale_count" jdbcType="BIGINT" property="saleCount" />
+    <result column="sale_price" jdbcType="BIGINT" property="salePrice" />
+    <result column="market_price" jdbcType="BIGINT" property="marketPrice" />
+    <result column="bonus_ratio" jdbcType="TINYINT" property="bonusRatio" />
+    <result column="hidden" jdbcType="BIT" property="hidden" />
+    <result column="onsale" jdbcType="BIT" property="onsale" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,15 +76,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, gmt_create, gmt_modified, is_deleted, account_id, nickname, sex, portrait, state
+    id, gmt_create, gmt_modified, is_deleted, sku_id, attribute_name_id, attribute_value_id, 
+    store_count, sale_count, sale_price, market_price, bonus_ratio, hidden, onsale
   </sql>
-  <select id="selectByExample" parameterType="com.weafung.shop.model.po.AccountInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.weafung.shop.model.po.SkuExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from account_info
+    from sku
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,24 +93,26 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.weafung.shop.model.po.AccountInfoExample">
-    delete from account_info
+  <delete id="deleteByExample" parameterType="com.weafung.shop.model.po.SkuExample">
+    delete from sku
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.weafung.shop.model.po.AccountInfo">
-    insert into account_info (id, gmt_create, gmt_modified, 
-      is_deleted, account_id, nickname, 
-      sex, portrait, state
-      )
+  <insert id="insert" parameterType="com.weafung.shop.model.po.Sku">
+    insert into sku (id, gmt_create, gmt_modified, 
+      is_deleted, sku_id, attribute_name_id, 
+      attribute_value_id, store_count, sale_count, 
+      sale_price, market_price, bonus_ratio, 
+      hidden, onsale)
     values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
-      #{isDeleted,jdbcType=BIT}, #{accountId,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=TINYINT}, #{portrait,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}
-      )
+      #{isDeleted,jdbcType=BIT}, #{skuId,jdbcType=BIGINT}, #{attributeNameId,jdbcType=BIGINT}, 
+      #{attributeValueId,jdbcType=BIGINT}, #{storeCount,jdbcType=BIGINT}, #{saleCount,jdbcType=BIGINT}, 
+      #{salePrice,jdbcType=BIGINT}, #{marketPrice,jdbcType=BIGINT}, #{bonusRatio,jdbcType=TINYINT}, 
+      #{hidden,jdbcType=BIT}, #{onsale,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.weafung.shop.model.po.AccountInfo">
-    insert into account_info
+  <insert id="insertSelective" parameterType="com.weafung.shop.model.po.Sku">
+    insert into sku
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -118,20 +126,35 @@
       <if test="isDeleted != null">
         is_deleted,
       </if>
-      <if test="accountId != null">
-        account_id,
+      <if test="skuId != null">
+        sku_id,
       </if>
-      <if test="nickname != null">
-        nickname,
+      <if test="attributeNameId != null">
+        attribute_name_id,
       </if>
-      <if test="sex != null">
-        sex,
+      <if test="attributeValueId != null">
+        attribute_value_id,
       </if>
-      <if test="portrait != null">
-        portrait,
+      <if test="storeCount != null">
+        store_count,
       </if>
-      <if test="state != null">
-        state,
+      <if test="saleCount != null">
+        sale_count,
+      </if>
+      <if test="salePrice != null">
+        sale_price,
+      </if>
+      <if test="marketPrice != null">
+        market_price,
+      </if>
+      <if test="bonusRatio != null">
+        bonus_ratio,
+      </if>
+      <if test="hidden != null">
+        hidden,
+      </if>
+      <if test="onsale != null">
+        onsale,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -147,31 +170,46 @@
       <if test="isDeleted != null">
         #{isDeleted,jdbcType=BIT},
       </if>
-      <if test="accountId != null">
-        #{accountId,jdbcType=VARCHAR},
+      <if test="skuId != null">
+        #{skuId,jdbcType=BIGINT},
       </if>
-      <if test="nickname != null">
-        #{nickname,jdbcType=VARCHAR},
+      <if test="attributeNameId != null">
+        #{attributeNameId,jdbcType=BIGINT},
       </if>
-      <if test="sex != null">
-        #{sex,jdbcType=TINYINT},
+      <if test="attributeValueId != null">
+        #{attributeValueId,jdbcType=BIGINT},
       </if>
-      <if test="portrait != null">
-        #{portrait,jdbcType=VARCHAR},
+      <if test="storeCount != null">
+        #{storeCount,jdbcType=BIGINT},
       </if>
-      <if test="state != null">
-        #{state,jdbcType=TINYINT},
+      <if test="saleCount != null">
+        #{saleCount,jdbcType=BIGINT},
+      </if>
+      <if test="salePrice != null">
+        #{salePrice,jdbcType=BIGINT},
+      </if>
+      <if test="marketPrice != null">
+        #{marketPrice,jdbcType=BIGINT},
+      </if>
+      <if test="bonusRatio != null">
+        #{bonusRatio,jdbcType=TINYINT},
+      </if>
+      <if test="hidden != null">
+        #{hidden,jdbcType=BIT},
+      </if>
+      <if test="onsale != null">
+        #{onsale,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.weafung.shop.model.po.AccountInfoExample" resultType="java.lang.Long">
-    select count(*) from account_info
+  <select id="countByExample" parameterType="com.weafung.shop.model.po.SkuExample" resultType="java.lang.Long">
+    select count(*) from sku
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update account_info
+    update sku
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
@@ -185,20 +223,35 @@
       <if test="record.isDeleted != null">
         is_deleted = #{record.isDeleted,jdbcType=BIT},
       </if>
-      <if test="record.accountId != null">
-        account_id = #{record.accountId,jdbcType=VARCHAR},
+      <if test="record.skuId != null">
+        sku_id = #{record.skuId,jdbcType=BIGINT},
       </if>
-      <if test="record.nickname != null">
-        nickname = #{record.nickname,jdbcType=VARCHAR},
+      <if test="record.attributeNameId != null">
+        attribute_name_id = #{record.attributeNameId,jdbcType=BIGINT},
       </if>
-      <if test="record.sex != null">
-        sex = #{record.sex,jdbcType=TINYINT},
+      <if test="record.attributeValueId != null">
+        attribute_value_id = #{record.attributeValueId,jdbcType=BIGINT},
       </if>
-      <if test="record.portrait != null">
-        portrait = #{record.portrait,jdbcType=VARCHAR},
+      <if test="record.storeCount != null">
+        store_count = #{record.storeCount,jdbcType=BIGINT},
       </if>
-      <if test="record.state != null">
-        state = #{record.state,jdbcType=TINYINT},
+      <if test="record.saleCount != null">
+        sale_count = #{record.saleCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.salePrice != null">
+        sale_price = #{record.salePrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.marketPrice != null">
+        market_price = #{record.marketPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.bonusRatio != null">
+        bonus_ratio = #{record.bonusRatio,jdbcType=TINYINT},
+      </if>
+      <if test="record.hidden != null">
+        hidden = #{record.hidden,jdbcType=BIT},
+      </if>
+      <if test="record.onsale != null">
+        onsale = #{record.onsale,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -206,30 +259,40 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update account_info
+    update sku
     set id = #{record.id,jdbcType=BIGINT},
       gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       is_deleted = #{record.isDeleted,jdbcType=BIT},
-      account_id = #{record.accountId,jdbcType=VARCHAR},
-      nickname = #{record.nickname,jdbcType=VARCHAR},
-      sex = #{record.sex,jdbcType=TINYINT},
-      portrait = #{record.portrait,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=TINYINT}
+      sku_id = #{record.skuId,jdbcType=BIGINT},
+      attribute_name_id = #{record.attributeNameId,jdbcType=BIGINT},
+      attribute_value_id = #{record.attributeValueId,jdbcType=BIGINT},
+      store_count = #{record.storeCount,jdbcType=BIGINT},
+      sale_count = #{record.saleCount,jdbcType=BIGINT},
+      sale_price = #{record.salePrice,jdbcType=BIGINT},
+      market_price = #{record.marketPrice,jdbcType=BIGINT},
+      bonus_ratio = #{record.bonusRatio,jdbcType=TINYINT},
+      hidden = #{record.hidden,jdbcType=BIT},
+      onsale = #{record.onsale,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.AccountInfo">
+  <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.Sku">
     <result column="id" jdbcType="BIGINT" property="id" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
-    <result column="account_id" jdbcType="VARCHAR" property="accountId" />
-    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="sex" jdbcType="TINYINT" property="sex" />
-    <result column="portrait" jdbcType="VARCHAR" property="portrait" />
-    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
+    <result column="attribute_name_id" jdbcType="BIGINT" property="attributeNameId" />
+    <result column="attribute_value_id" jdbcType="BIGINT" property="attributeValueId" />
+    <result column="store_count" jdbcType="BIGINT" property="storeCount" />
+    <result column="sale_count" jdbcType="BIGINT" property="saleCount" />
+    <result column="sale_price" jdbcType="BIGINT" property="salePrice" />
+    <result column="market_price" jdbcType="BIGINT" property="marketPrice" />
+    <result column="bonus_ratio" jdbcType="TINYINT" property="bonusRatio" />
+    <result column="hidden" jdbcType="BIT" property="hidden" />
+    <result column="onsale" jdbcType="BIT" property="onsale" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -290,15 +353,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, gmt_create, gmt_modified, is_deleted, account_id, nickname, sex, portrait, state
+    id, gmt_create, gmt_modified, is_deleted, sku_id, attribute_name_id, attribute_value_id, 
+    store_count, sale_count, sale_price, market_price, bonus_ratio, hidden, onsale
   </sql>
-  <select id="selectByExample" parameterType="com.weafung.shop.model.po.AccountInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.weafung.shop.model.po.SkuExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from account_info
+    from sku
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -306,24 +370,26 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.weafung.shop.model.po.AccountInfoExample">
-    delete from account_info
+  <delete id="deleteByExample" parameterType="com.weafung.shop.model.po.SkuExample">
+    delete from sku
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.weafung.shop.model.po.AccountInfo">
-    insert into account_info (id, gmt_create, gmt_modified, 
-      is_deleted, account_id, nickname, 
-      sex, portrait, state
-      )
+  <insert id="insert" parameterType="com.weafung.shop.model.po.Sku">
+    insert into sku (id, gmt_create, gmt_modified, 
+      is_deleted, sku_id, attribute_name_id, 
+      attribute_value_id, store_count, sale_count, 
+      sale_price, market_price, bonus_ratio, 
+      hidden, onsale)
     values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
-      #{isDeleted,jdbcType=BIT}, #{accountId,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=TINYINT}, #{portrait,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}
-      )
+      #{isDeleted,jdbcType=BIT}, #{skuId,jdbcType=BIGINT}, #{attributeNameId,jdbcType=BIGINT}, 
+      #{attributeValueId,jdbcType=BIGINT}, #{storeCount,jdbcType=BIGINT}, #{saleCount,jdbcType=BIGINT}, 
+      #{salePrice,jdbcType=BIGINT}, #{marketPrice,jdbcType=BIGINT}, #{bonusRatio,jdbcType=TINYINT}, 
+      #{hidden,jdbcType=BIT}, #{onsale,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.weafung.shop.model.po.AccountInfo">
-    insert into account_info
+  <insert id="insertSelective" parameterType="com.weafung.shop.model.po.Sku">
+    insert into sku
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -337,20 +403,35 @@
       <if test="isDeleted != null">
         is_deleted,
       </if>
-      <if test="accountId != null">
-        account_id,
+      <if test="skuId != null">
+        sku_id,
       </if>
-      <if test="nickname != null">
-        nickname,
+      <if test="attributeNameId != null">
+        attribute_name_id,
       </if>
-      <if test="sex != null">
-        sex,
+      <if test="attributeValueId != null">
+        attribute_value_id,
       </if>
-      <if test="portrait != null">
-        portrait,
+      <if test="storeCount != null">
+        store_count,
       </if>
-      <if test="state != null">
-        state,
+      <if test="saleCount != null">
+        sale_count,
+      </if>
+      <if test="salePrice != null">
+        sale_price,
+      </if>
+      <if test="marketPrice != null">
+        market_price,
+      </if>
+      <if test="bonusRatio != null">
+        bonus_ratio,
+      </if>
+      <if test="hidden != null">
+        hidden,
+      </if>
+      <if test="onsale != null">
+        onsale,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -366,31 +447,46 @@
       <if test="isDeleted != null">
         #{isDeleted,jdbcType=BIT},
       </if>
-      <if test="accountId != null">
-        #{accountId,jdbcType=VARCHAR},
+      <if test="skuId != null">
+        #{skuId,jdbcType=BIGINT},
       </if>
-      <if test="nickname != null">
-        #{nickname,jdbcType=VARCHAR},
+      <if test="attributeNameId != null">
+        #{attributeNameId,jdbcType=BIGINT},
       </if>
-      <if test="sex != null">
-        #{sex,jdbcType=TINYINT},
+      <if test="attributeValueId != null">
+        #{attributeValueId,jdbcType=BIGINT},
       </if>
-      <if test="portrait != null">
-        #{portrait,jdbcType=VARCHAR},
+      <if test="storeCount != null">
+        #{storeCount,jdbcType=BIGINT},
       </if>
-      <if test="state != null">
-        #{state,jdbcType=TINYINT},
+      <if test="saleCount != null">
+        #{saleCount,jdbcType=BIGINT},
+      </if>
+      <if test="salePrice != null">
+        #{salePrice,jdbcType=BIGINT},
+      </if>
+      <if test="marketPrice != null">
+        #{marketPrice,jdbcType=BIGINT},
+      </if>
+      <if test="bonusRatio != null">
+        #{bonusRatio,jdbcType=TINYINT},
+      </if>
+      <if test="hidden != null">
+        #{hidden,jdbcType=BIT},
+      </if>
+      <if test="onsale != null">
+        #{onsale,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.weafung.shop.model.po.AccountInfoExample" resultType="java.lang.Long">
-    select count(*) from account_info
+  <select id="countByExample" parameterType="com.weafung.shop.model.po.SkuExample" resultType="java.lang.Long">
+    select count(*) from sku
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update account_info
+    update sku
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
@@ -404,20 +500,35 @@
       <if test="record.isDeleted != null">
         is_deleted = #{record.isDeleted,jdbcType=BIT},
       </if>
-      <if test="record.accountId != null">
-        account_id = #{record.accountId,jdbcType=VARCHAR},
+      <if test="record.skuId != null">
+        sku_id = #{record.skuId,jdbcType=BIGINT},
       </if>
-      <if test="record.nickname != null">
-        nickname = #{record.nickname,jdbcType=VARCHAR},
+      <if test="record.attributeNameId != null">
+        attribute_name_id = #{record.attributeNameId,jdbcType=BIGINT},
       </if>
-      <if test="record.sex != null">
-        sex = #{record.sex,jdbcType=TINYINT},
+      <if test="record.attributeValueId != null">
+        attribute_value_id = #{record.attributeValueId,jdbcType=BIGINT},
       </if>
-      <if test="record.portrait != null">
-        portrait = #{record.portrait,jdbcType=VARCHAR},
+      <if test="record.storeCount != null">
+        store_count = #{record.storeCount,jdbcType=BIGINT},
       </if>
-      <if test="record.state != null">
-        state = #{record.state,jdbcType=TINYINT},
+      <if test="record.saleCount != null">
+        sale_count = #{record.saleCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.salePrice != null">
+        sale_price = #{record.salePrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.marketPrice != null">
+        market_price = #{record.marketPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.bonusRatio != null">
+        bonus_ratio = #{record.bonusRatio,jdbcType=TINYINT},
+      </if>
+      <if test="record.hidden != null">
+        hidden = #{record.hidden,jdbcType=BIT},
+      </if>
+      <if test="record.onsale != null">
+        onsale = #{record.onsale,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -425,30 +536,40 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update account_info
+    update sku
     set id = #{record.id,jdbcType=BIGINT},
       gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       is_deleted = #{record.isDeleted,jdbcType=BIT},
-      account_id = #{record.accountId,jdbcType=VARCHAR},
-      nickname = #{record.nickname,jdbcType=VARCHAR},
-      sex = #{record.sex,jdbcType=TINYINT},
-      portrait = #{record.portrait,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=TINYINT}
+      sku_id = #{record.skuId,jdbcType=BIGINT},
+      attribute_name_id = #{record.attributeNameId,jdbcType=BIGINT},
+      attribute_value_id = #{record.attributeValueId,jdbcType=BIGINT},
+      store_count = #{record.storeCount,jdbcType=BIGINT},
+      sale_count = #{record.saleCount,jdbcType=BIGINT},
+      sale_price = #{record.salePrice,jdbcType=BIGINT},
+      market_price = #{record.marketPrice,jdbcType=BIGINT},
+      bonus_ratio = #{record.bonusRatio,jdbcType=TINYINT},
+      hidden = #{record.hidden,jdbcType=BIT},
+      onsale = #{record.onsale,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.AccountInfo">
+  <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.Sku">
     <result column="id" jdbcType="BIGINT" property="id" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
-    <result column="account_id" jdbcType="VARCHAR" property="accountId" />
-    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="sex" jdbcType="TINYINT" property="sex" />
-    <result column="portrait" jdbcType="VARCHAR" property="portrait" />
-    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
+    <result column="attribute_name_id" jdbcType="BIGINT" property="attributeNameId" />
+    <result column="attribute_value_id" jdbcType="BIGINT" property="attributeValueId" />
+    <result column="store_count" jdbcType="BIGINT" property="storeCount" />
+    <result column="sale_count" jdbcType="BIGINT" property="saleCount" />
+    <result column="sale_price" jdbcType="BIGINT" property="salePrice" />
+    <result column="market_price" jdbcType="BIGINT" property="marketPrice" />
+    <result column="bonus_ratio" jdbcType="TINYINT" property="bonusRatio" />
+    <result column="hidden" jdbcType="BIT" property="hidden" />
+    <result column="onsale" jdbcType="BIT" property="onsale" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -509,15 +630,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, gmt_create, gmt_modified, is_deleted, account_id, nickname, sex, portrait, state
+    id, gmt_create, gmt_modified, is_deleted, sku_id, attribute_name_id, attribute_value_id, 
+    store_count, sale_count, sale_price, market_price, bonus_ratio, hidden, onsale
   </sql>
-  <select id="selectByExample" parameterType="com.weafung.shop.model.po.AccountInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.weafung.shop.model.po.SkuExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from account_info
+    from sku
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -525,24 +647,26 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.weafung.shop.model.po.AccountInfoExample">
-    delete from account_info
+  <delete id="deleteByExample" parameterType="com.weafung.shop.model.po.SkuExample">
+    delete from sku
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.weafung.shop.model.po.AccountInfo">
-    insert into account_info (id, gmt_create, gmt_modified, 
-      is_deleted, account_id, nickname, 
-      sex, portrait, state
-      )
+  <insert id="insert" parameterType="com.weafung.shop.model.po.Sku">
+    insert into sku (id, gmt_create, gmt_modified, 
+      is_deleted, sku_id, attribute_name_id, 
+      attribute_value_id, store_count, sale_count, 
+      sale_price, market_price, bonus_ratio, 
+      hidden, onsale)
     values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
-      #{isDeleted,jdbcType=BIT}, #{accountId,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=TINYINT}, #{portrait,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}
-      )
+      #{isDeleted,jdbcType=BIT}, #{skuId,jdbcType=BIGINT}, #{attributeNameId,jdbcType=BIGINT}, 
+      #{attributeValueId,jdbcType=BIGINT}, #{storeCount,jdbcType=BIGINT}, #{saleCount,jdbcType=BIGINT}, 
+      #{salePrice,jdbcType=BIGINT}, #{marketPrice,jdbcType=BIGINT}, #{bonusRatio,jdbcType=TINYINT}, 
+      #{hidden,jdbcType=BIT}, #{onsale,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.weafung.shop.model.po.AccountInfo">
-    insert into account_info
+  <insert id="insertSelective" parameterType="com.weafung.shop.model.po.Sku">
+    insert into sku
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -556,20 +680,35 @@
       <if test="isDeleted != null">
         is_deleted,
       </if>
-      <if test="accountId != null">
-        account_id,
+      <if test="skuId != null">
+        sku_id,
       </if>
-      <if test="nickname != null">
-        nickname,
+      <if test="attributeNameId != null">
+        attribute_name_id,
       </if>
-      <if test="sex != null">
-        sex,
+      <if test="attributeValueId != null">
+        attribute_value_id,
       </if>
-      <if test="portrait != null">
-        portrait,
+      <if test="storeCount != null">
+        store_count,
       </if>
-      <if test="state != null">
-        state,
+      <if test="saleCount != null">
+        sale_count,
+      </if>
+      <if test="salePrice != null">
+        sale_price,
+      </if>
+      <if test="marketPrice != null">
+        market_price,
+      </if>
+      <if test="bonusRatio != null">
+        bonus_ratio,
+      </if>
+      <if test="hidden != null">
+        hidden,
+      </if>
+      <if test="onsale != null">
+        onsale,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -585,31 +724,46 @@
       <if test="isDeleted != null">
         #{isDeleted,jdbcType=BIT},
       </if>
-      <if test="accountId != null">
-        #{accountId,jdbcType=VARCHAR},
+      <if test="skuId != null">
+        #{skuId,jdbcType=BIGINT},
       </if>
-      <if test="nickname != null">
-        #{nickname,jdbcType=VARCHAR},
+      <if test="attributeNameId != null">
+        #{attributeNameId,jdbcType=BIGINT},
       </if>
-      <if test="sex != null">
-        #{sex,jdbcType=TINYINT},
+      <if test="attributeValueId != null">
+        #{attributeValueId,jdbcType=BIGINT},
       </if>
-      <if test="portrait != null">
-        #{portrait,jdbcType=VARCHAR},
+      <if test="storeCount != null">
+        #{storeCount,jdbcType=BIGINT},
       </if>
-      <if test="state != null">
-        #{state,jdbcType=TINYINT},
+      <if test="saleCount != null">
+        #{saleCount,jdbcType=BIGINT},
+      </if>
+      <if test="salePrice != null">
+        #{salePrice,jdbcType=BIGINT},
+      </if>
+      <if test="marketPrice != null">
+        #{marketPrice,jdbcType=BIGINT},
+      </if>
+      <if test="bonusRatio != null">
+        #{bonusRatio,jdbcType=TINYINT},
+      </if>
+      <if test="hidden != null">
+        #{hidden,jdbcType=BIT},
+      </if>
+      <if test="onsale != null">
+        #{onsale,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.weafung.shop.model.po.AccountInfoExample" resultType="java.lang.Long">
-    select count(*) from account_info
+  <select id="countByExample" parameterType="com.weafung.shop.model.po.SkuExample" resultType="java.lang.Long">
+    select count(*) from sku
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update account_info
+    update sku
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
@@ -623,20 +777,35 @@
       <if test="record.isDeleted != null">
         is_deleted = #{record.isDeleted,jdbcType=BIT},
       </if>
-      <if test="record.accountId != null">
-        account_id = #{record.accountId,jdbcType=VARCHAR},
+      <if test="record.skuId != null">
+        sku_id = #{record.skuId,jdbcType=BIGINT},
       </if>
-      <if test="record.nickname != null">
-        nickname = #{record.nickname,jdbcType=VARCHAR},
+      <if test="record.attributeNameId != null">
+        attribute_name_id = #{record.attributeNameId,jdbcType=BIGINT},
       </if>
-      <if test="record.sex != null">
-        sex = #{record.sex,jdbcType=TINYINT},
+      <if test="record.attributeValueId != null">
+        attribute_value_id = #{record.attributeValueId,jdbcType=BIGINT},
       </if>
-      <if test="record.portrait != null">
-        portrait = #{record.portrait,jdbcType=VARCHAR},
+      <if test="record.storeCount != null">
+        store_count = #{record.storeCount,jdbcType=BIGINT},
       </if>
-      <if test="record.state != null">
-        state = #{record.state,jdbcType=TINYINT},
+      <if test="record.saleCount != null">
+        sale_count = #{record.saleCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.salePrice != null">
+        sale_price = #{record.salePrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.marketPrice != null">
+        market_price = #{record.marketPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.bonusRatio != null">
+        bonus_ratio = #{record.bonusRatio,jdbcType=TINYINT},
+      </if>
+      <if test="record.hidden != null">
+        hidden = #{record.hidden,jdbcType=BIT},
+      </if>
+      <if test="record.onsale != null">
+        onsale = #{record.onsale,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -644,30 +813,40 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update account_info
+    update sku
     set id = #{record.id,jdbcType=BIGINT},
       gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       is_deleted = #{record.isDeleted,jdbcType=BIT},
-      account_id = #{record.accountId,jdbcType=VARCHAR},
-      nickname = #{record.nickname,jdbcType=VARCHAR},
-      sex = #{record.sex,jdbcType=TINYINT},
-      portrait = #{record.portrait,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=TINYINT}
+      sku_id = #{record.skuId,jdbcType=BIGINT},
+      attribute_name_id = #{record.attributeNameId,jdbcType=BIGINT},
+      attribute_value_id = #{record.attributeValueId,jdbcType=BIGINT},
+      store_count = #{record.storeCount,jdbcType=BIGINT},
+      sale_count = #{record.saleCount,jdbcType=BIGINT},
+      sale_price = #{record.salePrice,jdbcType=BIGINT},
+      market_price = #{record.marketPrice,jdbcType=BIGINT},
+      bonus_ratio = #{record.bonusRatio,jdbcType=TINYINT},
+      hidden = #{record.hidden,jdbcType=BIT},
+      onsale = #{record.onsale,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.AccountInfo">
+  <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.Sku">
     <result column="id" jdbcType="BIGINT" property="id" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
-    <result column="account_id" jdbcType="VARCHAR" property="accountId" />
-    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="sex" jdbcType="TINYINT" property="sex" />
-    <result column="portrait" jdbcType="VARCHAR" property="portrait" />
-    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
+    <result column="attribute_name_id" jdbcType="BIGINT" property="attributeNameId" />
+    <result column="attribute_value_id" jdbcType="BIGINT" property="attributeValueId" />
+    <result column="store_count" jdbcType="BIGINT" property="storeCount" />
+    <result column="sale_count" jdbcType="BIGINT" property="saleCount" />
+    <result column="sale_price" jdbcType="BIGINT" property="salePrice" />
+    <result column="market_price" jdbcType="BIGINT" property="marketPrice" />
+    <result column="bonus_ratio" jdbcType="TINYINT" property="bonusRatio" />
+    <result column="hidden" jdbcType="BIT" property="hidden" />
+    <result column="onsale" jdbcType="BIT" property="onsale" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -728,15 +907,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, gmt_create, gmt_modified, is_deleted, account_id, nickname, sex, portrait, state
+    id, gmt_create, gmt_modified, is_deleted, sku_id, attribute_name_id, attribute_value_id, 
+    store_count, sale_count, sale_price, market_price, bonus_ratio, hidden, onsale
   </sql>
-  <select id="selectByExample" parameterType="com.weafung.shop.model.po.AccountInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.weafung.shop.model.po.SkuExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from account_info
+    from sku
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -744,24 +924,26 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.weafung.shop.model.po.AccountInfoExample">
-    delete from account_info
+  <delete id="deleteByExample" parameterType="com.weafung.shop.model.po.SkuExample">
+    delete from sku
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.weafung.shop.model.po.AccountInfo">
-    insert into account_info (id, gmt_create, gmt_modified, 
-      is_deleted, account_id, nickname, 
-      sex, portrait, state
-      )
+  <insert id="insert" parameterType="com.weafung.shop.model.po.Sku">
+    insert into sku (id, gmt_create, gmt_modified, 
+      is_deleted, sku_id, attribute_name_id, 
+      attribute_value_id, store_count, sale_count, 
+      sale_price, market_price, bonus_ratio, 
+      hidden, onsale)
     values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
-      #{isDeleted,jdbcType=BIT}, #{accountId,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=TINYINT}, #{portrait,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}
-      )
+      #{isDeleted,jdbcType=BIT}, #{skuId,jdbcType=BIGINT}, #{attributeNameId,jdbcType=BIGINT}, 
+      #{attributeValueId,jdbcType=BIGINT}, #{storeCount,jdbcType=BIGINT}, #{saleCount,jdbcType=BIGINT}, 
+      #{salePrice,jdbcType=BIGINT}, #{marketPrice,jdbcType=BIGINT}, #{bonusRatio,jdbcType=TINYINT}, 
+      #{hidden,jdbcType=BIT}, #{onsale,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.weafung.shop.model.po.AccountInfo">
-    insert into account_info
+  <insert id="insertSelective" parameterType="com.weafung.shop.model.po.Sku">
+    insert into sku
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -775,20 +957,35 @@
       <if test="isDeleted != null">
         is_deleted,
       </if>
-      <if test="accountId != null">
-        account_id,
+      <if test="skuId != null">
+        sku_id,
       </if>
-      <if test="nickname != null">
-        nickname,
+      <if test="attributeNameId != null">
+        attribute_name_id,
       </if>
-      <if test="sex != null">
-        sex,
+      <if test="attributeValueId != null">
+        attribute_value_id,
       </if>
-      <if test="portrait != null">
-        portrait,
+      <if test="storeCount != null">
+        store_count,
       </if>
-      <if test="state != null">
-        state,
+      <if test="saleCount != null">
+        sale_count,
+      </if>
+      <if test="salePrice != null">
+        sale_price,
+      </if>
+      <if test="marketPrice != null">
+        market_price,
+      </if>
+      <if test="bonusRatio != null">
+        bonus_ratio,
+      </if>
+      <if test="hidden != null">
+        hidden,
+      </if>
+      <if test="onsale != null">
+        onsale,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -804,31 +1001,46 @@
       <if test="isDeleted != null">
         #{isDeleted,jdbcType=BIT},
       </if>
-      <if test="accountId != null">
-        #{accountId,jdbcType=VARCHAR},
+      <if test="skuId != null">
+        #{skuId,jdbcType=BIGINT},
       </if>
-      <if test="nickname != null">
-        #{nickname,jdbcType=VARCHAR},
+      <if test="attributeNameId != null">
+        #{attributeNameId,jdbcType=BIGINT},
       </if>
-      <if test="sex != null">
-        #{sex,jdbcType=TINYINT},
+      <if test="attributeValueId != null">
+        #{attributeValueId,jdbcType=BIGINT},
       </if>
-      <if test="portrait != null">
-        #{portrait,jdbcType=VARCHAR},
+      <if test="storeCount != null">
+        #{storeCount,jdbcType=BIGINT},
       </if>
-      <if test="state != null">
-        #{state,jdbcType=TINYINT},
+      <if test="saleCount != null">
+        #{saleCount,jdbcType=BIGINT},
+      </if>
+      <if test="salePrice != null">
+        #{salePrice,jdbcType=BIGINT},
+      </if>
+      <if test="marketPrice != null">
+        #{marketPrice,jdbcType=BIGINT},
+      </if>
+      <if test="bonusRatio != null">
+        #{bonusRatio,jdbcType=TINYINT},
+      </if>
+      <if test="hidden != null">
+        #{hidden,jdbcType=BIT},
+      </if>
+      <if test="onsale != null">
+        #{onsale,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.weafung.shop.model.po.AccountInfoExample" resultType="java.lang.Long">
-    select count(*) from account_info
+  <select id="countByExample" parameterType="com.weafung.shop.model.po.SkuExample" resultType="java.lang.Long">
+    select count(*) from sku
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update account_info
+    update sku
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
@@ -842,239 +1054,35 @@
       <if test="record.isDeleted != null">
         is_deleted = #{record.isDeleted,jdbcType=BIT},
       </if>
-      <if test="record.accountId != null">
-        account_id = #{record.accountId,jdbcType=VARCHAR},
+      <if test="record.skuId != null">
+        sku_id = #{record.skuId,jdbcType=BIGINT},
       </if>
-      <if test="record.nickname != null">
-        nickname = #{record.nickname,jdbcType=VARCHAR},
+      <if test="record.attributeNameId != null">
+        attribute_name_id = #{record.attributeNameId,jdbcType=BIGINT},
       </if>
-      <if test="record.sex != null">
-        sex = #{record.sex,jdbcType=TINYINT},
+      <if test="record.attributeValueId != null">
+        attribute_value_id = #{record.attributeValueId,jdbcType=BIGINT},
       </if>
-      <if test="record.portrait != null">
-        portrait = #{record.portrait,jdbcType=VARCHAR},
+      <if test="record.storeCount != null">
+        store_count = #{record.storeCount,jdbcType=BIGINT},
       </if>
-      <if test="record.state != null">
-        state = #{record.state,jdbcType=TINYINT},
+      <if test="record.saleCount != null">
+        sale_count = #{record.saleCount,jdbcType=BIGINT},
       </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update account_info
-    set id = #{record.id,jdbcType=BIGINT},
-      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
-      is_deleted = #{record.isDeleted,jdbcType=BIT},
-      account_id = #{record.accountId,jdbcType=VARCHAR},
-      nickname = #{record.nickname,jdbcType=VARCHAR},
-      sex = #{record.sex,jdbcType=TINYINT},
-      portrait = #{record.portrait,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=TINYINT}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.AccountInfo">
-    <result column="id" jdbcType="BIGINT" property="id" />
-    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
-    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
-    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
-    <result column="account_id" jdbcType="VARCHAR" property="accountId" />
-    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="sex" jdbcType="TINYINT" property="sex" />
-    <result column="portrait" jdbcType="VARCHAR" property="portrait" />
-    <result column="state" jdbcType="TINYINT" property="state" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    id, gmt_create, gmt_modified, is_deleted, account_id, nickname, sex, portrait, state
-  </sql>
-  <select id="selectByExample" parameterType="com.weafung.shop.model.po.AccountInfoExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from account_info
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <delete id="deleteByExample" parameterType="com.weafung.shop.model.po.AccountInfoExample">
-    delete from account_info
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.weafung.shop.model.po.AccountInfo">
-    insert into account_info (id, gmt_create, gmt_modified, 
-      is_deleted, account_id, nickname, 
-      sex, portrait, state
-      )
-    values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
-      #{isDeleted,jdbcType=BIT}, #{accountId,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=TINYINT}, #{portrait,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.weafung.shop.model.po.AccountInfo">
-    insert into account_info
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
+      <if test="record.salePrice != null">
+        sale_price = #{record.salePrice,jdbcType=BIGINT},
       </if>
-      <if test="gmtCreate != null">
-        gmt_create,
+      <if test="record.marketPrice != null">
+        market_price = #{record.marketPrice,jdbcType=BIGINT},
       </if>
-      <if test="gmtModified != null">
-        gmt_modified,
+      <if test="record.bonusRatio != null">
+        bonus_ratio = #{record.bonusRatio,jdbcType=TINYINT},
       </if>
-      <if test="isDeleted != null">
-        is_deleted,
+      <if test="record.hidden != null">
+        hidden = #{record.hidden,jdbcType=BIT},
       </if>
-      <if test="accountId != null">
-        account_id,
-      </if>
-      <if test="nickname != null">
-        nickname,
-      </if>
-      <if test="sex != null">
-        sex,
-      </if>
-      <if test="portrait != null">
-        portrait,
-      </if>
-      <if test="state != null">
-        state,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="gmtCreate != null">
-        #{gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtModified != null">
-        #{gmtModified,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isDeleted != null">
-        #{isDeleted,jdbcType=BIT},
-      </if>
-      <if test="accountId != null">
-        #{accountId,jdbcType=VARCHAR},
-      </if>
-      <if test="nickname != null">
-        #{nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null">
-        #{sex,jdbcType=TINYINT},
-      </if>
-      <if test="portrait != null">
-        #{portrait,jdbcType=VARCHAR},
-      </if>
-      <if test="state != null">
-        #{state,jdbcType=TINYINT},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.weafung.shop.model.po.AccountInfoExample" resultType="java.lang.Long">
-    select count(*) from account_info
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update account_info
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
-      </if>
-      <if test="record.gmtCreate != null">
-        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.gmtModified != null">
-        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.isDeleted != null">
-        is_deleted = #{record.isDeleted,jdbcType=BIT},
-      </if>
-      <if test="record.accountId != null">
-        account_id = #{record.accountId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.nickname != null">
-        nickname = #{record.nickname,jdbcType=VARCHAR},
-      </if>
-      <if test="record.sex != null">
-        sex = #{record.sex,jdbcType=TINYINT},
-      </if>
-      <if test="record.portrait != null">
-        portrait = #{record.portrait,jdbcType=VARCHAR},
-      </if>
-      <if test="record.state != null">
-        state = #{record.state,jdbcType=TINYINT},
+      <if test="record.onsale != null">
+        onsale = #{record.onsale,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -1082,16 +1090,21 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update account_info
+    update sku
     set id = #{record.id,jdbcType=BIGINT},
       gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       is_deleted = #{record.isDeleted,jdbcType=BIT},
-      account_id = #{record.accountId,jdbcType=VARCHAR},
-      nickname = #{record.nickname,jdbcType=VARCHAR},
-      sex = #{record.sex,jdbcType=TINYINT},
-      portrait = #{record.portrait,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=TINYINT}
+      sku_id = #{record.skuId,jdbcType=BIGINT},
+      attribute_name_id = #{record.attributeNameId,jdbcType=BIGINT},
+      attribute_value_id = #{record.attributeValueId,jdbcType=BIGINT},
+      store_count = #{record.storeCount,jdbcType=BIGINT},
+      sale_count = #{record.saleCount,jdbcType=BIGINT},
+      sale_price = #{record.salePrice,jdbcType=BIGINT},
+      market_price = #{record.marketPrice,jdbcType=BIGINT},
+      bonus_ratio = #{record.bonusRatio,jdbcType=TINYINT},
+      hidden = #{record.hidden,jdbcType=BIT},
+      onsale = #{record.onsale,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

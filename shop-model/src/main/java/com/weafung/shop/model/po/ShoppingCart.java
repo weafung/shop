@@ -3,7 +3,7 @@ package com.weafung.shop.model.po;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Order implements Serializable {
+public class ShoppingCart implements Serializable {
     private Long id;
 
     private Date gmtCreate;
@@ -12,19 +12,13 @@ public class Order implements Serializable {
 
     private Boolean isDeleted;
 
-    private String gorderId;
+    private Boolean accountId;
 
-    private String orderId;
+    private Boolean goodsId;
 
-    private Long goodsId;
+    private Boolean skuId;
 
-    private Long skuId;
-
-    private Integer count;
-
-    private Long price;
-
-    private Byte status;
+    private Boolean count;
 
     private static final long serialVersionUID = 1L;
 
@@ -60,59 +54,35 @@ public class Order implements Serializable {
         this.isDeleted = isDeleted;
     }
 
-    public String getGorderId() {
-        return gorderId;
+    public Boolean getAccountId() {
+        return accountId;
     }
 
-    public void setGorderId(String gorderId) {
-        this.gorderId = gorderId == null ? null : gorderId.trim();
+    public void setAccountId(Boolean accountId) {
+        this.accountId = accountId;
     }
 
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId == null ? null : orderId.trim();
-    }
-
-    public Long getGoodsId() {
+    public Boolean getGoodsId() {
         return goodsId;
     }
 
-    public void setGoodsId(Long goodsId) {
+    public void setGoodsId(Boolean goodsId) {
         this.goodsId = goodsId;
     }
 
-    public Long getSkuId() {
+    public Boolean getSkuId() {
         return skuId;
     }
 
-    public void setSkuId(Long skuId) {
+    public void setSkuId(Boolean skuId) {
         this.skuId = skuId;
     }
 
-    public Integer getCount() {
+    public Boolean getCount() {
         return count;
     }
 
-    public void setCount(Integer count) {
+    public void setCount(Boolean count) {
         this.count = count;
-    }
-
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
-    }
-
-    public Byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(Byte status) {
-        this.status = status;
     }
 }
