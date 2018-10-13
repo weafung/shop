@@ -7,8 +7,8 @@
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
     <result column="sku_id" jdbcType="BIGINT" property="skuId" />
-    <result column="attribute_name_id" jdbcType="BIGINT" property="attributeNameId" />
-    <result column="attribute_value_id" jdbcType="BIGINT" property="attributeValueId" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="attribute" jdbcType="VARCHAR" property="attribute" />
     <result column="store_count" jdbcType="BIGINT" property="storeCount" />
     <result column="sale_count" jdbcType="BIGINT" property="saleCount" />
     <result column="sale_price" jdbcType="BIGINT" property="salePrice" />
@@ -76,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, gmt_create, gmt_modified, is_deleted, sku_id, attribute_name_id, attribute_value_id, 
-    store_count, sale_count, sale_price, market_price, bonus_ratio, hidden, onsale
+    id, gmt_create, gmt_modified, is_deleted, sku_id, goods_id, attribute, store_count, 
+    sale_count, sale_price, market_price, bonus_ratio, hidden, onsale
   </sql>
   <select id="selectByExample" parameterType="com.weafung.shop.model.po.SkuExample" resultMap="BaseResultMap">
     select
@@ -101,13 +101,13 @@
   </delete>
   <insert id="insert" parameterType="com.weafung.shop.model.po.Sku">
     insert into sku (id, gmt_create, gmt_modified, 
-      is_deleted, sku_id, attribute_name_id, 
-      attribute_value_id, store_count, sale_count, 
+      is_deleted, sku_id, goods_id, 
+      attribute, store_count, sale_count, 
       sale_price, market_price, bonus_ratio, 
       hidden, onsale)
     values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
-      #{isDeleted,jdbcType=BIT}, #{skuId,jdbcType=BIGINT}, #{attributeNameId,jdbcType=BIGINT}, 
-      #{attributeValueId,jdbcType=BIGINT}, #{storeCount,jdbcType=BIGINT}, #{saleCount,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=BIT}, #{skuId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
+      #{attribute,jdbcType=VARCHAR}, #{storeCount,jdbcType=BIGINT}, #{saleCount,jdbcType=BIGINT}, 
       #{salePrice,jdbcType=BIGINT}, #{marketPrice,jdbcType=BIGINT}, #{bonusRatio,jdbcType=TINYINT}, 
       #{hidden,jdbcType=BIT}, #{onsale,jdbcType=BIT})
   </insert>
@@ -129,11 +129,11 @@
       <if test="skuId != null">
         sku_id,
       </if>
-      <if test="attributeNameId != null">
-        attribute_name_id,
+      <if test="goodsId != null">
+        goods_id,
       </if>
-      <if test="attributeValueId != null">
-        attribute_value_id,
+      <if test="attribute != null">
+        attribute,
       </if>
       <if test="storeCount != null">
         store_count,
@@ -173,11 +173,11 @@
       <if test="skuId != null">
         #{skuId,jdbcType=BIGINT},
       </if>
-      <if test="attributeNameId != null">
-        #{attributeNameId,jdbcType=BIGINT},
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=BIGINT},
       </if>
-      <if test="attributeValueId != null">
-        #{attributeValueId,jdbcType=BIGINT},
+      <if test="attribute != null">
+        #{attribute,jdbcType=VARCHAR},
       </if>
       <if test="storeCount != null">
         #{storeCount,jdbcType=BIGINT},
@@ -226,11 +226,11 @@
       <if test="record.skuId != null">
         sku_id = #{record.skuId,jdbcType=BIGINT},
       </if>
-      <if test="record.attributeNameId != null">
-        attribute_name_id = #{record.attributeNameId,jdbcType=BIGINT},
+      <if test="record.goodsId != null">
+        goods_id = #{record.goodsId,jdbcType=BIGINT},
       </if>
-      <if test="record.attributeValueId != null">
-        attribute_value_id = #{record.attributeValueId,jdbcType=BIGINT},
+      <if test="record.attribute != null">
+        attribute = #{record.attribute,jdbcType=VARCHAR},
       </if>
       <if test="record.storeCount != null">
         store_count = #{record.storeCount,jdbcType=BIGINT},
@@ -265,8 +265,8 @@
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       is_deleted = #{record.isDeleted,jdbcType=BIT},
       sku_id = #{record.skuId,jdbcType=BIGINT},
-      attribute_name_id = #{record.attributeNameId,jdbcType=BIGINT},
-      attribute_value_id = #{record.attributeValueId,jdbcType=BIGINT},
+      goods_id = #{record.goodsId,jdbcType=BIGINT},
+      attribute = #{record.attribute,jdbcType=VARCHAR},
       store_count = #{record.storeCount,jdbcType=BIGINT},
       sale_count = #{record.saleCount,jdbcType=BIGINT},
       sale_price = #{record.salePrice,jdbcType=BIGINT},

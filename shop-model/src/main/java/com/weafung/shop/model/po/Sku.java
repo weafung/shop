@@ -14,9 +14,9 @@ public class Sku implements Serializable {
 
     private Long skuId;
 
-    private Long attributeNameId;
+    private Long goodsId;
 
-    private Long attributeValueId;
+    private String attribute;
 
     private Long storeCount;
 
@@ -74,20 +74,20 @@ public class Sku implements Serializable {
         this.skuId = skuId;
     }
 
-    public Long getAttributeNameId() {
-        return attributeNameId;
+    public Long getGoodsId() {
+        return goodsId;
     }
 
-    public void setAttributeNameId(Long attributeNameId) {
-        this.attributeNameId = attributeNameId;
+    public void setGoodsId(Long goodsId) {
+        this.goodsId = goodsId;
     }
 
-    public Long getAttributeValueId() {
-        return attributeValueId;
+    public String getAttribute() {
+        return attribute;
     }
 
-    public void setAttributeValueId(Long attributeValueId) {
-        this.attributeValueId = attributeValueId;
+    public void setAttribute(String attribute) {
+        this.attribute = attribute == null ? null : attribute.trim();
     }
 
     public Long getStoreCount() {

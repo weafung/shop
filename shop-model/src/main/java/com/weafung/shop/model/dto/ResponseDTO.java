@@ -3,11 +3,15 @@ package com.weafung.shop.model.dto;
 import com.weafung.shop.common.constant.CodeEnum;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author weifeng
  */
 @Data
-public class ResponseDTO<T> {
+public class ResponseDTO<T> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     private Integer code;
     private T data;
     private String msg;

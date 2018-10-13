@@ -4,12 +4,14 @@ import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.dao.GoodsImageMapper;
 import com.weafung.shop.dao.GoodsMapper;
 import com.weafung.shop.model.dto.GoodsDTO;
+import com.weafung.shop.model.dto.GoodsImageDTO;
 import com.weafung.shop.model.dto.ResponseDTO;
 import com.weafung.shop.model.po.Goods;
 import com.weafung.shop.model.po.GoodsExample;
 import com.weafung.shop.model.po.GoodsImage;
 import com.weafung.shop.model.po.GoodsImageExample;
 import com.weafung.shop.service.GoodsService;
+import com.weafung.shop.service.SkuService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author weifeng
@@ -29,6 +32,9 @@ public class GoodsServiceImpl implements GoodsService {
     private GoodsMapper goodsMapper;
     @Autowired
     private GoodsImageMapper goodsImageMapper;
+
+    @Autowired
+    private SkuService skuService;
 
     @Override
     public ResponseDTO<GoodsDTO> getGoodsByGoodsId(Long goodsId) {
@@ -42,7 +48,6 @@ public class GoodsServiceImpl implements GoodsService {
         if (CollectionUtils.isEmpty(goodsList)) {
             return ResponseDTO.build(CodeEnum.GOODS_NOT_FOUND, null);
         }
-
         GoodsDTO goodsDTO = new GoodsDTO();
         Goods goods = goodsList.get(0);
         BeanUtils.copyProperties(goods, goodsDTO);
@@ -50,8 +55,13 @@ public class GoodsServiceImpl implements GoodsService {
         GoodsImageExample goodsImageExample = new GoodsImageExample();
         goodsExample.createCriteria().andGoodsIdEqualTo(goodsId).andIsDeletedEqualTo(false);
         List<GoodsImage> goodsImageList = goodsImageMapper.selectByExample(goodsImageExample);
-        goodsDTO.setGoodsImageList(goodsImageList);
-
+        goodsDTO.setGoodsImageList(goodsImageList.stream().map(goodsImage -> {
+            GoodsImageDTO goodsImageDTO = new GoodsImageDTO();
+            BeanUtils.copyProperties(goodsImage, goodsImageDTO);
+            return goodsImageDTO;
+        }).collect(Collectors.toList()));
+        // 获取SKU信息
+        goodsDTO.setSkuList(skuService.listSku(goodsId).getData());
         return ResponseDTO.buildSuccess(goodsDTO);
     }
 
@@ -88,7 +98,11 @@ public class GoodsServiceImpl implements GoodsService {
         // 添加新照片
         if (CollectionUtils.isNotEmpty(goodsDTO.getGoodsImageList())) {
             goodsDTO.getGoodsImageList()
-                    .forEach(newGoodsImage -> goodsImageMapper.insertSelective(newGoodsImage));
+                    .forEach(goodsImageDTO -> {
+                        GoodsImage goodsImage = new GoodsImage();
+                        BeanUtils.copyProperties(goodsImageDTO, goodsImage);
+                        goodsImageMapper.insertSelective(goodsImage);
+                    });
         }
         return ResponseDTO.buildSuccess(Boolean.TRUE);
     }

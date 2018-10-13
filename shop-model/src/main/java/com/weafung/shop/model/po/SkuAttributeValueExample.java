@@ -474,6 +474,66 @@ public class SkuAttributeValueExample {
             addCriterion("attribute_value not between", value1, value2, "attributeValue");
             return (Criteria) this;
         }
+
+        public Criteria andAttributeNameIdIsNull() {
+            addCriterion("attribute_name_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttributeNameIdIsNotNull() {
+            addCriterion("attribute_name_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttributeNameIdEqualTo(Long value) {
+            addCriterion("attribute_name_id =", value, "attributeNameId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttributeNameIdNotEqualTo(Long value) {
+            addCriterion("attribute_name_id <>", value, "attributeNameId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttributeNameIdGreaterThan(Long value) {
+            addCriterion("attribute_name_id >", value, "attributeNameId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttributeNameIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("attribute_name_id >=", value, "attributeNameId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttributeNameIdLessThan(Long value) {
+            addCriterion("attribute_name_id <", value, "attributeNameId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttributeNameIdLessThanOrEqualTo(Long value) {
+            addCriterion("attribute_name_id <=", value, "attributeNameId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttributeNameIdIn(List<Long> values) {
+            addCriterion("attribute_name_id in", values, "attributeNameId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttributeNameIdNotIn(List<Long> values) {
+            addCriterion("attribute_name_id not in", values, "attributeNameId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttributeNameIdBetween(Long value1, Long value2) {
+            addCriterion("attribute_name_id between", value1, value2, "attributeNameId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttributeNameIdNotBetween(Long value1, Long value2) {
+            addCriterion("attribute_name_id not between", value1, value2, "attributeNameId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

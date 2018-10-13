@@ -1,6 +1,5 @@
 package com.weafung.shop.model.dto;
 
-import com.weafung.shop.model.po.GoodsImage;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,7 +15,7 @@ public class GoodsDTO implements Serializable {
 
     private Long goodsId;
 
-    private Long skuId;
+    private List<SkuDTO> skuList;
 
     private Long firstCategoryId;
 
@@ -26,7 +25,7 @@ public class GoodsDTO implements Serializable {
 
     private String introduce;
 
-    private List<GoodsImage> goodsImageList;
+    private List<GoodsImageDTO> goodsImageList;
 
     private Integer limitPerOrder;
 

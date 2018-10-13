@@ -7,7 +7,6 @@
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
     <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
-    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
     <result column="first_category_id" jdbcType="BIGINT" property="firstCategoryId" />
     <result column="second_category_id" jdbcType="BIGINT" property="secondCategoryId" />
     <result column="third_category_id" jdbcType="BIGINT" property="thirdCategoryId" />
@@ -75,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, gmt_create, gmt_modified, is_deleted, goods_id, sku_id, first_category_id, second_category_id, 
+    id, gmt_create, gmt_modified, is_deleted, goods_id, first_category_id, second_category_id, 
     third_category_id, title, introduce, limit_per_order, free_delivery
   </sql>
   <select id="selectByExample" parameterType="com.weafung.shop.model.po.GoodsExample" resultMap="BaseResultMap">
@@ -100,15 +99,15 @@
   </delete>
   <insert id="insert" parameterType="com.weafung.shop.model.po.Goods">
     insert into goods (id, gmt_create, gmt_modified, 
-      is_deleted, goods_id, sku_id, 
-      first_category_id, second_category_id, third_category_id, 
-      title, introduce, limit_per_order, 
-      free_delivery)
+      is_deleted, goods_id, first_category_id, 
+      second_category_id, third_category_id, title, 
+      introduce, limit_per_order, free_delivery
+      )
     values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
-      #{isDeleted,jdbcType=BIT}, #{goodsId,jdbcType=BIGINT}, #{skuId,jdbcType=BIGINT}, 
-      #{firstCategoryId,jdbcType=BIGINT}, #{secondCategoryId,jdbcType=BIGINT}, #{thirdCategoryId,jdbcType=BIGINT}, 
-      #{title,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, #{limitPerOrder,jdbcType=INTEGER}, 
-      #{freeDelivery,jdbcType=BIT})
+      #{isDeleted,jdbcType=BIT}, #{goodsId,jdbcType=BIGINT}, #{firstCategoryId,jdbcType=BIGINT}, 
+      #{secondCategoryId,jdbcType=BIGINT}, #{thirdCategoryId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
+      #{introduce,jdbcType=VARCHAR}, #{limitPerOrder,jdbcType=INTEGER}, #{freeDelivery,jdbcType=BIT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.weafung.shop.model.po.Goods">
     insert into goods
@@ -127,9 +126,6 @@
       </if>
       <if test="goodsId != null">
         goods_id,
-      </if>
-      <if test="skuId != null">
-        sku_id,
       </if>
       <if test="firstCategoryId != null">
         first_category_id,
@@ -168,9 +164,6 @@
       </if>
       <if test="goodsId != null">
         #{goodsId,jdbcType=BIGINT},
-      </if>
-      <if test="skuId != null">
-        #{skuId,jdbcType=BIGINT},
       </if>
       <if test="firstCategoryId != null">
         #{firstCategoryId,jdbcType=BIGINT},
@@ -219,9 +212,6 @@
       <if test="record.goodsId != null">
         goods_id = #{record.goodsId,jdbcType=BIGINT},
       </if>
-      <if test="record.skuId != null">
-        sku_id = #{record.skuId,jdbcType=BIGINT},
-      </if>
       <if test="record.firstCategoryId != null">
         first_category_id = #{record.firstCategoryId,jdbcType=BIGINT},
       </if>
@@ -255,7 +245,6 @@
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       is_deleted = #{record.isDeleted,jdbcType=BIT},
       goods_id = #{record.goodsId,jdbcType=BIGINT},
-      sku_id = #{record.skuId,jdbcType=BIGINT},
       first_category_id = #{record.firstCategoryId,jdbcType=BIGINT},
       second_category_id = #{record.secondCategoryId,jdbcType=BIGINT},
       third_category_id = #{record.thirdCategoryId,jdbcType=BIGINT},

@@ -8,6 +8,8 @@ import lombok.Data;
  */
 @Data
 public class ResponseVO<T> {
+    private static final long serialVersionUID = 1L;
+
     private Integer code;
     private T data;
     private String msg;

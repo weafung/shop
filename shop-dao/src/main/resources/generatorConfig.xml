@@ -98,6 +98,7 @@
         </table>
         <table tableName="sku" domainObjectName="Sku">
             <property name="useActualColumnNames" value="false"/>
+            <columnOverride column="attribute" javaType="java.lang.String" jdbcType="VARCHAR" />
         </table>
         <table tableName="sku_attribute_name" domainObjectName="SkuAttributeName">
             <property name="useActualColumnNames" value="false"/>

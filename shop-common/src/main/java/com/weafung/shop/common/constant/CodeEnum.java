@@ -18,10 +18,11 @@ public enum CodeEnum {
     WEBSITE_CONFIG_NOT_FOUND(10404, "参数配置不存在"),
 
     /**
-     * 商品相关 20***
+     * 商品相关 20****
      */
-    GOODS_NOT_FOUND(20404, "商品不存在"),
-
+    GOODS_NOT_FOUND(201404, "商品不存在"),
+    SKU_ATTRIBUTE_NAME_NOT_FOUND(202404, "商品SKU属性名不存在"),
+    SKU_ATTRIBUTE_VALUE_NOT_FOUND(202404, "商品SKU属性值不存在"),
     /**
      * 商品类目相关 30***
      */

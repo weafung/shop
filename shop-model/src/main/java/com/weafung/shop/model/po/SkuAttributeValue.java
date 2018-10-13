@@ -16,6 +16,8 @@ public class SkuAttributeValue implements Serializable {
 
     private String attributeValue;
 
+    private Long attributeNameId;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -64,5 +66,13 @@ public class SkuAttributeValue implements Serializable {
 
     public void setAttributeValue(String attributeValue) {
         this.attributeValue = attributeValue == null ? null : attributeValue.trim();
+    }
+
+    public Long getAttributeNameId() {
+        return attributeNameId;
+    }
+
+    public void setAttributeNameId(Long attributeNameId) {
+        this.attributeNameId = attributeNameId;
     }
 }

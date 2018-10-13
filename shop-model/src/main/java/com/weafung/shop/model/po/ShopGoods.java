@@ -14,7 +14,9 @@ public class ShopGoods implements Serializable {
 
     private String accountId;
 
-    private String goodsId;
+    private Long goodsId;
+
+    private Long skuId;
 
     private static final long serialVersionUID = 1L;
 
@@ -58,11 +60,19 @@ public class ShopGoods implements Serializable {
         this.accountId = accountId == null ? null : accountId.trim();
     }
 
-    public String getGoodsId() {
+    public Long getGoodsId() {
         return goodsId;
     }
 
-    public void setGoodsId(String goodsId) {
-        this.goodsId = goodsId == null ? null : goodsId.trim();
+    public void setGoodsId(Long goodsId) {
+        this.goodsId = goodsId;
+    }
+
+    public Long getSkuId() {
+        return skuId;
+    }
+
+    public void setSkuId(Long skuId) {
+        this.skuId = skuId;
     }
 }

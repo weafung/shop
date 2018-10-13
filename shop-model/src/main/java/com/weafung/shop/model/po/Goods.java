@@ -14,8 +14,6 @@ public class Goods implements Serializable {
 
     private Long goodsId;
 
-    private Long skuId;
-
     private Long firstCategoryId;
 
     private Long secondCategoryId;
@@ -70,14 +68,6 @@ public class Goods implements Serializable {
 
     public void setGoodsId(Long goodsId) {
         this.goodsId = goodsId;
-    }
-
-    public Long getSkuId() {
-        return skuId;
-    }
-
-    public void setSkuId(Long skuId) {
-        this.skuId = skuId;
     }
 
     public Long getFirstCategoryId() {

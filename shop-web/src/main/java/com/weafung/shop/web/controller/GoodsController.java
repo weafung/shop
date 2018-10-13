@@ -32,13 +32,16 @@ public class GoodsController {
             return ResponseVO.build(CodeEnum.PARAM_EMPTY);
         }
         ResponseDTO<GoodsDTO> responseDTO = goodsService.getGoodsByGoodsId(goodsId);
-        if (responseDTO != null && responseDTO.getData() != null) {
-            GoodsVO goodsVO = new GoodsVO();
-            BeanUtils.copyProperties(responseDTO.getData(), goodsVO);
-            return ResponseVO.build(responseDTO.getCode(), goodsVO, responseDTO.getMsg());
+        if (responseDTO == null) {
+            log.warn("execute goodsService#getGoodsByGoodsId failed. goodsId:{}, responseDTO:{}", goodsId, responseDTO);
+            return ResponseVO.build(CodeEnum.ERROR);
         }
-        log.warn("execute goodsService#getGoodsByGoodsId failed.goodsIs:{}, responseDTO:{}",goodsId, responseDTO);
-        return ResponseVO.build(CodeEnum.ERROR);
+        if (responseDTO.getData() == null) {
+            return ResponseVO.build(responseDTO.getCode(), null, responseDTO.getMsg());
+        }
+        GoodsVO goodsVO = new GoodsVO();
+        BeanUtils.copyProperties(responseDTO.getData(), goodsVO);
+        return ResponseVO.build(responseDTO.getCode(), goodsVO, responseDTO.getMsg());
     }
 
     @RequestMapping("/update")

@@ -7,7 +7,8 @@
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
     <result column="account_id" jdbcType="VARCHAR" property="accountId" />
-    <result column="goods_id" jdbcType="VARCHAR" property="goodsId" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, gmt_create, gmt_modified, is_deleted, account_id, goods_id
+    id, gmt_create, gmt_modified, is_deleted, account_id, goods_id, sku_id
   </sql>
   <select id="selectByExample" parameterType="com.weafung.shop.model.po.ShopGoodsExample" resultMap="BaseResultMap">
     select
@@ -92,11 +93,11 @@
   </delete>
   <insert id="insert" parameterType="com.weafung.shop.model.po.ShopGoods">
     insert into shop_goods (id, gmt_create, gmt_modified, 
-      is_deleted, account_id, goods_id
-      )
+      is_deleted, account_id, goods_id, 
+      sku_id)
     values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
-      #{isDeleted,jdbcType=BIT}, #{accountId,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}
-      )
+      #{isDeleted,jdbcType=BIT}, #{accountId,jdbcType=VARCHAR}, #{goodsId,jdbcType=BIGINT}, 
+      #{skuId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.weafung.shop.model.po.ShopGoods">
     insert into shop_goods
@@ -119,6 +120,9 @@
       <if test="goodsId != null">
         goods_id,
       </if>
+      <if test="skuId != null">
+        sku_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -137,7 +141,10 @@
         #{accountId,jdbcType=VARCHAR},
       </if>
       <if test="goodsId != null">
-        #{goodsId,jdbcType=VARCHAR},
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null">
+        #{skuId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -166,7 +173,10 @@
         account_id = #{record.accountId,jdbcType=VARCHAR},
       </if>
       <if test="record.goodsId != null">
-        goods_id = #{record.goodsId,jdbcType=VARCHAR},
+        goods_id = #{record.goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.skuId != null">
+        sku_id = #{record.skuId,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -180,7 +190,8 @@
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       is_deleted = #{record.isDeleted,jdbcType=BIT},
       account_id = #{record.accountId,jdbcType=VARCHAR},
-      goods_id = #{record.goodsId,jdbcType=VARCHAR}
+      goods_id = #{record.goodsId,jdbcType=BIGINT},
+      sku_id = #{record.skuId,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

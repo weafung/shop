@@ -405,66 +405,6 @@ public class GoodsExample {
             return (Criteria) this;
         }
 
-        public Criteria andSkuIdIsNull() {
-            addCriterion("sku_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSkuIdIsNotNull() {
-            addCriterion("sku_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSkuIdEqualTo(Long value) {
-            addCriterion("sku_id =", value, "skuId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSkuIdNotEqualTo(Long value) {
-            addCriterion("sku_id <>", value, "skuId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSkuIdGreaterThan(Long value) {
-            addCriterion("sku_id >", value, "skuId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSkuIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("sku_id >=", value, "skuId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSkuIdLessThan(Long value) {
-            addCriterion("sku_id <", value, "skuId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSkuIdLessThanOrEqualTo(Long value) {
-            addCriterion("sku_id <=", value, "skuId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSkuIdIn(List<Long> values) {
-            addCriterion("sku_id in", values, "skuId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSkuIdNotIn(List<Long> values) {
-            addCriterion("sku_id not in", values, "skuId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSkuIdBetween(Long value1, Long value2) {
-            addCriterion("sku_id between", value1, value2, "skuId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSkuIdNotBetween(Long value1, Long value2) {
-            addCriterion("sku_id not between", value1, value2, "skuId");
-            return (Criteria) this;
-        }
-
         public Criteria andFirstCategoryIdIsNull() {
             addCriterion("first_category_id is null");
             return (Criteria) this;

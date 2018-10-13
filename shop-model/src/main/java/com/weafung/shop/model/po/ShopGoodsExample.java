@@ -425,63 +425,113 @@ public class ShopGoodsExample {
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdEqualTo(String value) {
+        public Criteria andGoodsIdEqualTo(Long value) {
             addCriterion("goods_id =", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdNotEqualTo(String value) {
+        public Criteria andGoodsIdNotEqualTo(Long value) {
             addCriterion("goods_id <>", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdGreaterThan(String value) {
+        public Criteria andGoodsIdGreaterThan(Long value) {
             addCriterion("goods_id >", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdGreaterThanOrEqualTo(String value) {
+        public Criteria andGoodsIdGreaterThanOrEqualTo(Long value) {
             addCriterion("goods_id >=", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdLessThan(String value) {
+        public Criteria andGoodsIdLessThan(Long value) {
             addCriterion("goods_id <", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdLessThanOrEqualTo(String value) {
+        public Criteria andGoodsIdLessThanOrEqualTo(Long value) {
             addCriterion("goods_id <=", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdLike(String value) {
-            addCriterion("goods_id like", value, "goodsId");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoodsIdNotLike(String value) {
-            addCriterion("goods_id not like", value, "goodsId");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoodsIdIn(List<String> values) {
+        public Criteria andGoodsIdIn(List<Long> values) {
             addCriterion("goods_id in", values, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdNotIn(List<String> values) {
+        public Criteria andGoodsIdNotIn(List<Long> values) {
             addCriterion("goods_id not in", values, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdBetween(String value1, String value2) {
+        public Criteria andGoodsIdBetween(Long value1, Long value2) {
             addCriterion("goods_id between", value1, value2, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdNotBetween(String value1, String value2) {
+        public Criteria andGoodsIdNotBetween(Long value1, Long value2) {
             addCriterion("goods_id not between", value1, value2, "goodsId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuIdIsNull() {
+            addCriterion("sku_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuIdIsNotNull() {
+            addCriterion("sku_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuIdEqualTo(Long value) {
+            addCriterion("sku_id =", value, "skuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuIdNotEqualTo(Long value) {
+            addCriterion("sku_id <>", value, "skuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuIdGreaterThan(Long value) {
+            addCriterion("sku_id >", value, "skuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("sku_id >=", value, "skuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuIdLessThan(Long value) {
+            addCriterion("sku_id <", value, "skuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuIdLessThanOrEqualTo(Long value) {
+            addCriterion("sku_id <=", value, "skuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuIdIn(List<Long> values) {
+            addCriterion("sku_id in", values, "skuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuIdNotIn(List<Long> values) {
+            addCriterion("sku_id not in", values, "skuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuIdBetween(Long value1, Long value2) {
+            addCriterion("sku_id between", value1, value2, "skuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuIdNotBetween(Long value1, Long value2) {
+            addCriterion("sku_id not between", value1, value2, "skuId");
             return (Criteria) this;
         }
     }

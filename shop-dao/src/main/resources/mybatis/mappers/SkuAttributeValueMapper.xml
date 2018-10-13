@@ -8,6 +8,7 @@
     <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
     <result column="attribute_value_id" jdbcType="BIGINT" property="attributeValueId" />
     <result column="attribute_value" jdbcType="VARCHAR" property="attributeValue" />
+    <result column="attribute_name_id" jdbcType="BIGINT" property="attributeNameId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, gmt_create, gmt_modified, is_deleted, attribute_value_id, attribute_value
+    id, gmt_create, gmt_modified, is_deleted, attribute_value_id, attribute_value, attribute_name_id
   </sql>
   <select id="selectByExample" parameterType="com.weafung.shop.model.po.SkuAttributeValueExample" resultMap="BaseResultMap">
     select
@@ -92,11 +93,11 @@
   </delete>
   <insert id="insert" parameterType="com.weafung.shop.model.po.SkuAttributeValue">
     insert into sku_attribute_value (id, gmt_create, gmt_modified, 
-      is_deleted, attribute_value_id, attribute_value
-      )
+      is_deleted, attribute_value_id, attribute_value, 
+      attribute_name_id)
     values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
-      #{isDeleted,jdbcType=BIT}, #{attributeValueId,jdbcType=BIGINT}, #{attributeValue,jdbcType=VARCHAR}
-      )
+      #{isDeleted,jdbcType=BIT}, #{attributeValueId,jdbcType=BIGINT}, #{attributeValue,jdbcType=VARCHAR}, 
+      #{attributeNameId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.weafung.shop.model.po.SkuAttributeValue">
     insert into sku_attribute_value
@@ -119,6 +120,9 @@
       <if test="attributeValue != null">
         attribute_value,
       </if>
+      <if test="attributeNameId != null">
+        attribute_name_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -138,6 +142,9 @@
       </if>
       <if test="attributeValue != null">
         #{attributeValue,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeNameId != null">
+        #{attributeNameId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -168,6 +175,9 @@
       <if test="record.attributeValue != null">
         attribute_value = #{record.attributeValue,jdbcType=VARCHAR},
       </if>
+      <if test="record.attributeNameId != null">
+        attribute_name_id = #{record.attributeNameId,jdbcType=BIGINT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -180,7 +190,8 @@
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       is_deleted = #{record.isDeleted,jdbcType=BIT},
       attribute_value_id = #{record.attributeValueId,jdbcType=BIGINT},
-      attribute_value = #{record.attributeValue,jdbcType=VARCHAR}
+      attribute_value = #{record.attributeValue,jdbcType=VARCHAR},
+      attribute_name_id = #{record.attributeNameId,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

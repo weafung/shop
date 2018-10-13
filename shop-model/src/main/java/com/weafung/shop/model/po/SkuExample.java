@@ -405,123 +405,133 @@ public class SkuExample {
             return (Criteria) this;
         }
 
-        public Criteria andAttributeNameIdIsNull() {
-            addCriterion("attribute_name_id is null");
+        public Criteria andGoodsIdIsNull() {
+            addCriterion("goods_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeNameIdIsNotNull() {
-            addCriterion("attribute_name_id is not null");
+        public Criteria andGoodsIdIsNotNull() {
+            addCriterion("goods_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeNameIdEqualTo(Long value) {
-            addCriterion("attribute_name_id =", value, "attributeNameId");
+        public Criteria andGoodsIdEqualTo(Long value) {
+            addCriterion("goods_id =", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeNameIdNotEqualTo(Long value) {
-            addCriterion("attribute_name_id <>", value, "attributeNameId");
+        public Criteria andGoodsIdNotEqualTo(Long value) {
+            addCriterion("goods_id <>", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeNameIdGreaterThan(Long value) {
-            addCriterion("attribute_name_id >", value, "attributeNameId");
+        public Criteria andGoodsIdGreaterThan(Long value) {
+            addCriterion("goods_id >", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeNameIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("attribute_name_id >=", value, "attributeNameId");
+        public Criteria andGoodsIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("goods_id >=", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeNameIdLessThan(Long value) {
-            addCriterion("attribute_name_id <", value, "attributeNameId");
+        public Criteria andGoodsIdLessThan(Long value) {
+            addCriterion("goods_id <", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeNameIdLessThanOrEqualTo(Long value) {
-            addCriterion("attribute_name_id <=", value, "attributeNameId");
+        public Criteria andGoodsIdLessThanOrEqualTo(Long value) {
+            addCriterion("goods_id <=", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeNameIdIn(List<Long> values) {
-            addCriterion("attribute_name_id in", values, "attributeNameId");
+        public Criteria andGoodsIdIn(List<Long> values) {
+            addCriterion("goods_id in", values, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeNameIdNotIn(List<Long> values) {
-            addCriterion("attribute_name_id not in", values, "attributeNameId");
+        public Criteria andGoodsIdNotIn(List<Long> values) {
+            addCriterion("goods_id not in", values, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeNameIdBetween(Long value1, Long value2) {
-            addCriterion("attribute_name_id between", value1, value2, "attributeNameId");
+        public Criteria andGoodsIdBetween(Long value1, Long value2) {
+            addCriterion("goods_id between", value1, value2, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeNameIdNotBetween(Long value1, Long value2) {
-            addCriterion("attribute_name_id not between", value1, value2, "attributeNameId");
+        public Criteria andGoodsIdNotBetween(Long value1, Long value2) {
+            addCriterion("goods_id not between", value1, value2, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeValueIdIsNull() {
-            addCriterion("attribute_value_id is null");
+        public Criteria andAttributeIsNull() {
+            addCriterion("attribute is null");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeValueIdIsNotNull() {
-            addCriterion("attribute_value_id is not null");
+        public Criteria andAttributeIsNotNull() {
+            addCriterion("attribute is not null");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeValueIdEqualTo(Long value) {
-            addCriterion("attribute_value_id =", value, "attributeValueId");
+        public Criteria andAttributeEqualTo(String value) {
+            addCriterion("attribute =", value, "attribute");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeValueIdNotEqualTo(Long value) {
-            addCriterion("attribute_value_id <>", value, "attributeValueId");
+        public Criteria andAttributeNotEqualTo(String value) {
+            addCriterion("attribute <>", value, "attribute");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeValueIdGreaterThan(Long value) {
-            addCriterion("attribute_value_id >", value, "attributeValueId");
+        public Criteria andAttributeGreaterThan(String value) {
+            addCriterion("attribute >", value, "attribute");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeValueIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("attribute_value_id >=", value, "attributeValueId");
+        public Criteria andAttributeGreaterThanOrEqualTo(String value) {
+            addCriterion("attribute >=", value, "attribute");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeValueIdLessThan(Long value) {
-            addCriterion("attribute_value_id <", value, "attributeValueId");
+        public Criteria andAttributeLessThan(String value) {
+            addCriterion("attribute <", value, "attribute");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeValueIdLessThanOrEqualTo(Long value) {
-            addCriterion("attribute_value_id <=", value, "attributeValueId");
+        public Criteria andAttributeLessThanOrEqualTo(String value) {
+            addCriterion("attribute <=", value, "attribute");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeValueIdIn(List<Long> values) {
-            addCriterion("attribute_value_id in", values, "attributeValueId");
+        public Criteria andAttributeLike(String value) {
+            addCriterion("attribute like", value, "attribute");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeValueIdNotIn(List<Long> values) {
-            addCriterion("attribute_value_id not in", values, "attributeValueId");
+        public Criteria andAttributeNotLike(String value) {
+            addCriterion("attribute not like", value, "attribute");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeValueIdBetween(Long value1, Long value2) {
-            addCriterion("attribute_value_id between", value1, value2, "attributeValueId");
+        public Criteria andAttributeIn(List<String> values) {
+            addCriterion("attribute in", values, "attribute");
             return (Criteria) this;
         }
 
-        public Criteria andAttributeValueIdNotBetween(Long value1, Long value2) {
-            addCriterion("attribute_value_id not between", value1, value2, "attributeValueId");
+        public Criteria andAttributeNotIn(List<String> values) {
+            addCriterion("attribute not in", values, "attribute");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttributeBetween(String value1, String value2) {
+            addCriterion("attribute between", value1, value2, "attribute");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttributeNotBetween(String value1, String value2) {
+            addCriterion("attribute not between", value1, value2, "attribute");
             return (Criteria) this;
         }
 
