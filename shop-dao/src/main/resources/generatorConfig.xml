@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
     <properties resource="db.properties" />
-    <classPathEntry location="C:\Users\weifeng\.m2\repository\mysql\mysql-connector-java\8.0.12\mysql-connector-java-8.0.12.jar" />
+    <classPathEntry location="D:\repository\mysql\mysql-connector-java\8.0.12\mysql-connector-java-8.0.12.jar" />
     <context id="mysqlTables" targetRuntime="MyBatis3">
         <!-- 生成的pojo，将implements Serializable-->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
@@ -55,7 +55,7 @@
         <table tableName="account_info" domainObjectName="AccountInfo">
             <property name="useActualColumnNames" value="false"/>
         </table>
-        <table tableName="account_thirdpart" domainObjectName="AccountThirdparty">
+        <table tableName="account_thirdparty" domainObjectName="AccountThirdparty">
             <property name="useActualColumnNames" value="false"/>
         </table>
         <table tableName="account_token" domainObjectName="AccountToken">
