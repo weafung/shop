@@ -11,6 +11,11 @@ import java.util.List;
 public interface ShoppingCartMapperEx {
     List<ShoppingCart> selectByAccountId(@Param("accountId") String accountId);
 
+    ShoppingCart selectByAccountIdAndGoodsIdAndSkuId(@Param("accountId")String accountId,
+                                                     @Param("goodsId") Long goodsId, @Param("skuId") Long skuId);
+
     int insert(@Param("accountId")String accountId, @Param("goodsId") Long goodsId, @Param("skuId") Long skuId,
                @Param("count") Integer count);
+
+    int delete(@Param("accountId")String accountId, @Param("goodsId") Long goodsId, @Param("skuId") Long skuId);
 }

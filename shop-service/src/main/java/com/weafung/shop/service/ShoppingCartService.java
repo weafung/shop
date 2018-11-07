@@ -10,4 +10,6 @@ public interface ShoppingCartService {
     ResponseDTO<ShoppingCartDTO> getShoppingCart(String accountId);
 
     ResponseDTO<Boolean> addGoods(String accountId, Long goodsId, Long skuId, Integer count);
+
+    ResponseDTO<Boolean> deleteGoods(String accountId, Long goodsId, Long skuId);
 }

@@ -12,6 +12,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,6 +59,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<Boolean> addGoods(String accountId, Long goodsId, Long skuId, Integer count) {
         SimpleGoodsDTO simpleGoodsDTO = goodsService.getSimpleGoodsByGoodsId(goodsId);
         if (simpleGoodsDTO == null) {
@@ -69,7 +71,23 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (count > simpleGoodsDTO.getLimitPerOrder()) {
             return ResponseDTO.build(CodeEnum.GOODS_COUNT_MORE_THAN_LIMIT, Boolean.FALSE);
         }
+        ShoppingCart shoppingCart = shoppingCartMapperEx.selectByAccountIdAndGoodsIdAndSkuId(accountId, goodsId, skuId);
+        if (shoppingCart != null) {
+            count = simpleGoodsDTO.getLimitPerOrder() - shoppingCart.getCount() > count
+                    ? shoppingCart.getCount() + count
+                    : simpleGoodsDTO.getLimitPerOrder();
+            shoppingCartMapperEx.delete(accountId, goodsId, skuId);
+        }
         boolean result = shoppingCartMapperEx.insert(accountId, goodsId, skuId, count) > 0;
+        if (result) {
+            return ResponseDTO.buildSuccess(Boolean.TRUE);
+        }
+        return ResponseDTO.build(CodeEnum.ERROR, Boolean.FALSE);
+    }
+
+    @Override
+    public ResponseDTO<Boolean> deleteGoods(String accountId, Long goodsId, Long skuId) {
+        boolean result = shoppingCartMapperEx.delete(accountId, goodsId, skuId) > 0;
         if (result) {
             return ResponseDTO.buildSuccess(Boolean.TRUE);
         }

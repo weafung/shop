@@ -52,4 +52,19 @@ public class ShoppingCartController {
         }
         return ResponseVO.buildSuccess(Boolean.TRUE);
     }
+
+    @RequestMapping(value = {"/", ""}, method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseVO<Boolean> delete(@RequestParam("goodsId")Long goodsId, @RequestParam("skuId")Long skuId) {
+        String accountId = RequestHolder.getCurrentUser().getAccountId();
+        ResponseDTO<Boolean> responseDTO = shoppingCartService.deleteGoods(accountId, goodsId, skuId);
+        if (responseDTO == null) {
+            return ResponseVO.build(CodeEnum.ERROR, Boolean.FALSE);
+        }
+        if (!responseDTO.getData()) {
+            return ResponseVO.build(responseDTO.getCode(), Boolean.FALSE, responseDTO.getMsg());
+        }
+        return ResponseVO.buildSuccess(Boolean.TRUE);
+    }
+
 }

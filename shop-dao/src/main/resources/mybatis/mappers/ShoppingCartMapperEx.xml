@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.weafung.shop.dao.ShoppingCartMapperEx">
-  <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.ShoppingCart">
-    <result column="id" jdbcType="BIGINT" property="id" />
-    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
-    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
-    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
-    <result column="account_id" jdbcType="VARCHAR" property="accountId" />
-    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
-    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
-    <result column="count" jdbcType="INTEGER" property="count" />
-  </resultMap>
-  <select id="selectByAccountId" resultMap="BaseResultMap">
-    select * from shopping_cart
-    where is_deleted = 0 and account_id = #{accountId}
-  </select>
+    <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.ShoppingCart">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+        <result column="account_id" jdbcType="VARCHAR" property="accountId"/>
+        <result column="goods_id" jdbcType="BIGINT" property="goodsId"/>
+        <result column="sku_id" jdbcType="BIGINT" property="skuId"/>
+        <result column="count" jdbcType="INTEGER" property="count"/>
+    </resultMap>
+    <select id="selectByAccountId" resultMap="BaseResultMap">
+      select * from shopping_cart
+      where is_deleted = 0 and account_id = #{accountId}
+    </select>
 
+    <select id="selectByAccountIdAndGoodsIdAndSkuId" resultMap="BaseResultMap">
+      select * from shopping_cart
+      where is_deleted = 0 and account_id = #{accountId} and goods_id = #{goodsId} and sku_id = #{skuId}
+      limit 1
+    </select>
 
-  <insert id="insert">
-    insert into shopping_cart (account_id, goods_id, sku_id, count)
-    VALUES (#{accountId}, #{goodsId}, #{skuId}, #{count})
+    <insert id="insert">
+      insert into shopping_cart (account_id, goods_id, sku_id, count)
+      values (#{accountId}, #{goodsId}, #{skuId}, #{count})
   </insert>
+
+    <delete id="delete">
+      delete from shopping_cart where account_id = #{accountId} and goods_id = #{goodsId} and sku_id = #{skuId} limit 1
+    </delete>
 </mapper>
