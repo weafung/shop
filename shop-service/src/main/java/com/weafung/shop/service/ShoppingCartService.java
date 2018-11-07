@@ -8,4 +8,6 @@ import com.weafung.shop.model.dto.ShoppingCartDTO;
  */
 public interface ShoppingCartService {
     ResponseDTO<ShoppingCartDTO> getShoppingCart(String accountId);
+
+    ResponseDTO<Boolean> addGoods(String accountId, Long goodsId, Long skuId, Integer count);
 }

@@ -15,4 +15,10 @@
     select * from shopping_cart
     where is_deleted = 0 and account_id = #{accountId}
   </select>
+
+
+  <insert id="insert">
+    insert into shopping_cart (account_id, goods_id, sku_id, count)
+    VALUES (#{accountId}, #{goodsId}, #{skuId}, #{count})
+  </insert>
 </mapper>

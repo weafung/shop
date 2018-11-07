@@ -14,4 +14,6 @@ public class ShoppingCartDetailDTO implements Serializable {
     private SimpleGoodsDTO goods;
 
     private SkuDTO sku;
+
+    private Integer count;
 }

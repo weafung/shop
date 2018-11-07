@@ -14,4 +14,6 @@ public interface SkuService {
     ResponseDTO<List<SkuDTO>> listSku(Long goodsId);
 
     SkuDTO getSkuDTOBySkuId(Long skuId);
+
+    boolean checkSkuId(Long skuId);
 }

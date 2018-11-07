@@ -22,4 +22,9 @@
     select * from sku
     where is_deleted = 0 and sku_id = #{skuId}
   </select>
+
+  <select id="countBySkuId" resultType="int">
+    select count(id) from sku
+    where is_deleted = 0 and sku_id = #{skuId}
+  </select>
 </mapper>

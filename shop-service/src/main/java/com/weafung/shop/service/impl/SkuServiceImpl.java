@@ -86,4 +86,9 @@ public class SkuServiceImpl implements SkuService {
         skuDTO.setAttributes(skuAttributeDTOS);
         return skuDTO;
     }
+
+    @Override
+    public boolean checkSkuId(Long skuId) {
+        return skuMapperEx.countBySkuId(skuId) > 0;
+    }
 }
