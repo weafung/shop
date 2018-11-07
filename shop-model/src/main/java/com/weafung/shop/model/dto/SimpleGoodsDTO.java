@@ -3,7 +3,6 @@ package com.weafung.shop.model.dto;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author weifengshih
@@ -19,13 +18,17 @@ public class SimpleGoodsDTO implements Serializable {
 
     private Long secondCategoryId;
 
+    private Long thirdCategoryId;
+
     private String title;
 
     private String introduce;
 
-    private List<GoodsImageDTO> goodsImageList;
+    private String goodsImage;
 
     private Integer limitPerOrder;
 
     private Boolean freeDelivery;
+
+    private Long salePrice;
 }

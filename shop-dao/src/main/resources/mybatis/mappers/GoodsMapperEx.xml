@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weafung.shop.dao.GoodsMapperEx">
+  <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.Goods">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="first_category_id" jdbcType="BIGINT" property="firstCategoryId" />
+    <result column="second_category_id" jdbcType="BIGINT" property="secondCategoryId" />
+    <result column="third_category_id" jdbcType="BIGINT" property="thirdCategoryId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+    <result column="limit_per_order" jdbcType="INTEGER" property="limitPerOrder" />
+    <result column="free_delivery" jdbcType="BIT" property="freeDelivery" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, gmt_create, gmt_modified, is_deleted, goods_id, first_category_id, second_category_id, 
+    third_category_id, title, introduce, limit_per_order, free_delivery
+  </sql>
+
+  <select id="listGoodsByCategoryId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from goods
+    <where>
+      is_deleted = 0
+      <if test="firstCategoryId != null">
+        and first_category_id = #{firstCategoryId}
+      </if>
+      <if test="secondCategoryId != null">
+        and second_category_id = #{secondCategoryId}
+      </if>
+      <if test="thirdCategoryId != null">
+        and third_category_id = #{thirdCategoryId}
+      </if>
+    </where>
+
+  </select>
+</mapper>

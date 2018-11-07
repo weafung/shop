@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author weifeng
  */
 @Controller
-@RequestMapping("/api/web/goods")
+@RequestMapping("/api/mall/goods")
 @Slf4j
 public class GoodsController {
     @Autowired

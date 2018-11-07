@@ -16,4 +16,6 @@ public interface SkuService {
     SkuDTO getSkuDTOBySkuId(Long skuId);
 
     boolean checkSkuId(Long skuId);
+
+    Long getMinSalePrice(Long goodsId);
 }

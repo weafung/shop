@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weafung.shop.dao.GoodsImageMapperEx">
+    <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.GoodsImage">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+        <result column="goods_id" jdbcType="BIGINT" property="goodsId"/>
+        <result column="image_url" jdbcType="VARCHAR" property="imageUrl"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+      id, gmt_create, gmt_modified, is_deleted, goods_id, image_url
+    </sql>
+
+    <select id="getByGoodsId" resultType="java.lang.String">
+      select image_url
+      from goods_image
+      where is_deleted = 0 and goods_id = #{goodsId}
+      order by id desc
+      limit 1
+    </select>
+</mapper>

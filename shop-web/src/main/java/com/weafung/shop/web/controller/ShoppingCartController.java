@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller
-@RequestMapping("/api/web/shoppingCart")
+@RequestMapping("/api/mall/shoppingCart")
 @Slf4j
 public class ShoppingCartController {
 

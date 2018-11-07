@@ -1,8 +1,11 @@
 package com.weafung.shop.service.impl;
 
+import com.google.common.collect.Lists;
 import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.dao.GoodsImageMapper;
+import com.weafung.shop.dao.GoodsImageMapperEx;
 import com.weafung.shop.dao.GoodsMapper;
+import com.weafung.shop.dao.GoodsMapperEx;
 import com.weafung.shop.model.dto.GoodsDTO;
 import com.weafung.shop.model.dto.GoodsImageDTO;
 import com.weafung.shop.model.dto.ResponseDTO;
@@ -22,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -33,7 +37,12 @@ public class GoodsServiceImpl implements GoodsService {
     @Autowired
     private GoodsMapper goodsMapper;
     @Autowired
+    private GoodsMapperEx goodsMapperEx;
+
+    @Autowired
     private GoodsImageMapper goodsImageMapper;
+    @Autowired
+    private GoodsImageMapperEx goodsImageMapperEx;
 
     @Autowired
     private SkuService skuService;
@@ -43,12 +52,20 @@ public class GoodsServiceImpl implements GoodsService {
         if (goodsId == null) {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY);
         }
+        GoodsDTO goodsDTO = getGoods(goodsId);
+        if (goodsDTO == null) {
+            return ResponseDTO.build(CodeEnum.GOODS_NOT_FOUND);
+        }
+        return ResponseDTO.buildSuccess(goodsDTO);
+    }
+
+    private GoodsDTO getGoods(Long goodsId) {
         // 获取商品信息
         GoodsExample goodsExample = new GoodsExample();
         goodsExample.createCriteria().andGoodsIdEqualTo(goodsId).andIsDeletedEqualTo(false);
         List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
         if (CollectionUtils.isEmpty(goodsList)) {
-            return ResponseDTO.build(CodeEnum.GOODS_NOT_FOUND);
+            return null;
         }
         GoodsDTO goodsDTO = new GoodsDTO();
         Goods goods = goodsList.get(0);
@@ -64,7 +81,7 @@ public class GoodsServiceImpl implements GoodsService {
         }).collect(Collectors.toList()));
         // 获取SKU信息
         goodsDTO.setSkuList(skuService.listSku(goodsId).getData());
-        return ResponseDTO.buildSuccess(goodsDTO);
+        return goodsDTO;
     }
 
     @Override
@@ -123,6 +140,20 @@ public class GoodsServiceImpl implements GoodsService {
         Goods goods = goodsList.get(0);
         SimpleGoodsDTO simpleGoodsDTO = new SimpleGoodsDTO();
         BeanUtils.copyProperties(goods, simpleGoodsDTO);
+        simpleGoodsDTO.setSalePrice(skuService.getMinSalePrice(goodsId));
+        simpleGoodsDTO.setGoodsImage(goodsImageMapperEx.getByGoodsId(goodsId));
         return simpleGoodsDTO;
+    }
+
+    @Override
+    public ResponseDTO<List<SimpleGoodsDTO>> listGoodsByCategoryId(Long firstCategoryId, Long secondCategoryId, Long thirdCategoryId) {
+        List<Goods> goodsList = goodsMapperEx.listGoodsByCategoryId(firstCategoryId,secondCategoryId,thirdCategoryId);
+        if (CollectionUtils.isEmpty(goodsList)) {
+            return ResponseDTO.buildSuccess(Lists.newArrayList());
+        }
+        List<SimpleGoodsDTO> simpleGoodsDTOList = goodsList.stream()
+                .map(goods -> getSimpleGoodsByGoodsId(goods.getGoodsId()))
+                .filter(Objects::nonNull).collect(Collectors.toList());
+        return ResponseDTO.buildSuccess(simpleGoodsDTOList);
     }
 }

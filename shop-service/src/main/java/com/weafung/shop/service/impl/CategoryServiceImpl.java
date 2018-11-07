@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.dao.CategoryMapper;
 import com.weafung.shop.model.dto.CategoryDTO;
+import com.weafung.shop.model.dto.GoodsDTO;
 import com.weafung.shop.model.dto.ResponseDTO;
 import com.weafung.shop.model.po.Category;
 import com.weafung.shop.model.po.CategoryExample;
@@ -65,5 +66,10 @@ public class CategoryServiceImpl implements CategoryService {
             childrenCategoryDTOList.add(categoryDTO);
         }
         return childrenCategoryDTOList;
+    }
+
+    @Override
+    public ResponseDTO<GoodsDTO> listGoods(Long categoryId) {
+        return null;
     }
 }

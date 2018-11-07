@@ -91,4 +91,9 @@ public class SkuServiceImpl implements SkuService {
     public boolean checkSkuId(Long skuId) {
         return skuMapperEx.countBySkuId(skuId) > 0;
     }
+
+    @Override
+    public Long getMinSalePrice(Long goodsId) {
+        return skuMapperEx.selectMinSalePrice(goodsId);
+    }
 }

@@ -10,4 +10,6 @@ public interface SkuMapperEx {
     Sku selectBySkuId(Long skuId);
 
     int countBySkuId(Long skuId);
+
+    Long selectMinSalePrice(Long goodsId);
 }
