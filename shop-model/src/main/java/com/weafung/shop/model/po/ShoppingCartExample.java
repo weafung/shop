@@ -355,52 +355,62 @@ public class ShoppingCartExample {
             return (Criteria) this;
         }
 
-        public Criteria andAccountIdEqualTo(Boolean value) {
+        public Criteria andAccountIdEqualTo(String value) {
             addCriterion("account_id =", value, "accountId");
             return (Criteria) this;
         }
 
-        public Criteria andAccountIdNotEqualTo(Boolean value) {
+        public Criteria andAccountIdNotEqualTo(String value) {
             addCriterion("account_id <>", value, "accountId");
             return (Criteria) this;
         }
 
-        public Criteria andAccountIdGreaterThan(Boolean value) {
+        public Criteria andAccountIdGreaterThan(String value) {
             addCriterion("account_id >", value, "accountId");
             return (Criteria) this;
         }
 
-        public Criteria andAccountIdGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andAccountIdGreaterThanOrEqualTo(String value) {
             addCriterion("account_id >=", value, "accountId");
             return (Criteria) this;
         }
 
-        public Criteria andAccountIdLessThan(Boolean value) {
+        public Criteria andAccountIdLessThan(String value) {
             addCriterion("account_id <", value, "accountId");
             return (Criteria) this;
         }
 
-        public Criteria andAccountIdLessThanOrEqualTo(Boolean value) {
+        public Criteria andAccountIdLessThanOrEqualTo(String value) {
             addCriterion("account_id <=", value, "accountId");
             return (Criteria) this;
         }
 
-        public Criteria andAccountIdIn(List<Boolean> values) {
+        public Criteria andAccountIdLike(String value) {
+            addCriterion("account_id like", value, "accountId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountIdNotLike(String value) {
+            addCriterion("account_id not like", value, "accountId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountIdIn(List<String> values) {
             addCriterion("account_id in", values, "accountId");
             return (Criteria) this;
         }
 
-        public Criteria andAccountIdNotIn(List<Boolean> values) {
+        public Criteria andAccountIdNotIn(List<String> values) {
             addCriterion("account_id not in", values, "accountId");
             return (Criteria) this;
         }
 
-        public Criteria andAccountIdBetween(Boolean value1, Boolean value2) {
+        public Criteria andAccountIdBetween(String value1, String value2) {
             addCriterion("account_id between", value1, value2, "accountId");
             return (Criteria) this;
         }
 
-        public Criteria andAccountIdNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andAccountIdNotBetween(String value1, String value2) {
             addCriterion("account_id not between", value1, value2, "accountId");
             return (Criteria) this;
         }
@@ -415,52 +425,52 @@ public class ShoppingCartExample {
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdEqualTo(Boolean value) {
+        public Criteria andGoodsIdEqualTo(Long value) {
             addCriterion("goods_id =", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdNotEqualTo(Boolean value) {
+        public Criteria andGoodsIdNotEqualTo(Long value) {
             addCriterion("goods_id <>", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdGreaterThan(Boolean value) {
+        public Criteria andGoodsIdGreaterThan(Long value) {
             addCriterion("goods_id >", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andGoodsIdGreaterThanOrEqualTo(Long value) {
             addCriterion("goods_id >=", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdLessThan(Boolean value) {
+        public Criteria andGoodsIdLessThan(Long value) {
             addCriterion("goods_id <", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdLessThanOrEqualTo(Boolean value) {
+        public Criteria andGoodsIdLessThanOrEqualTo(Long value) {
             addCriterion("goods_id <=", value, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdIn(List<Boolean> values) {
+        public Criteria andGoodsIdIn(List<Long> values) {
             addCriterion("goods_id in", values, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdNotIn(List<Boolean> values) {
+        public Criteria andGoodsIdNotIn(List<Long> values) {
             addCriterion("goods_id not in", values, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdBetween(Boolean value1, Boolean value2) {
+        public Criteria andGoodsIdBetween(Long value1, Long value2) {
             addCriterion("goods_id between", value1, value2, "goodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andGoodsIdNotBetween(Long value1, Long value2) {
             addCriterion("goods_id not between", value1, value2, "goodsId");
             return (Criteria) this;
         }
@@ -475,52 +485,52 @@ public class ShoppingCartExample {
             return (Criteria) this;
         }
 
-        public Criteria andSkuIdEqualTo(Boolean value) {
+        public Criteria andSkuIdEqualTo(Long value) {
             addCriterion("sku_id =", value, "skuId");
             return (Criteria) this;
         }
 
-        public Criteria andSkuIdNotEqualTo(Boolean value) {
+        public Criteria andSkuIdNotEqualTo(Long value) {
             addCriterion("sku_id <>", value, "skuId");
             return (Criteria) this;
         }
 
-        public Criteria andSkuIdGreaterThan(Boolean value) {
+        public Criteria andSkuIdGreaterThan(Long value) {
             addCriterion("sku_id >", value, "skuId");
             return (Criteria) this;
         }
 
-        public Criteria andSkuIdGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andSkuIdGreaterThanOrEqualTo(Long value) {
             addCriterion("sku_id >=", value, "skuId");
             return (Criteria) this;
         }
 
-        public Criteria andSkuIdLessThan(Boolean value) {
+        public Criteria andSkuIdLessThan(Long value) {
             addCriterion("sku_id <", value, "skuId");
             return (Criteria) this;
         }
 
-        public Criteria andSkuIdLessThanOrEqualTo(Boolean value) {
+        public Criteria andSkuIdLessThanOrEqualTo(Long value) {
             addCriterion("sku_id <=", value, "skuId");
             return (Criteria) this;
         }
 
-        public Criteria andSkuIdIn(List<Boolean> values) {
+        public Criteria andSkuIdIn(List<Long> values) {
             addCriterion("sku_id in", values, "skuId");
             return (Criteria) this;
         }
 
-        public Criteria andSkuIdNotIn(List<Boolean> values) {
+        public Criteria andSkuIdNotIn(List<Long> values) {
             addCriterion("sku_id not in", values, "skuId");
             return (Criteria) this;
         }
 
-        public Criteria andSkuIdBetween(Boolean value1, Boolean value2) {
+        public Criteria andSkuIdBetween(Long value1, Long value2) {
             addCriterion("sku_id between", value1, value2, "skuId");
             return (Criteria) this;
         }
 
-        public Criteria andSkuIdNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andSkuIdNotBetween(Long value1, Long value2) {
             addCriterion("sku_id not between", value1, value2, "skuId");
             return (Criteria) this;
         }
@@ -535,52 +545,52 @@ public class ShoppingCartExample {
             return (Criteria) this;
         }
 
-        public Criteria andCountEqualTo(Boolean value) {
+        public Criteria andCountEqualTo(Integer value) {
             addCriterion("count =", value, "count");
             return (Criteria) this;
         }
 
-        public Criteria andCountNotEqualTo(Boolean value) {
+        public Criteria andCountNotEqualTo(Integer value) {
             addCriterion("count <>", value, "count");
             return (Criteria) this;
         }
 
-        public Criteria andCountGreaterThan(Boolean value) {
+        public Criteria andCountGreaterThan(Integer value) {
             addCriterion("count >", value, "count");
             return (Criteria) this;
         }
 
-        public Criteria andCountGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andCountGreaterThanOrEqualTo(Integer value) {
             addCriterion("count >=", value, "count");
             return (Criteria) this;
         }
 
-        public Criteria andCountLessThan(Boolean value) {
+        public Criteria andCountLessThan(Integer value) {
             addCriterion("count <", value, "count");
             return (Criteria) this;
         }
 
-        public Criteria andCountLessThanOrEqualTo(Boolean value) {
+        public Criteria andCountLessThanOrEqualTo(Integer value) {
             addCriterion("count <=", value, "count");
             return (Criteria) this;
         }
 
-        public Criteria andCountIn(List<Boolean> values) {
+        public Criteria andCountIn(List<Integer> values) {
             addCriterion("count in", values, "count");
             return (Criteria) this;
         }
 
-        public Criteria andCountNotIn(List<Boolean> values) {
+        public Criteria andCountNotIn(List<Integer> values) {
             addCriterion("count not in", values, "count");
             return (Criteria) this;
         }
 
-        public Criteria andCountBetween(Boolean value1, Boolean value2) {
+        public Criteria andCountBetween(Integer value1, Integer value2) {
             addCriterion("count between", value1, value2, "count");
             return (Criteria) this;
         }
 
-        public Criteria andCountNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andCountNotBetween(Integer value1, Integer value2) {
             addCriterion("count not between", value1, value2, "count");
             return (Criteria) this;
         }

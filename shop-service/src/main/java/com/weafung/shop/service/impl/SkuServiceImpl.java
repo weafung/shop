@@ -5,9 +5,9 @@ import com.alibaba.fastjson.TypeReference;
 import com.google.common.collect.Lists;
 import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.dao.SkuMapper;
+import com.weafung.shop.dao.SkuMapperEx;
 import com.weafung.shop.model.dto.*;
 import com.weafung.shop.model.po.Sku;
-import com.weafung.shop.model.po.SkuAttributeName;
 import com.weafung.shop.model.po.SkuExample;
 import com.weafung.shop.service.SkuAttributeNameService;
 import com.weafung.shop.service.SkuAttributeValueService;
@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author weifeng
@@ -28,6 +29,9 @@ import java.util.Set;
 public class SkuServiceImpl implements SkuService {
     @Autowired
     private SkuMapper skuMapper;
+
+    @Autowired
+    private SkuMapperEx skuMapperEx;
 
     @Autowired
     private SkuAttributeNameService skuAttributeNameService;
@@ -46,26 +50,40 @@ public class SkuServiceImpl implements SkuService {
         if (CollectionUtils.isEmpty(skuList)) {
             return ResponseDTO.buildSuccess(Lists.newArrayList());
         }
-        List<SkuDTO> skuDTOList = Lists.newArrayList();
-        skuList.stream().filter(sku -> StringUtils.isNotBlank(sku.getAttribute())).forEach(sku -> {
-            SkuDTO skuDTO = new SkuDTO();
-            BeanUtils.copyProperties(sku, skuDTO);
-            Set<SkuAttributeDTO> skuAttributeDTOS = JSON.parseObject(sku.getAttribute(),
-                    new TypeReference<Set<SkuAttributeDTO>>() {
-            });
-            skuAttributeDTOS.forEach(skuAttributeDTO -> {
-                ResponseDTO<SkuAttributeNameDTO> nameDTOResponseDTO = skuAttributeNameService.getByAttributeNameId(skuAttributeDTO.getAttributeNameId());
-                if (nameDTOResponseDTO != null && nameDTOResponseDTO.getData() != null) {
-                    skuAttributeDTO.setAttributeName(nameDTOResponseDTO.getData().getAttributeName());
-                }
-                ResponseDTO<SkuAttributeValueDTO> valueDTOResponseDTO = skuAttributeValueService.getByAttributeValueId(skuAttributeDTO.getAttributeValueId());
-                if (valueDTOResponseDTO != null && valueDTOResponseDTO.getData() != null) {
-                    skuAttributeDTO.setAttributeValue(valueDTOResponseDTO.getData().getAttributeValue());
-                }
-            });
-            skuDTO.setAttributes(skuAttributeDTOS);
-            skuDTOList.add(skuDTO);
-        });
+        List<SkuDTO> skuDTOList = skuList.stream().filter(sku -> StringUtils.isNotBlank(sku.getAttribute()))
+                .map(this::sku2SkuDTO).collect(Collectors.toList());
         return ResponseDTO.buildSuccess(skuDTOList);
+    }
+
+    @Override
+    public SkuDTO getSkuDTOBySkuId(Long skuId) {
+        if (skuId ==  null) {
+            return null;
+        }
+        Sku sku = skuMapperEx.selectBySkuId(skuId);
+        if (sku == null) {
+            return null;
+        }
+        return sku2SkuDTO(sku);
+    }
+
+    private SkuDTO sku2SkuDTO(Sku sku) {
+        SkuDTO skuDTO = new SkuDTO();
+        BeanUtils.copyProperties(sku, skuDTO);
+        Set<SkuAttributeDTO> skuAttributeDTOS = JSON.parseObject(sku.getAttribute(),
+                new TypeReference<Set<SkuAttributeDTO>>() {
+                });
+        skuAttributeDTOS.forEach(skuAttributeDTO -> {
+            ResponseDTO<SkuAttributeNameDTO> nameDTOResponseDTO = skuAttributeNameService.getByAttributeNameId(skuAttributeDTO.getAttributeNameId());
+            if (nameDTOResponseDTO != null && nameDTOResponseDTO.getData() != null) {
+                skuAttributeDTO.setAttributeName(nameDTOResponseDTO.getData().getAttributeName());
+            }
+            ResponseDTO<SkuAttributeValueDTO> valueDTOResponseDTO = skuAttributeValueService.getByAttributeValueId(skuAttributeDTO.getAttributeValueId());
+            if (valueDTOResponseDTO != null && valueDTOResponseDTO.getData() != null) {
+                skuAttributeDTO.setAttributeValue(valueDTOResponseDTO.getData().getAttributeValue());
+            }
+        });
+        skuDTO.setAttributes(skuAttributeDTOS);
+        return skuDTO;
     }
 }

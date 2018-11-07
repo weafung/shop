@@ -25,7 +25,7 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/api/config")
 @Slf4j
-public class WebsiteConfigController {
+public class ConfigController {
     @Autowired
     private WebsiteConfigService websiteConfigService;
 
@@ -36,23 +36,6 @@ public class WebsiteConfigController {
             return ResponseVO.build(CodeEnum.PARAM_EMPTY);
         }
         ResponseDTO<String> responseDTO = websiteConfigService.getConfigValue(key);
-        if (responseDTO != null) {
-            if (Objects.equals(responseDTO.getCode(), CodeEnum.SUCCESS.getCode())) {
-                return ResponseVO.buildSuccess(responseDTO.getData());
-            } else {
-                return ResponseVO.build(responseDTO.getCode(), responseDTO.getData(), responseDTO.getMsg());
-            }
-        }
-        return ResponseVO.build(CodeEnum.ERROR);
-    }
-
-    @RequestMapping("/update")
-    @ResponseBody
-    public ResponseVO<Boolean> update(@RequestParam("key") String key, @RequestParam("value") String value) {
-        if (StringUtils.isBlank(key) || StringUtils.isBlank(value)) {
-            return ResponseVO.build(CodeEnum.PARAM_EMPTY);
-        }
-        ResponseDTO<Boolean> responseDTO = websiteConfigService.insertOrUpdateConfig(key, value);
         if (responseDTO != null) {
             if (Objects.equals(responseDTO.getCode(), CodeEnum.SUCCESS.getCode())) {
                 return ResponseVO.buildSuccess(responseDTO.getData());

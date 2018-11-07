@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author weifeng
  */
 @Controller
-@RequestMapping("/api/goods")
+@RequestMapping("/api/web/goods")
 @Slf4j
 public class GoodsController {
     @Autowired
@@ -44,17 +44,4 @@ public class GoodsController {
         return ResponseVO.build(responseDTO.getCode(), goodsVO, responseDTO.getMsg());
     }
 
-    @RequestMapping("/update")
-    @ResponseBody
-    public ResponseVO<Boolean> update(@RequestBody GoodsDTO goodsDTO) {
-        if (goodsDTO == null) {
-            return ResponseVO.build(CodeEnum.PARAM_EMPTY);
-        }
-        ResponseDTO<Boolean> responseDTO = goodsService.updateGoods(goodsDTO);
-        if (responseDTO != null && responseDTO.getData() != null) {
-            return ResponseVO.build(responseDTO.getCode(), responseDTO.getData(), responseDTO.getMsg());
-        }
-        log.warn("execute goodsService#updateGoods failed. goodsDTO:{}, responseDTO:{}", goodsDTO, responseDTO);
-        return ResponseVO.build(CodeEnum.ERROR);
-    }
 }

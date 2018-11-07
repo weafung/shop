@@ -12,13 +12,13 @@ public class ShoppingCart implements Serializable {
 
     private Boolean isDeleted;
 
-    private Boolean accountId;
+    private String accountId;
 
-    private Boolean goodsId;
+    private Long goodsId;
 
-    private Boolean skuId;
+    private Long skuId;
 
-    private Boolean count;
+    private Integer count;
 
     private static final long serialVersionUID = 1L;
 
@@ -54,35 +54,35 @@ public class ShoppingCart implements Serializable {
         this.isDeleted = isDeleted;
     }
 
-    public Boolean getAccountId() {
+    public String getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Boolean accountId) {
-        this.accountId = accountId;
+    public void setAccountId(String accountId) {
+        this.accountId = accountId == null ? null : accountId.trim();
     }
 
-    public Boolean getGoodsId() {
+    public Long getGoodsId() {
         return goodsId;
     }
 
-    public void setGoodsId(Boolean goodsId) {
+    public void setGoodsId(Long goodsId) {
         this.goodsId = goodsId;
     }
 
-    public Boolean getSkuId() {
+    public Long getSkuId() {
         return skuId;
     }
 
-    public void setSkuId(Boolean skuId) {
+    public void setSkuId(Long skuId) {
         this.skuId = skuId;
     }
 
-    public Boolean getCount() {
+    public Integer getCount() {
         return count;
     }
 
-    public void setCount(Boolean count) {
+    public void setCount(Integer count) {
         this.count = count;
     }
 }

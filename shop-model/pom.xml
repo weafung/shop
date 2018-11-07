@@ -15,7 +15,7 @@
         <dependency>
             <groupId>com.weafung</groupId>
             <artifactId>shop-common</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

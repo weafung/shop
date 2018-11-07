@@ -12,4 +12,6 @@ public interface SkuService {
      * @return
      */
     ResponseDTO<List<SkuDTO>> listSku(Long goodsId);
+
+    SkuDTO getSkuDTOBySkuId(Long skuId);
 }

@@ -6,10 +6,10 @@
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
-    <result column="account_id" jdbcType="BIT" property="accountId" />
-    <result column="goods_id" jdbcType="BIT" property="goodsId" />
-    <result column="sku_id" jdbcType="BIT" property="skuId" />
-    <result column="count" jdbcType="BIT" property="count" />
+    <result column="account_id" jdbcType="VARCHAR" property="accountId" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
+    <result column="count" jdbcType="INTEGER" property="count" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -97,8 +97,8 @@
       is_deleted, account_id, goods_id, 
       sku_id, count)
     values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
-      #{isDeleted,jdbcType=BIT}, #{accountId,jdbcType=BIT}, #{goodsId,jdbcType=BIT}, 
-      #{skuId,jdbcType=BIT}, #{count,jdbcType=BIT})
+      #{isDeleted,jdbcType=BIT}, #{accountId,jdbcType=VARCHAR}, #{goodsId,jdbcType=BIGINT}, 
+      #{skuId,jdbcType=BIGINT}, #{count,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.weafung.shop.model.po.ShoppingCart">
     insert into shopping_cart
@@ -142,16 +142,16 @@
         #{isDeleted,jdbcType=BIT},
       </if>
       <if test="accountId != null">
-        #{accountId,jdbcType=BIT},
+        #{accountId,jdbcType=VARCHAR},
       </if>
       <if test="goodsId != null">
-        #{goodsId,jdbcType=BIT},
+        #{goodsId,jdbcType=BIGINT},
       </if>
       <if test="skuId != null">
-        #{skuId,jdbcType=BIT},
+        #{skuId,jdbcType=BIGINT},
       </if>
       <if test="count != null">
-        #{count,jdbcType=BIT},
+        #{count,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -177,16 +177,16 @@
         is_deleted = #{record.isDeleted,jdbcType=BIT},
       </if>
       <if test="record.accountId != null">
-        account_id = #{record.accountId,jdbcType=BIT},
+        account_id = #{record.accountId,jdbcType=VARCHAR},
       </if>
       <if test="record.goodsId != null">
-        goods_id = #{record.goodsId,jdbcType=BIT},
+        goods_id = #{record.goodsId,jdbcType=BIGINT},
       </if>
       <if test="record.skuId != null">
-        sku_id = #{record.skuId,jdbcType=BIT},
+        sku_id = #{record.skuId,jdbcType=BIGINT},
       </if>
       <if test="record.count != null">
-        count = #{record.count,jdbcType=BIT},
+        count = #{record.count,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -199,10 +199,10 @@
       gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       is_deleted = #{record.isDeleted,jdbcType=BIT},
-      account_id = #{record.accountId,jdbcType=BIT},
-      goods_id = #{record.goodsId,jdbcType=BIT},
-      sku_id = #{record.skuId,jdbcType=BIT},
-      count = #{record.count,jdbcType=BIT}
+      account_id = #{record.accountId,jdbcType=VARCHAR},
+      goods_id = #{record.goodsId,jdbcType=BIGINT},
+      sku_id = #{record.skuId,jdbcType=BIGINT},
+      count = #{record.count,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

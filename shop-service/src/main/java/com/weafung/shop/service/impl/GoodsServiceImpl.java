@@ -6,6 +6,7 @@ import com.weafung.shop.dao.GoodsMapper;
 import com.weafung.shop.model.dto.GoodsDTO;
 import com.weafung.shop.model.dto.GoodsImageDTO;
 import com.weafung.shop.model.dto.ResponseDTO;
+import com.weafung.shop.model.dto.SimpleGoodsDTO;
 import com.weafung.shop.model.po.Goods;
 import com.weafung.shop.model.po.GoodsExample;
 import com.weafung.shop.model.po.GoodsImage;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +48,7 @@ public class GoodsServiceImpl implements GoodsService {
         goodsExample.createCriteria().andGoodsIdEqualTo(goodsId).andIsDeletedEqualTo(false);
         List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
         if (CollectionUtils.isEmpty(goodsList)) {
-            return ResponseDTO.build(CodeEnum.GOODS_NOT_FOUND, null);
+            return ResponseDTO.build(CodeEnum.GOODS_NOT_FOUND);
         }
         GoodsDTO goodsDTO = new GoodsDTO();
         Goods goods = goodsList.get(0);
@@ -81,7 +83,7 @@ public class GoodsServiceImpl implements GoodsService {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY);
         }
         GoodsExample goodsExample = new GoodsExample();
-        goodsExample.createCriteria().andIdEqualTo(goodsDTO.getGoodsId()).andIsDeletedEqualTo(false);
+        goodsExample.createCriteria().andGoodsIdEqualTo(goodsDTO.getGoodsId()).andIsDeletedEqualTo(false);
         List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
         if (CollectionUtils.isEmpty(goodsList)) {
             return ResponseDTO.build(CodeEnum.GOODS_NOT_FOUND, null);
@@ -105,5 +107,22 @@ public class GoodsServiceImpl implements GoodsService {
                     });
         }
         return ResponseDTO.buildSuccess(Boolean.TRUE);
+    }
+
+    @Override
+    public SimpleGoodsDTO getSimpleGoodsByGoodsId(Long goodsId) {
+        if (goodsId == null) {
+            return null;
+        }
+        GoodsExample goodsExample = new GoodsExample();
+        goodsExample.createCriteria().andGoodsIdEqualTo(goodsId).andIsDeletedEqualTo(false);
+        List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
+        if (CollectionUtils.isEmpty(goodsList)) {
+            return null;
+        }
+        Goods goods = goodsList.get(0);
+        SimpleGoodsDTO simpleGoodsDTO = new SimpleGoodsDTO();
+        BeanUtils.copyProperties(goods, simpleGoodsDTO);
+        return simpleGoodsDTO;
     }
 }

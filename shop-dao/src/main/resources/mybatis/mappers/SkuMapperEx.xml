@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weafung.shop.dao.SkuMapperEx">
+  <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.Sku">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="attribute" jdbcType="VARCHAR" property="attribute" />
+    <result column="store_count" jdbcType="BIGINT" property="storeCount" />
+    <result column="sale_count" jdbcType="BIGINT" property="saleCount" />
+    <result column="sale_price" jdbcType="BIGINT" property="salePrice" />
+    <result column="market_price" jdbcType="BIGINT" property="marketPrice" />
+    <result column="bonus_ratio" jdbcType="TINYINT" property="bonusRatio" />
+    <result column="hidden" jdbcType="BIT" property="hidden" />
+    <result column="onsale" jdbcType="BIT" property="onsale" />
+  </resultMap>
+
+  <select id="selectBySkuId" resultMap="BaseResultMap">
+    select * from sku
+    where is_deleted = 0 and sku_id = #{skuId}
+  </select>
+</mapper>
