@@ -25,14 +25,11 @@ public class SkuAttributeValueServiceImpl implements SkuAttributeValueService {
 
     @Override
     public ResponseDTO<SkuAttributeValueDTO> getByAttributeValueId(Long attributeValueId) {
-        SkuAttributeValueExample skuAttributeValueExample = new SkuAttributeValueExample();
-        skuAttributeValueExample.createCriteria().andIsDeletedEqualTo(false)
-                .andAttributeValueIdEqualTo(attributeValueId);
-        List<SkuAttributeValue> skuAttributeValueExampleList = skuAttributeValueMapper.selectByExample(skuAttributeValueExample);
-        if (CollectionUtils.isEmpty(skuAttributeValueExampleList)) {
+        List<SkuAttributeValue> skuAttributeValueList = skuAttributeValueMapper.listByAttributeValueId(attributeValueId);
+        if (CollectionUtils.isEmpty(skuAttributeValueList)) {
             return ResponseDTO.build(CodeEnum.SKU_ATTRIBUTE_VALUE_NOT_FOUND);
         }
-        SkuAttributeValue skuAttributeValue = skuAttributeValueExampleList.get(0);
+        SkuAttributeValue skuAttributeValue = skuAttributeValueList.get(0);
         SkuAttributeValueDTO skuAttributeValueDTO = new SkuAttributeValueDTO();
         BeanUtils.copyProperties(skuAttributeValue, skuAttributeValueDTO);
         return ResponseDTO.buildSuccess(skuAttributeValueDTO);
@@ -40,14 +37,11 @@ public class SkuAttributeValueServiceImpl implements SkuAttributeValueService {
 
     @Override
     public ResponseDTO<SkuAttributeValueDTO> getByAttributeNameId(Long attributeNameId) {
-        SkuAttributeValueExample skuAttributeValueExample = new SkuAttributeValueExample();
-        skuAttributeValueExample.createCriteria().andIsDeletedEqualTo(false)
-                .andAttributeNameIdEqualTo(attributeNameId);
-        List<SkuAttributeValue> skuAttributeValueExampleList = skuAttributeValueMapper.selectByExample(skuAttributeValueExample);
-        if (CollectionUtils.isEmpty(skuAttributeValueExampleList)) {
+        List<SkuAttributeValue> skuAttributeValueList = skuAttributeValueMapper.listByAttributeNameId(attributeNameId);
+        if (CollectionUtils.isEmpty(skuAttributeValueList)) {
             return ResponseDTO.build(CodeEnum.SKU_ATTRIBUTE_VALUE_NOT_FOUND);
         }
-        SkuAttributeValue skuAttributeValue = skuAttributeValueExampleList.get(0);
+        SkuAttributeValue skuAttributeValue = skuAttributeValueList.get(0);
         SkuAttributeValueDTO skuAttributeValueDTO = new SkuAttributeValueDTO();
         BeanUtils.copyProperties(skuAttributeValue, skuAttributeValueDTO);
         return ResponseDTO.buildSuccess(skuAttributeValueDTO);

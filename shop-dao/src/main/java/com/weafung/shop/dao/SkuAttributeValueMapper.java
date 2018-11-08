@@ -6,17 +6,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface SkuAttributeValueMapper {
-    long countByExample(SkuAttributeValueExample example);
+    List<SkuAttributeValue> listByAttributeNameId(@Param("attributeNameId") Long attributeNameId);
 
-    int deleteByExample(SkuAttributeValueExample example);
+    List<SkuAttributeValue> listByAttributeValueId(@Param("attributeValueId") Long attributeValueId);
 
-    int insert(SkuAttributeValue record);
-
-    int insertSelective(SkuAttributeValue record);
-
-    List<SkuAttributeValue> selectByExample(SkuAttributeValueExample example);
-
-    int updateByExampleSelective(@Param("record") SkuAttributeValue record, @Param("example") SkuAttributeValueExample example);
-
-    int updateByExample(@Param("record") SkuAttributeValue record, @Param("example") SkuAttributeValueExample example);
 }

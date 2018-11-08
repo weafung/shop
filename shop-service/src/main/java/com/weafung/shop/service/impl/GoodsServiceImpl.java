@@ -3,9 +3,7 @@ package com.weafung.shop.service.impl;
 import com.google.common.collect.Lists;
 import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.dao.GoodsImageMapper;
-import com.weafung.shop.dao.GoodsImageMapperEx;
 import com.weafung.shop.dao.GoodsMapper;
-import com.weafung.shop.dao.GoodsMapperEx;
 import com.weafung.shop.model.dto.GoodsDTO;
 import com.weafung.shop.model.dto.GoodsImageDTO;
 import com.weafung.shop.model.dto.ResponseDTO;
@@ -13,14 +11,12 @@ import com.weafung.shop.model.dto.SimpleGoodsDTO;
 import com.weafung.shop.model.po.Goods;
 import com.weafung.shop.model.po.GoodsExample;
 import com.weafung.shop.model.po.GoodsImage;
-import com.weafung.shop.model.po.GoodsImageExample;
 import com.weafung.shop.service.GoodsService;
 import com.weafung.shop.service.SkuService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,13 +32,9 @@ import java.util.stream.Collectors;
 public class GoodsServiceImpl implements GoodsService {
     @Autowired
     private GoodsMapper goodsMapper;
-    @Autowired
-    private GoodsMapperEx goodsMapperEx;
 
     @Autowired
     private GoodsImageMapper goodsImageMapper;
-    @Autowired
-    private GoodsImageMapperEx goodsImageMapperEx;
 
     @Autowired
     private SkuService skuService;
@@ -61,19 +53,14 @@ public class GoodsServiceImpl implements GoodsService {
 
     private GoodsDTO getGoods(Long goodsId) {
         // 获取商品信息
-        GoodsExample goodsExample = new GoodsExample();
-        goodsExample.createCriteria().andGoodsIdEqualTo(goodsId).andIsDeletedEqualTo(false);
-        List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
-        if (CollectionUtils.isEmpty(goodsList)) {
+        Goods goods = goodsMapper.getGoodsByGoodsId(goodsId);
+        if (goods == null) {
             return null;
         }
         GoodsDTO goodsDTO = new GoodsDTO();
-        Goods goods = goodsList.get(0);
         BeanUtils.copyProperties(goods, goodsDTO);
         // 获取商品图片信息
-        GoodsImageExample goodsImageExample = new GoodsImageExample();
-        goodsExample.createCriteria().andGoodsIdEqualTo(goodsId).andIsDeletedEqualTo(false);
-        List<GoodsImage> goodsImageList = goodsImageMapper.selectByExample(goodsImageExample);
+        List<GoodsImage> goodsImageList = goodsImageMapper.listByGoodsId(goodsId);
         goodsDTO.setGoodsImageList(goodsImageList.stream().map(goodsImage -> {
             GoodsImageDTO goodsImageDTO = new GoodsImageDTO();
             BeanUtils.copyProperties(goodsImage, goodsImageDTO);
@@ -101,27 +88,18 @@ public class GoodsServiceImpl implements GoodsService {
         }
         GoodsExample goodsExample = new GoodsExample();
         goodsExample.createCriteria().andGoodsIdEqualTo(goodsDTO.getGoodsId()).andIsDeletedEqualTo(false);
-        List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
-        if (CollectionUtils.isEmpty(goodsList)) {
-            return ResponseDTO.build(CodeEnum.GOODS_NOT_FOUND, null);
+        Goods goods = goodsMapper.getGoodsByGoodsId(goodsDTO.getGoodsId());
+        if (goods == null) {
+            return null;
         }
-        Goods goods = goodsList.get(0);
         BeanUtils.copyProperties(goodsDTO, goods);
-        goodsMapper.updateByExampleSelective(goods, goodsExample);
+        goodsMapper.updateSelective(goods);
         // 删除原来的照片
-        GoodsImageExample goodsImageExample = new GoodsImageExample();
-        goodsImageExample.createCriteria().andGoodsIdEqualTo(goodsDTO.getGoodsId()).andIsDeletedEqualTo(false);
-        GoodsImage oldGoodsImage = new GoodsImage();
-        oldGoodsImage.setIsDeleted(true);
-        goodsImageMapper.updateByExampleSelective(oldGoodsImage, goodsImageExample);
+        goodsImageMapper.deleteByGoodsId(goodsDTO.getGoodsId());
         // 添加新照片
         if (CollectionUtils.isNotEmpty(goodsDTO.getGoodsImageList())) {
             goodsDTO.getGoodsImageList()
-                    .forEach(goodsImageDTO -> {
-                        GoodsImage goodsImage = new GoodsImage();
-                        BeanUtils.copyProperties(goodsImageDTO, goodsImage);
-                        goodsImageMapper.insertSelective(goodsImage);
-                    });
+                    .forEach(goodsImageDTO -> goodsImageMapper.insert(goodsDTO.getGoodsId(), goodsImageDTO.getImageUrl()));
         }
         return ResponseDTO.buildSuccess(Boolean.TRUE);
     }
@@ -133,21 +111,20 @@ public class GoodsServiceImpl implements GoodsService {
         }
         GoodsExample goodsExample = new GoodsExample();
         goodsExample.createCriteria().andGoodsIdEqualTo(goodsId).andIsDeletedEqualTo(false);
-        List<Goods> goodsList = goodsMapper.selectByExample(goodsExample);
-        if (CollectionUtils.isEmpty(goodsList)) {
+        Goods goods = goodsMapper.getGoodsByGoodsId(goodsId);
+        if (goods == null) {
             return null;
         }
-        Goods goods = goodsList.get(0);
         SimpleGoodsDTO simpleGoodsDTO = new SimpleGoodsDTO();
         BeanUtils.copyProperties(goods, simpleGoodsDTO);
         simpleGoodsDTO.setSalePrice(skuService.getMinSalePrice(goodsId));
-        simpleGoodsDTO.setGoodsImage(goodsImageMapperEx.getByGoodsId(goodsId));
+        simpleGoodsDTO.setGoodsImage(goodsImageMapper.getImageUrlByGoodsId(goodsId));
         return simpleGoodsDTO;
     }
 
     @Override
     public ResponseDTO<List<SimpleGoodsDTO>> listGoodsByCategoryId(Long firstCategoryId, Long secondCategoryId, Long thirdCategoryId) {
-        List<Goods> goodsList = goodsMapperEx.listGoodsByCategoryId(firstCategoryId,secondCategoryId,thirdCategoryId);
+        List<Goods> goodsList = goodsMapper.listGoodsByCategoryId(firstCategoryId,secondCategoryId,thirdCategoryId);
         if (CollectionUtils.isEmpty(goodsList)) {
             return ResponseDTO.buildSuccess(Lists.newArrayList());
         }

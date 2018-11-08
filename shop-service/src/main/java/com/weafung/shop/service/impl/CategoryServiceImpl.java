@@ -7,8 +7,6 @@ import com.weafung.shop.model.dto.CategoryDTO;
 import com.weafung.shop.model.dto.GoodsDTO;
 import com.weafung.shop.model.dto.ResponseDTO;
 import com.weafung.shop.model.po.Category;
-import com.weafung.shop.model.po.CategoryExample;
-import com.weafung.shop.model.po.Goods;
 import com.weafung.shop.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -31,9 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Cacheable(value = "goodsCategory", key = "#categoryId")
     public ResponseDTO<CategoryDTO> listCategories(Long categoryId) {
-        CategoryExample categoryExample = new CategoryExample();
-        categoryExample.createCriteria().andIsDeletedEqualTo(false).andCategoryIdEqualTo(categoryId);
-        List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
+        List<Category> categoryList = categoryMapper.listByCategoryId(categoryId);
         if (CollectionUtils.isEmpty(categoryList)) {
             return ResponseDTO.build(CodeEnum.CATEGORY_NOT_FOUND);
         }
@@ -46,10 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private List<CategoryDTO> getChildrenCategory(Long categoryId) {
         List<CategoryDTO> childrenCategoryDTOList = Lists.newArrayList();
-
-        CategoryExample childrenCategoryExample = new CategoryExample();
-        childrenCategoryExample.createCriteria().andIsDeletedEqualTo(false).andParentIdEqualTo(categoryId);
-        List<Category> childrenCategoryList = categoryMapper.selectByExample(childrenCategoryExample);
+        List<Category> childrenCategoryList = categoryMapper.listByCategoryId(categoryId);
         if (CollectionUtils.isEmpty(childrenCategoryList)) {
             return childrenCategoryDTOList;
         }

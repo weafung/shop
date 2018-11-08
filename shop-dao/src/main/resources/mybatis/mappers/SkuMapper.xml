@@ -17,265 +17,29 @@
     <result column="hidden" jdbcType="BIT" property="hidden" />
     <result column="onsale" jdbcType="BIT" property="onsale" />
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
   <sql id="Base_Column_List">
     id, gmt_create, gmt_modified, is_deleted, sku_id, goods_id, attribute, store_count, 
     sale_count, sale_price, market_price, bonus_ratio, hidden, onsale
   </sql>
-  <select id="selectByExample" parameterType="com.weafung.shop.model.po.SkuExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from sku
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
+  <select id="selectBySkuId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from sku
+    where is_deleted = 0 and sku_id = #{skuId}
   </select>
-  <delete id="deleteByExample" parameterType="com.weafung.shop.model.po.SkuExample">
-    delete from sku
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.weafung.shop.model.po.Sku">
-    insert into sku (id, gmt_create, gmt_modified, 
-      is_deleted, sku_id, goods_id, 
-      attribute, store_count, sale_count, 
-      sale_price, market_price, bonus_ratio, 
-      hidden, onsale)
-    values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
-      #{isDeleted,jdbcType=BIT}, #{skuId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
-      #{attribute,jdbcType=VARCHAR}, #{storeCount,jdbcType=BIGINT}, #{saleCount,jdbcType=BIGINT}, 
-      #{salePrice,jdbcType=BIGINT}, #{marketPrice,jdbcType=BIGINT}, #{bonusRatio,jdbcType=TINYINT}, 
-      #{hidden,jdbcType=BIT}, #{onsale,jdbcType=BIT})
-  </insert>
-  <insert id="insertSelective" parameterType="com.weafung.shop.model.po.Sku">
-    insert into sku
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="gmtCreate != null">
-        gmt_create,
-      </if>
-      <if test="gmtModified != null">
-        gmt_modified,
-      </if>
-      <if test="isDeleted != null">
-        is_deleted,
-      </if>
-      <if test="skuId != null">
-        sku_id,
-      </if>
-      <if test="goodsId != null">
-        goods_id,
-      </if>
-      <if test="attribute != null">
-        attribute,
-      </if>
-      <if test="storeCount != null">
-        store_count,
-      </if>
-      <if test="saleCount != null">
-        sale_count,
-      </if>
-      <if test="salePrice != null">
-        sale_price,
-      </if>
-      <if test="marketPrice != null">
-        market_price,
-      </if>
-      <if test="bonusRatio != null">
-        bonus_ratio,
-      </if>
-      <if test="hidden != null">
-        hidden,
-      </if>
-      <if test="onsale != null">
-        onsale,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="gmtCreate != null">
-        #{gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtModified != null">
-        #{gmtModified,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isDeleted != null">
-        #{isDeleted,jdbcType=BIT},
-      </if>
-      <if test="skuId != null">
-        #{skuId,jdbcType=BIGINT},
-      </if>
-      <if test="goodsId != null">
-        #{goodsId,jdbcType=BIGINT},
-      </if>
-      <if test="attribute != null">
-        #{attribute,jdbcType=VARCHAR},
-      </if>
-      <if test="storeCount != null">
-        #{storeCount,jdbcType=BIGINT},
-      </if>
-      <if test="saleCount != null">
-        #{saleCount,jdbcType=BIGINT},
-      </if>
-      <if test="salePrice != null">
-        #{salePrice,jdbcType=BIGINT},
-      </if>
-      <if test="marketPrice != null">
-        #{marketPrice,jdbcType=BIGINT},
-      </if>
-      <if test="bonusRatio != null">
-        #{bonusRatio,jdbcType=TINYINT},
-      </if>
-      <if test="hidden != null">
-        #{hidden,jdbcType=BIT},
-      </if>
-      <if test="onsale != null">
-        #{onsale,jdbcType=BIT},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.weafung.shop.model.po.SkuExample" resultType="java.lang.Long">
-    select count(*) from sku
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
+
+  <select id="countBySkuId" resultType="int">
+      select count(id) from sku
+      where is_deleted = 0 and sku_id = #{skuId}
+    </select>
+
+  <select id="selectMinSalePrice" resultType="java.lang.Long">
+      select sale_price from sku
+      where is_deleted = 0 and goods_id = #{goodsId}
+      order by sale_price asc, onsale desc
+      limit 1
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update sku
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
-      </if>
-      <if test="record.gmtCreate != null">
-        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.gmtModified != null">
-        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.isDeleted != null">
-        is_deleted = #{record.isDeleted,jdbcType=BIT},
-      </if>
-      <if test="record.skuId != null">
-        sku_id = #{record.skuId,jdbcType=BIGINT},
-      </if>
-      <if test="record.goodsId != null">
-        goods_id = #{record.goodsId,jdbcType=BIGINT},
-      </if>
-      <if test="record.attribute != null">
-        attribute = #{record.attribute,jdbcType=VARCHAR},
-      </if>
-      <if test="record.storeCount != null">
-        store_count = #{record.storeCount,jdbcType=BIGINT},
-      </if>
-      <if test="record.saleCount != null">
-        sale_count = #{record.saleCount,jdbcType=BIGINT},
-      </if>
-      <if test="record.salePrice != null">
-        sale_price = #{record.salePrice,jdbcType=BIGINT},
-      </if>
-      <if test="record.marketPrice != null">
-        market_price = #{record.marketPrice,jdbcType=BIGINT},
-      </if>
-      <if test="record.bonusRatio != null">
-        bonus_ratio = #{record.bonusRatio,jdbcType=TINYINT},
-      </if>
-      <if test="record.hidden != null">
-        hidden = #{record.hidden,jdbcType=BIT},
-      </if>
-      <if test="record.onsale != null">
-        onsale = #{record.onsale,jdbcType=BIT},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update sku
-    set id = #{record.id,jdbcType=BIGINT},
-      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
-      is_deleted = #{record.isDeleted,jdbcType=BIT},
-      sku_id = #{record.skuId,jdbcType=BIGINT},
-      goods_id = #{record.goodsId,jdbcType=BIGINT},
-      attribute = #{record.attribute,jdbcType=VARCHAR},
-      store_count = #{record.storeCount,jdbcType=BIGINT},
-      sale_count = #{record.saleCount,jdbcType=BIGINT},
-      sale_price = #{record.salePrice,jdbcType=BIGINT},
-      market_price = #{record.marketPrice,jdbcType=BIGINT},
-      bonus_ratio = #{record.bonusRatio,jdbcType=TINYINT},
-      hidden = #{record.hidden,jdbcType=BIT},
-      onsale = #{record.onsale,jdbcType=BIT}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
+
+  <select id="listByGoodsId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from sku
+    where is_deleted = 0 and goods_id = #{goodsId}
+  </select>
 </mapper>

@@ -6,17 +6,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface WebsiteConfigMapper {
-    long countByExample(WebsiteConfigExample example);
+    int deleteByKey(@Param("configKey") String configKey);
 
-    int deleteByExample(WebsiteConfigExample example);
+    int insert(@Param("configKey") String configKey, @Param("configValue") String configValue);
 
-    int insert(WebsiteConfig record);
+    int updateByKey(@Param("configKey") String configKey, @Param("configValue") String configValue);
 
-    int insertSelective(WebsiteConfig record);
-
-    List<WebsiteConfig> selectByExample(WebsiteConfigExample example);
-
-    int updateByExampleSelective(@Param("record") WebsiteConfig record, @Param("example") WebsiteConfigExample example);
-
-    int updateByExample(@Param("record") WebsiteConfig record, @Param("example") WebsiteConfigExample example);
+    WebsiteConfig selectByKey(@Param("configKey") String configKey);
 }

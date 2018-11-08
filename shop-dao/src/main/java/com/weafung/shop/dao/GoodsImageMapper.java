@@ -6,17 +6,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface GoodsImageMapper {
-    long countByExample(GoodsImageExample example);
+    int deleteByGoodsId(Long goodsId);
 
-    int deleteByExample(GoodsImageExample example);
+    String getImageUrlByGoodsId(Long goodsId);
 
-    int insert(GoodsImage record);
+    List<GoodsImage> listByGoodsId(Long goodsId);
 
-    int insertSelective(GoodsImage record);
-
-    List<GoodsImage> selectByExample(GoodsImageExample example);
-
-    int updateByExampleSelective(@Param("record") GoodsImage record, @Param("example") GoodsImageExample example);
-
-    int updateByExample(@Param("record") GoodsImage record, @Param("example") GoodsImageExample example);
+    int insert(Long goodsId, String imageUrl);
 }

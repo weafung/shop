@@ -5,7 +5,6 @@ import com.alibaba.fastjson.TypeReference;
 import com.google.common.collect.Lists;
 import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.dao.SkuMapper;
-import com.weafung.shop.dao.SkuMapperEx;
 import com.weafung.shop.model.dto.*;
 import com.weafung.shop.model.po.Sku;
 import com.weafung.shop.model.po.SkuExample;
@@ -31,9 +30,6 @@ public class SkuServiceImpl implements SkuService {
     private SkuMapper skuMapper;
 
     @Autowired
-    private SkuMapperEx skuMapperEx;
-
-    @Autowired
     private SkuAttributeNameService skuAttributeNameService;
 
     @Autowired
@@ -44,9 +40,7 @@ public class SkuServiceImpl implements SkuService {
         if (goodsId == null) {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY);
         }
-        SkuExample skuExample = new SkuExample();
-        skuExample.createCriteria().andIsDeletedEqualTo(false).andGoodsIdEqualTo(goodsId);
-        List<Sku> skuList = skuMapper.selectByExample(skuExample);
+        List<Sku> skuList = skuMapper.listByGoodsId(goodsId);
         if (CollectionUtils.isEmpty(skuList)) {
             return ResponseDTO.buildSuccess(Lists.newArrayList());
         }
@@ -60,7 +54,7 @@ public class SkuServiceImpl implements SkuService {
         if (skuId ==  null) {
             return null;
         }
-        Sku sku = skuMapperEx.selectBySkuId(skuId);
+        Sku sku = skuMapper.selectBySkuId(skuId);
         if (sku == null) {
             return null;
         }
@@ -89,11 +83,11 @@ public class SkuServiceImpl implements SkuService {
 
     @Override
     public boolean checkSkuId(Long skuId) {
-        return skuMapperEx.countBySkuId(skuId) > 0;
+        return skuMapper.countBySkuId(skuId) > 0;
     }
 
     @Override
     public Long getMinSalePrice(Long goodsId) {
-        return skuMapperEx.selectMinSalePrice(goodsId);
+        return skuMapper.selectMinSalePrice(goodsId);
     }
 }

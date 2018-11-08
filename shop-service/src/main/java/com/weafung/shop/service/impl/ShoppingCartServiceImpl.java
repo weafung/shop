@@ -2,7 +2,7 @@ package com.weafung.shop.service.impl;
 
 import com.google.common.collect.Lists;
 import com.weafung.shop.common.constant.CodeEnum;
-import com.weafung.shop.dao.ShoppingCartMapperEx;
+import com.weafung.shop.dao.ShoppingCartMapper;
 import com.weafung.shop.model.dto.*;
 import com.weafung.shop.model.po.ShoppingCart;
 import com.weafung.shop.service.GoodsService;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Autowired
-    private ShoppingCartMapperEx shoppingCartMapperEx;
+    private ShoppingCartMapper shoppingCartMapper;
 
     @Autowired
     private GoodsService goodsService;
@@ -37,7 +37,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (StringUtils.isBlank(accountId)) {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY);
         }
-        List<ShoppingCart> shoppingCartList = shoppingCartMapperEx.selectByAccountId(accountId);
+        List<ShoppingCart> shoppingCartList = shoppingCartMapper.selectByAccountId(accountId);
 
         ShoppingCartDTO shoppingCartDTO = new ShoppingCartDTO();
         shoppingCartDTO.setAccountId(accountId);
@@ -71,14 +71,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (count > simpleGoodsDTO.getLimitPerOrder()) {
             return ResponseDTO.build(CodeEnum.GOODS_COUNT_MORE_THAN_LIMIT, Boolean.FALSE);
         }
-        ShoppingCart shoppingCart = shoppingCartMapperEx.selectByAccountIdAndGoodsIdAndSkuId(accountId, goodsId, skuId);
+        ShoppingCart shoppingCart = shoppingCartMapper.selectByAccountIdAndGoodsIdAndSkuId(accountId, goodsId, skuId);
         if (shoppingCart != null) {
             count = simpleGoodsDTO.getLimitPerOrder() - shoppingCart.getCount() > count
                     ? shoppingCart.getCount() + count
                     : simpleGoodsDTO.getLimitPerOrder();
-            shoppingCartMapperEx.delete(accountId, goodsId, skuId);
+            shoppingCartMapper.delete(accountId, goodsId, skuId);
         }
-        boolean result = shoppingCartMapperEx.insert(accountId, goodsId, skuId, count) > 0;
+        boolean result = shoppingCartMapper.insert(accountId, goodsId, skuId, count) > 0;
         if (result) {
             return ResponseDTO.buildSuccess(Boolean.TRUE);
         }
@@ -87,7 +87,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ResponseDTO<Boolean> deleteGoods(String accountId, Long goodsId, Long skuId) {
-        boolean result = shoppingCartMapperEx.delete(accountId, goodsId, skuId) > 0;
+        boolean result = shoppingCartMapper.delete(accountId, goodsId, skuId) > 0;
         if (result) {
             return ResponseDTO.buildSuccess(Boolean.TRUE);
         }

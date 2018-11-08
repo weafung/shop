@@ -6,17 +6,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface SkuMapper {
-    long countByExample(SkuExample example);
+    Sku selectBySkuId(@Param("skuId") Long skuId);
 
-    int deleteByExample(SkuExample example);
+    int countBySkuId(@Param("skuId") Long skuId);
 
-    int insert(Sku record);
+    Long selectMinSalePrice(@Param("goodsId") Long goodsId);
 
-    int insertSelective(Sku record);
-
-    List<Sku> selectByExample(SkuExample example);
-
-    int updateByExampleSelective(@Param("record") Sku record, @Param("example") SkuExample example);
-
-    int updateByExample(@Param("record") Sku record, @Param("example") SkuExample example);
+    List<Sku> listByGoodsId(@Param("goodsId") Long goodsId);
 }
