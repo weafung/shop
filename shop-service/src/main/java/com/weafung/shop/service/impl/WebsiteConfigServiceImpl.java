@@ -5,7 +5,6 @@ import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.dao.WebsiteConfigMapper;
 import com.weafung.shop.model.dto.ResponseDTO;
 import com.weafung.shop.model.po.WebsiteConfig;
-import com.weafung.shop.model.po.WebsiteConfigExample;
 import com.weafung.shop.service.WebsiteConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -14,7 +13,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 

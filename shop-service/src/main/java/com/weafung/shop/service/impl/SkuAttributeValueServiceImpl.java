@@ -5,7 +5,6 @@ import com.weafung.shop.dao.SkuAttributeValueMapper;
 import com.weafung.shop.model.dto.ResponseDTO;
 import com.weafung.shop.model.dto.SkuAttributeValueDTO;
 import com.weafung.shop.model.po.SkuAttributeValue;
-import com.weafung.shop.model.po.SkuAttributeValueExample;
 import com.weafung.shop.service.SkuAttributeValueService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;

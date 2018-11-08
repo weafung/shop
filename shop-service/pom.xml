@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.weafung</groupId>
             <artifactId>shop-dao</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
@@ -28,7 +28,7 @@
         <dependency>
             <groupId>com.weafung</groupId>
             <artifactId>shop-model</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -12,6 +12,9 @@ public enum CodeEnum {
     PARAM_EMPTY(400, "请求参数为空"),
     ERROR(500, "调用服务失败"),
 
+    DELETE_FAIL(601, "删除失败"),
+    SAVE_FAIL(602, "保存失败"),
+
     /**
      * 参数配置相关 1*****
      */

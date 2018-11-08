@@ -22,6 +22,7 @@
     </bean>
 
     <mvc:cors>
-        <mvc:mapping path="/**" />
+        <mvc:mapping path="/**"
+                     allowed-methods="GET,PUT,POST,DELETE,OPTIONS"/>
     </mvc:cors>
 </beans>
