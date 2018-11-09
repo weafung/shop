@@ -55,9 +55,9 @@ public class ShoppingCartController {
 
     @RequestMapping(value = {"/", ""}, method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseVO<Boolean> delete(@RequestParam("goodsId")Long goodsId, @RequestParam("skuId")Long skuId) {
+    public ResponseVO<Boolean> delete(@RequestParam("skuId")Long skuId) {
         String accountId = RequestHolder.getCurrentUser().getAccountId();
-        ResponseDTO<Boolean> responseDTO = shoppingCartService.deleteGoods(accountId, goodsId, skuId);
+        ResponseDTO<Boolean> responseDTO = shoppingCartService.deleteGoods(accountId, skuId);
         if (responseDTO == null) {
             return ResponseVO.build(CodeEnum.ERROR, Boolean.FALSE);
         }
@@ -67,4 +67,18 @@ public class ShoppingCartController {
         return ResponseVO.buildSuccess(Boolean.TRUE);
     }
 
+    @RequestMapping(value = {"/", ""}, method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseVO<Boolean> update(@RequestParam("skuId")Long skuId,
+                                   @RequestParam("count")Integer count) {
+        String accountId = RequestHolder.getCurrentUser().getAccountId();
+        ResponseDTO<Boolean> responseDTO = shoppingCartService.updateGoods(accountId, skuId, count);
+        if (responseDTO == null) {
+            return ResponseVO.build(CodeEnum.ERROR, Boolean.FALSE);
+        }
+        if (!responseDTO.getData()) {
+            return ResponseVO.build(responseDTO.getCode(), Boolean.FALSE, responseDTO.getMsg());
+        }
+        return ResponseVO.buildSuccess(Boolean.TRUE);
+    }
 }

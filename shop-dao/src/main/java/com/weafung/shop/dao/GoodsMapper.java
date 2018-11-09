@@ -13,4 +13,6 @@ public interface GoodsMapper {
     Goods getGoodsByGoodsId(@Param("goodsId") Long goodsId);
 
     Goods updateSelective(@Param("goods") Goods goods);
+
+    Goods getGoodsBySkuId(@Param("skuId") Long skuId);
 }

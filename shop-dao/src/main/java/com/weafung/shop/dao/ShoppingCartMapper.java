@@ -8,11 +8,14 @@ import java.util.List;
 public interface ShoppingCartMapper {
     List<ShoppingCart> selectByAccountId(@Param("accountId") String accountId);
 
-    ShoppingCart selectByAccountIdAndGoodsIdAndSkuId(@Param("accountId")String accountId,
-                                                     @Param("goodsId") Long goodsId, @Param("skuId") Long skuId);
+    ShoppingCart selectByAccountIdAndSkuId(@Param("accountId")String accountId,
+                                          @Param("skuId") Long skuId);
 
     int insert(@Param("accountId")String accountId, @Param("goodsId") Long goodsId, @Param("skuId") Long skuId,
                @Param("count") Integer count);
 
-    int delete(@Param("accountId")String accountId, @Param("goodsId") Long goodsId, @Param("skuId") Long skuId);
+    int delete(@Param("accountId")String accountId, @Param("skuId") Long skuId);
+
+    int update(@Param("accountId")String accountId, @Param("skuId") Long skuId, @Param("count") Integer count);
+
 }

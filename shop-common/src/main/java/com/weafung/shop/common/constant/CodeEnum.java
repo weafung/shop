@@ -35,7 +35,9 @@ public enum CodeEnum {
     /**
      * 订单相关 4*****
      */
-    GOODS_COUNT_MORE_THAN_LIMIT(400404, "商品数量超过每单限制"),
+    GOODS_COUNT_MORE_THAN_LIMIT(400400, "商品数量超过每单限制"),
+    GOODS_COUNT_LESS_THAN_ONE(401400, "商品数量小于1"),
+
 
     ;
 

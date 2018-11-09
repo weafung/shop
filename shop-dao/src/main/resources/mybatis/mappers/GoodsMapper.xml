@@ -73,4 +73,11 @@
         where goods_id = #{goods.goodsId}
         limit 1
     </update>
+
+    <select id="getGoodsBySkuId" resultMap="BaseResultMap">
+        select g.*
+        from goods as g, sku as s
+        where s.is_deleted = 0 and s.sku_id = #{skuId} and s.goods_id = g.goods_id and g.is_deleted = 0
+        limit 1
+    </select>
 </mapper>

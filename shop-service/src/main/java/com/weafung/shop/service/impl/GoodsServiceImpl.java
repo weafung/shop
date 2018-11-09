@@ -109,8 +109,6 @@ public class GoodsServiceImpl implements GoodsService {
         if (goodsId == null) {
             return null;
         }
-        GoodsExample goodsExample = new GoodsExample();
-        goodsExample.createCriteria().andGoodsIdEqualTo(goodsId).andIsDeletedEqualTo(false);
         Goods goods = goodsMapper.getGoodsByGoodsId(goodsId);
         if (goods == null) {
             return null;
@@ -119,6 +117,22 @@ public class GoodsServiceImpl implements GoodsService {
         BeanUtils.copyProperties(goods, simpleGoodsDTO);
         simpleGoodsDTO.setSalePrice(skuService.getMinSalePrice(goodsId));
         simpleGoodsDTO.setGoodsImage(goodsImageMapper.getImageUrlByGoodsId(goodsId));
+        return simpleGoodsDTO;
+    }
+
+    @Override
+    public SimpleGoodsDTO getSimpleGoodsBySkuId(Long skuId) {
+        if (skuId == null) {
+            return null;
+        }
+        Goods goods = goodsMapper.getGoodsBySkuId(skuId);
+        if (goods == null) {
+            return null;
+        }
+        SimpleGoodsDTO simpleGoodsDTO = new SimpleGoodsDTO();
+        BeanUtils.copyProperties(goods, simpleGoodsDTO);
+        simpleGoodsDTO.setSalePrice(skuService.getMinSalePrice(goods.getGoodsId()));
+        simpleGoodsDTO.setGoodsImage(goodsImageMapper.getImageUrlByGoodsId(goods.getGoodsId()));
         return simpleGoodsDTO;
     }
 

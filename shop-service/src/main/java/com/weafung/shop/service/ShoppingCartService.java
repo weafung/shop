@@ -11,5 +11,7 @@ public interface ShoppingCartService {
 
     ResponseDTO<Boolean> addGoods(String accountId, Long goodsId, Long skuId, Integer count);
 
-    ResponseDTO<Boolean> deleteGoods(String accountId, Long goodsId, Long skuId);
+    ResponseDTO<Boolean> updateGoods(String accountId, Long skuId, Integer count);
+
+    ResponseDTO<Boolean> deleteGoods(String accountId, Long skuId);
 }

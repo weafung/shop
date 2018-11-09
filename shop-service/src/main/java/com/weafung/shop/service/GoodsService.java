@@ -18,5 +18,7 @@ public interface GoodsService {
 
     SimpleGoodsDTO getSimpleGoodsByGoodsId(Long goodsId);
 
+    SimpleGoodsDTO getSimpleGoodsBySkuId(Long skuId);
+
     ResponseDTO<List<SimpleGoodsDTO>> listGoodsByCategoryId(Long firstCategoryId, Long secondCategoryId, Long thirdCategoryId);
 }

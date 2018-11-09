@@ -71,12 +71,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (count > simpleGoodsDTO.getLimitPerOrder()) {
             return ResponseDTO.build(CodeEnum.GOODS_COUNT_MORE_THAN_LIMIT, Boolean.FALSE);
         }
-        ShoppingCart shoppingCart = shoppingCartMapper.selectByAccountIdAndGoodsIdAndSkuId(accountId, goodsId, skuId);
+        ShoppingCart shoppingCart = shoppingCartMapper.selectByAccountIdAndSkuId(accountId, skuId);
         if (shoppingCart != null) {
             count = simpleGoodsDTO.getLimitPerOrder() - shoppingCart.getCount() > count
                     ? shoppingCart.getCount() + count
                     : simpleGoodsDTO.getLimitPerOrder();
-            shoppingCartMapper.delete(accountId, goodsId, skuId);
+            shoppingCartMapper.delete(accountId, skuId);
         }
         boolean result = shoppingCartMapper.insert(accountId, goodsId, skuId, count) > 0;
         if (result) {
@@ -86,8 +86,30 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ResponseDTO<Boolean> deleteGoods(String accountId, Long goodsId, Long skuId) {
-        boolean result = shoppingCartMapper.delete(accountId, goodsId, skuId) > 0;
+    public ResponseDTO<Boolean> updateGoods(String accountId, Long skuId, Integer count) {
+        SimpleGoodsDTO simpleGoodsDTO = goodsService.getSimpleGoodsBySkuId(skuId);
+        if (simpleGoodsDTO == null) {
+            return ResponseDTO.build(CodeEnum.GOODS_NOT_FOUND, Boolean.FALSE);
+        }
+        if (!skuService.checkSkuId(skuId)) {
+            return ResponseDTO.build(CodeEnum.SKU_NOT_FOUND, Boolean.FALSE);
+        }
+        if (count > simpleGoodsDTO.getLimitPerOrder()) {
+            return ResponseDTO.build(CodeEnum.GOODS_COUNT_MORE_THAN_LIMIT, Boolean.FALSE);
+        }
+        if (count <= 0) {
+            return ResponseDTO.build(CodeEnum.GOODS_COUNT_LESS_THAN_ONE, Boolean.FALSE);
+        }
+        boolean updateResult = shoppingCartMapper.update(accountId, skuId, count) > 0;
+        if (updateResult) {
+            return ResponseDTO.buildSuccess(Boolean.TRUE);
+        }
+        return ResponseDTO.build(CodeEnum.ERROR, Boolean.FALSE);
+    }
+
+    @Override
+    public ResponseDTO<Boolean> deleteGoods(String accountId, Long skuId) {
+        boolean result = shoppingCartMapper.delete(accountId, skuId) > 0;
         if (result) {
             return ResponseDTO.buildSuccess(Boolean.TRUE);
         }

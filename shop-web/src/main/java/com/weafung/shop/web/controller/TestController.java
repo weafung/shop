@@ -1,7 +1,6 @@
 package com.weafung.shop.web.controller;
 
 import com.google.common.collect.Lists;
-import com.weafung.shop.common.util.GoodsIdGeneratorUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,7 +21,7 @@ public class TestController {
         for (int i = 1; i < 10; i++) {
             new Thread(() -> {
                 for (int j = 1; j < 100; j++) {
-                    longs.add(GoodsIdGeneratorUtil.getNextId());
+//                    longs.add(GoodsIdGeneratorUtil.getNextId());
                 }
             }).start();
         }
