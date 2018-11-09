@@ -1,8 +1,5 @@
 package com.weafung.shop.model.vo;
 
-import com.weafung.shop.model.dto.GoodsDTO;
-import com.weafung.shop.model.dto.GoodsImageDTO;
-import com.weafung.shop.model.dto.SkuDTO;
 import lombok.Data;
 
 import java.io.Serializable;

@@ -43,7 +43,6 @@ public class CategoryController {
                                                       @RequestParam(required = false) Long secondCategoryId,
                                                       @RequestParam(required = false) Long thirdCategoryId) {
         ResponseDTO<List<SimpleGoodsDTO>> responseDTO = goodsService.listGoodsByCategoryId(firstCategoryId, secondCategoryId, thirdCategoryId);
-
         return ResponseVO.buildSuccess(responseDTO.getData());
     }
 }

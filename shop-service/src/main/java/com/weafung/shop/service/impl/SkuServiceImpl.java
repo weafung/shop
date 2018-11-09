@@ -7,7 +7,6 @@ import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.dao.SkuMapper;
 import com.weafung.shop.model.dto.*;
 import com.weafung.shop.model.po.Sku;
-import com.weafung.shop.model.po.SkuExample;
 import com.weafung.shop.service.SkuAttributeNameService;
 import com.weafung.shop.service.SkuAttributeValueService;
 import com.weafung.shop.service.SkuService;
@@ -88,6 +87,7 @@ public class SkuServiceImpl implements SkuService {
 
     @Override
     public Long getMinSalePrice(Long goodsId) {
-        return skuMapper.selectMinSalePrice(goodsId);
+        Long minSalePrice = skuMapper.selectMinSalePrice(goodsId);
+        return minSalePrice != null ? minSalePrice : Long.MAX_VALUE;
     }
 }
