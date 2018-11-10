@@ -1,8 +1,7 @@
 package com.weafung.shop.dao;
 
 import com.weafung.shop.model.po.WebsiteConfig;
-import com.weafung.shop.model.po.WebsiteConfigExample;
-import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface WebsiteConfigMapper {

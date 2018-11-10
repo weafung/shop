@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -63,8 +62,8 @@ public class SkuServiceImpl implements SkuService {
     private SkuDTO sku2SkuDTO(Sku sku) {
         SkuDTO skuDTO = new SkuDTO();
         BeanUtils.copyProperties(sku, skuDTO);
-        Set<SkuAttributeDTO> skuAttributeDTOS = JSON.parseObject(sku.getAttribute(),
-                new TypeReference<Set<SkuAttributeDTO>>() {
+        List<SkuAttributeDTO> skuAttributeDTOS = JSON.parseObject(sku.getAttribute(),
+                new TypeReference<List<SkuAttributeDTO>>() {
                 });
         skuAttributeDTOS.forEach(skuAttributeDTO -> {
             ResponseDTO<SkuAttributeNameDTO> nameDTOResponseDTO = skuAttributeNameService.getByAttributeNameId(skuAttributeDTO.getAttributeNameId());
@@ -88,6 +87,6 @@ public class SkuServiceImpl implements SkuService {
     @Override
     public Long getMinSalePrice(Long goodsId) {
         Long minSalePrice = skuMapper.selectMinSalePrice(goodsId);
-        return minSalePrice != null ? minSalePrice : Long.MAX_VALUE;
+        return minSalePrice != null ? minSalePrice : 99999999999L;
     }
 }

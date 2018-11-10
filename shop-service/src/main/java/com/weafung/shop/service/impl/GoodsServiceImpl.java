@@ -9,7 +9,6 @@ import com.weafung.shop.model.dto.GoodsImageDTO;
 import com.weafung.shop.model.dto.ResponseDTO;
 import com.weafung.shop.model.dto.SimpleGoodsDTO;
 import com.weafung.shop.model.po.Goods;
-import com.weafung.shop.model.po.GoodsExample;
 import com.weafung.shop.model.po.GoodsImage;
 import com.weafung.shop.service.GoodsService;
 import com.weafung.shop.service.SkuService;
@@ -86,8 +85,6 @@ public class GoodsServiceImpl implements GoodsService {
         if (goodsDTO == null || goodsDTO.getGoodsId() == null) {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY);
         }
-        GoodsExample goodsExample = new GoodsExample();
-        goodsExample.createCriteria().andGoodsIdEqualTo(goodsDTO.getGoodsId()).andIsDeletedEqualTo(false);
         Goods goods = goodsMapper.getGoodsByGoodsId(goodsDTO.getGoodsId());
         if (goods == null) {
             return null;

@@ -8,4 +8,7 @@ public interface SnowFlakeService {
 
     Long nextGoodsId();
 
+    Long nextGorderId();
+
+    Long nextOrderId();
 }

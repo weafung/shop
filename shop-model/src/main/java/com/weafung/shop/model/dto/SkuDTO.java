@@ -4,7 +4,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author weifeng
@@ -32,5 +31,5 @@ public class SkuDTO implements Serializable {
 
     private Boolean onsale;
 
-    private Set<SkuAttributeDTO> attributes;
+    private List<SkuAttributeDTO> attributes;
 }
