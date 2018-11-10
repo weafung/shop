@@ -84,4 +84,11 @@
         where address_id = #{addressId} and is_deleted = 0
         limit 1
     </update>
+    <select id="getAddressByAddressId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from address
+        where address_id = #{addressId} and is_deleted = 0
+        limit 1
+    </select>
 </mapper>

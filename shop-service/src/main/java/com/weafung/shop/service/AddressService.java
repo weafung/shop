@@ -17,5 +17,5 @@ public interface AddressService {
 
     ResponseDTO<Boolean> deleteAddress(String accountId, List<Long> addressIdList);
 
-
+    AddressDTO getAddress(Long addressId);
 }

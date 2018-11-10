@@ -68,11 +68,7 @@ public class AddressServiceImpl implements AddressService {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Lists.newArrayList());
         }
         List<Address> addressList = addressMapper.listByAccountId(accountId);
-        List<AddressDTO> addressDTOList = addressList.stream().map(address -> {
-            AddressDTO addressDTO = new AddressDTO();
-            BeanUtils.copyProperties(address, addressDTO);
-            return addressDTO;
-        }).collect(Collectors.toList());
+        List<AddressDTO> addressDTOList = addressList.stream().map(this::address2AddressDTO).collect(Collectors.toList());
         return ResponseDTO.buildSuccess(addressDTOList);
     }
 
@@ -88,5 +84,20 @@ public class AddressServiceImpl implements AddressService {
             }
         });
         return ResponseDTO.buildSuccess(Boolean.TRUE);
+    }
+
+    @Override
+    public AddressDTO getAddress(Long addressId) {
+        Address address = addressMapper.getAddressByAddressId(addressId);
+        return address2AddressDTO(address);
+    }
+
+    private AddressDTO address2AddressDTO(Address address) {
+        if (address == null) {
+            return null;
+        }
+        AddressDTO addressDTO = new AddressDTO();
+        BeanUtils.copyProperties(address, addressDTO);
+        return addressDTO;
     }
 }

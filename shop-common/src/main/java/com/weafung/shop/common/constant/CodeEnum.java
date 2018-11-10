@@ -37,7 +37,12 @@ public enum CodeEnum {
      */
     GOODS_COUNT_MORE_THAN_LIMIT(400400, "商品数量超过每单限制"),
     GOODS_COUNT_LESS_THAN_ONE(401400, "商品数量小于1"),
+    ORDER_INSERT_FAIL(402500, "创建订单失败"),
 
+    /**
+     * 地址相关 5*****
+     */
+    ADDRESS_NOT_FOUND(500400, "地址不存在"),
 
     ;
 

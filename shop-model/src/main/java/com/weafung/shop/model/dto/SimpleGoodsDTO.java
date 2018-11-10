@@ -31,4 +31,6 @@ public class SimpleGoodsDTO implements Serializable {
     private Boolean freeDelivery;
 
     private Long salePrice;
+
+    private Long goodsDetailId;
 }

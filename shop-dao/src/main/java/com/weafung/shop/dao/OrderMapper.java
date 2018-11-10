@@ -1,22 +1,7 @@
 package com.weafung.shop.dao;
 
-import com.weafung.shop.model.po.Order;
-import com.weafung.shop.model.po.OrderExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import com.weafung.shop.model.po.Sorder;
 
 public interface OrderMapper {
-    long countByExample(OrderExample example);
-
-    int deleteByExample(OrderExample example);
-
-    int insert(Order record);
-
-    int insertSelective(Order record);
-
-    List<Order> selectByExample(OrderExample example);
-
-    int updateByExampleSelective(@Param("record") Order record, @Param("example") OrderExample example);
-
-    int updateByExample(@Param("record") Order record, @Param("example") OrderExample example);
+    int insert(Sorder record);
 }

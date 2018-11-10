@@ -1,9 +1,9 @@
 package com.weafung.shop.dao;
 
 import com.weafung.shop.model.po.Goods;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface GoodsMapper {
     List<Goods> listGoodsByCategoryId(@Param("firstCategoryId") Long firstCategoryId,

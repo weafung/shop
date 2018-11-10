@@ -114,6 +114,7 @@ public class GoodsServiceImpl implements GoodsService {
         BeanUtils.copyProperties(goods, simpleGoodsDTO);
         simpleGoodsDTO.setSalePrice(skuService.getMinSalePrice(goodsId));
         simpleGoodsDTO.setGoodsImage(goodsImageMapper.getImageUrlByGoodsId(goodsId));
+        simpleGoodsDTO.setGoodsDetailId(0L);
         return simpleGoodsDTO;
     }
 
@@ -130,6 +131,7 @@ public class GoodsServiceImpl implements GoodsService {
         BeanUtils.copyProperties(goods, simpleGoodsDTO);
         simpleGoodsDTO.setSalePrice(skuService.getMinSalePrice(goods.getGoodsId()));
         simpleGoodsDTO.setGoodsImage(goodsImageMapper.getImageUrlByGoodsId(goods.getGoodsId()));
+        simpleGoodsDTO.setGoodsDetailId(0L);
         return simpleGoodsDTO;
     }
 
