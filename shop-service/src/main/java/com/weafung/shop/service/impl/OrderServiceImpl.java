@@ -5,6 +5,7 @@ import com.weafung.shop.dao.OrderMapper;
 import com.weafung.shop.model.dto.ResponseDTO;
 import com.weafung.shop.model.dto.SimpleGoodsDTO;
 import com.weafung.shop.model.dto.SkuDTO;
+import com.weafung.shop.model.dto.SorderDTO;
 import com.weafung.shop.model.po.Sorder;
 import com.weafung.shop.service.GoodsService;
 import com.weafung.shop.service.OrderService;
@@ -12,11 +13,14 @@ import com.weafung.shop.service.SkuService;
 import com.weafung.shop.service.SnowFlakeService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author weifengshih
@@ -81,5 +85,15 @@ public class OrderServiceImpl implements OrderService {
             return ResponseDTO.build(CodeEnum.ORDER_INSERT_FAIL, Boolean.FALSE);
         }
         return ResponseDTO.buildSuccess(Boolean.TRUE);
+    }
+
+    @Override
+    public List<SorderDTO> listSorderByGorderId(Long gorderId) {
+        List<Sorder> sorderList = orderMapper.listOrderByGorderId(gorderId);
+        return sorderList.stream().map(sorder -> {
+            SorderDTO sorderDTO = new SorderDTO();
+            BeanUtils.copyProperties(sorder, sorderDTO);
+            return sorderDTO;
+        }).collect(Collectors.toList());
     }
 }

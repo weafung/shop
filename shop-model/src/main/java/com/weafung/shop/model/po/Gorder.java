@@ -15,7 +15,7 @@ public class Gorder implements Serializable {
 
     private Boolean isDeleted;
 
-    private String gorderId;
+    private Long gorderId;
 
     private String accountId;
 

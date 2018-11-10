@@ -2,9 +2,8 @@ package com.weafung.shop.service.impl;
 
 import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.dao.GorderMapper;
-import com.weafung.shop.model.dto.AddressDTO;
-import com.weafung.shop.model.dto.OrderItemDTO;
-import com.weafung.shop.model.dto.ResponseDTO;
+import com.weafung.shop.model.dto.*;
+import com.weafung.shop.model.po.Gorder;
 import com.weafung.shop.service.AddressService;
 import com.weafung.shop.service.GorderService;
 import com.weafung.shop.service.OrderService;
@@ -12,12 +11,15 @@ import com.weafung.shop.service.SnowFlakeService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author weifengshih
@@ -65,5 +67,23 @@ public class GorderServiceImpl implements GorderService {
             }
         }
         return ResponseDTO.buildSuccess(Boolean.TRUE);
+    }
+
+    @Override
+    public ResponseDTO<List<GorderDetailDTO>> listGorderDetail(String accountId, Long gorderId, Integer status) {
+        List<Gorder> gorderList = gorderMapper.listGorderPageByGorderIdAndStatus(accountId, gorderId, status);
+        List<GorderDetailDTO> list = gorderList.stream().map(gorder -> {
+            GorderDetailDTO gorderDetailDTO = new GorderDetailDTO();
+
+            GorderDTO gorderDTO = new GorderDTO();
+            BeanUtils.copyProperties(gorder, gorderDTO);
+            gorderDetailDTO.setGorderDTO(gorderDTO);
+
+            List<SorderDTO> sorderDTOList = orderService.listSorderByGorderId(gorderDTO.getGorderId());
+            gorderDetailDTO.setSorderDTOList(sorderDTOList);
+
+            return gorderDetailDTO;
+        }).collect(Collectors.toList());
+        return ResponseDTO.buildSuccess(list);
     }
 }

@@ -21,10 +21,17 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, gmt_create, gmt_modified, is_deleted, gorder_id, order_id, goods_id, sku_id, 
-    count, price, status
+    count, title, introduce, goods_detail_id, sale_price, market_price, money, status
   </sql>
   <insert id="insert" parameterType="com.weafung.shop.model.po.Sorder">
     insert into sorder (gorder_id, order_id,goods_id, sku_id, count,title, introduce, goods_detail_id, sale_price, market_price, money)
     values (#{gorderId}, #{orderId},#{goodsId}, #{skuId}, #{count},#{title}, #{introduce}, #{goodsDetailId},#{salePrice}, #{marketPrice}, #{money})
   </insert>
+
+  <select id="listOrderByGorderId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from sorder
+    where is_deleted = 0 and gorder_id = #{gorderId}
+    order by id asc
+  </select>
 </mapper>

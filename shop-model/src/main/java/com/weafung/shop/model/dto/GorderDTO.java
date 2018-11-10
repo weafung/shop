@@ -7,13 +7,15 @@ import lombok.Data;
  */
 @Data
 public class GorderDTO {
-    private String gorderId;
+    private Long gorderId;
 
     private String accountId;
 
     private Long addressId;
 
-    private Integer status;
+    private Byte status;
+
+    private Long orderTime;
 
     private Long payTime;
 
