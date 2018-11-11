@@ -7,9 +7,9 @@ import lombok.Data;
  */
 @Data
 public class SorderDTO {
-    private String gorderId;
+    private Long gorderId;
 
-    private String orderId;
+    private Long orderId;
 
     private Long goodsId;
 
