@@ -14,12 +14,14 @@ public class SnowFlakeServiceImpl implements SnowFlakeService {
     private SnowFlake goodsSnowFlake;
     private SnowFlake gorderSnowFlake;
     private SnowFlake orderSnowFlake;
+    private SnowFlake categorySnowFlake;
 
     public SnowFlakeServiceImpl() {
         addressSnowFlake = new SnowFlake(1L, 1L);
         goodsSnowFlake = new SnowFlake(2L, 1L);
         gorderSnowFlake = new SnowFlake(3L, 1L);
         orderSnowFlake = new SnowFlake(4L,1L);
+        categorySnowFlake = new SnowFlake(5L, 1L);
     }
 
     @Override
@@ -40,5 +42,10 @@ public class SnowFlakeServiceImpl implements SnowFlakeService {
     @Override
     public Long nextOrderId() {
         return orderSnowFlake.nextId();
+    }
+
+    @Override
+    public Long nextCategoryId() {
+        return categorySnowFlake.nextId();
     }
 }

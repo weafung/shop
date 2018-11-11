@@ -1,22 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.weafung.shop.dao.CategoryMapper">
-  <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.Category">
-    <result column="id" jdbcType="BIGINT" property="id" />
-    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
-    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
-    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
-    <result column="category_id" jdbcType="BIGINT" property="categoryId" />
-    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="image" jdbcType="VARCHAR" property="image" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.Category">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+        <result column="category_id" jdbcType="BIGINT" property="categoryId"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="image" jdbcType="VARCHAR" property="image"/>
+        <result column="rank" jdbcType="INTEGER" property="rank"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, gmt_create, gmt_modified, is_deleted, category_id, parent_id, title, image
   </sql>
-  <select id="listByCategoryId" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List" />
-    from category
-    where is_deleted = 0 and category_id = #{categoryId}
-  </select>
+    <select id="listByCategoryId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from category
+        where is_deleted = 0 and category_id = #{categoryId}
+        order by rank desc, id desc
+    </select>
+    <select id="listByParentId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from category
+        where is_deleted = 0 and parent_id = #{parentId} and category_id != #{parentId}
+        order by rank desc, id desc
+    </select>
+    <insert id="insert">
+        insert into category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            category_id, parent_id, title,
+            <if test="image != null">
+                image,
+            </if>
+            <if test="rank != null">
+                rank,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{categoryId}, #{parentId}, #{title},
+            <if test="image != null">
+                #{image},
+            </if>
+            <if test="rank != null">
+                #{rank},
+            </if>
+        </trim>
+    </insert>
 </mapper>

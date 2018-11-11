@@ -11,4 +11,6 @@ public interface SnowFlakeService {
     Long nextGorderId();
 
     Long nextOrderId();
+
+    Long nextCategoryId();
 }

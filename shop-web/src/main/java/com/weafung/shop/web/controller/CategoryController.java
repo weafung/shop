@@ -1,6 +1,7 @@
 package com.weafung.shop.web.controller;
 
-import com.weafung.shop.model.dto.CategoryDTO;
+import com.weafung.shop.common.constant.CodeEnum;
+import com.weafung.shop.model.dto.CategoryDetailDTO;
 import com.weafung.shop.model.dto.ResponseDTO;
 import com.weafung.shop.model.dto.SimpleGoodsDTO;
 import com.weafung.shop.model.vo.CategoryVO;
@@ -31,7 +32,13 @@ public class CategoryController {
     @RequestMapping(value = {"/", ""}, method = RequestMethod.GET)
     @ResponseBody
     public ResponseVO<CategoryVO> listCategories(@RequestParam Long categoryId) {
-        ResponseDTO<CategoryDTO> responseDTO = categoryService.listCategories(categoryId);
+        ResponseDTO<CategoryDetailDTO> responseDTO = categoryService.listCategories(categoryId);
+        if (responseDTO == null) {
+            return ResponseVO.build(CodeEnum.ERROR, null);
+        }
+        if (responseDTO.getData() == null) {
+            return ResponseVO.build(responseDTO.getCode(), null, responseDTO.getMsg());
+        }
         CategoryVO categoryVO = new CategoryVO();
         BeanUtils.copyProperties(responseDTO.getData(), categoryVO);
         return ResponseVO.buildSuccess(categoryVO);

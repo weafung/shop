@@ -3,12 +3,13 @@ package com.weafung.shop.model.dto;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
- * @author weifengshih
+ * @author weifeng
  */
 @Data
-public class CategoryDTO implements Serializable {
+public class CategoryDetailDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long categoryId;
@@ -18,6 +19,8 @@ public class CategoryDTO implements Serializable {
     private String title;
 
     private String image;
+
+    private List<CategoryDetailDTO> children;
 
     private Integer rank;
 }

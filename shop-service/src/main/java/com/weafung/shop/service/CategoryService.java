@@ -1,6 +1,6 @@
 package com.weafung.shop.service;
 
-import com.weafung.shop.model.dto.CategoryDTO;
+import com.weafung.shop.model.dto.CategoryDetailDTO;
 import com.weafung.shop.model.dto.GoodsDTO;
 import com.weafung.shop.model.dto.ResponseDTO;
 
@@ -10,8 +10,9 @@ public interface CategoryService {
      * @param categoryId
      * @return
      */
-    ResponseDTO<CategoryDTO> listCategories(Long categoryId);
+    ResponseDTO<CategoryDetailDTO> listCategories(Long categoryId);
 
     ResponseDTO<GoodsDTO> listGoods(Long categoryId);
 
+    ResponseDTO<Boolean> insertCategory(Long parentId, String title, String image, Integer rank);
 }
