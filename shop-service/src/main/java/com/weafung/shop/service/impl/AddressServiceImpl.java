@@ -87,9 +87,19 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressDTO getAddress(Long addressId) {
-        Address address = addressMapper.getAddressByAddressId(addressId);
-        return address2AddressDTO(address);
+    public ResponseDTO<AddressDTO> getAddress(String accountId, Long addressId) {
+        Address address;
+        if (addressId != null) {
+            // 通过 addressId 获取指定地址
+            address = addressMapper.getAddressByAddressId(addressId);
+        } else {
+            // 获取默认地址
+            address = addressMapper.getDefaultAddress(accountId);
+        }
+        if (address != null) {
+            return ResponseDTO.buildSuccess(address2AddressDTO(address));
+        }
+        return ResponseDTO.build(CodeEnum.ADDRESS_NOT_FOUND);
     }
 
     private AddressDTO address2AddressDTO(Address address) {

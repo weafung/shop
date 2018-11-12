@@ -15,4 +15,6 @@ public interface AddressMapper {
     int updateByAddressIdSelective(@Param("record") Address record, @Param("addressId") Long addressId);
 
     Address getAddressByAddressId(@Param("addressId") Long addressId);
+
+    Address getDefaultAddress(@Param("accountId") String accountId);
 }

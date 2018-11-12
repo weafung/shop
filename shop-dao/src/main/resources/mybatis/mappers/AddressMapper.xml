@@ -14,11 +14,20 @@
         <result column="detail" jdbcType="VARCHAR" property="detail"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="first" jdbcType="BIT" property="first"/>
     </resultMap>
     <sql id="Base_Column_List">
       id, gmt_create, gmt_modified, is_deleted, address_id, account_id, province, city,
-      district, detail, phone, name
+      district, detail, phone, name, first
     </sql>
+    <select id="getDefaultAddress" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from address
+        where account_id = #{accountId} and is_deleted = 0
+        order by first desc, address_id desc
+        limit 1
+    </select>
     <select id="listByAccountId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

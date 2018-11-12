@@ -28,6 +28,8 @@ public class Address implements Serializable {
 
     private String name;
 
+    private Boolean first;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -124,5 +126,13 @@ public class Address implements Serializable {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public Boolean getFirst() {
+        return first;
+    }
+
+    public void setFirst(Boolean first) {
+        this.first = first;
     }
 }

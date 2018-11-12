@@ -28,6 +28,8 @@ public class AddressDTO implements Serializable {
 
     private String name;
 
+    private Boolean first;
+
     public boolean validAddress() {
         return StringUtils.isNotBlank(province) && StringUtils.isNotBlank(city) && StringUtils.isNotBlank(district)
                 && StringUtils.isNotBlank(detail) && StringUtils.isNotBlank(phone) && StringUtils.isNotBlank(name);

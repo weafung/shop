@@ -44,7 +44,7 @@ public class GorderServiceImpl implements GorderService {
         if (StringUtils.isBlank(accountId) || Objects.isNull(addressId) || CollectionUtils.isEmpty(orderItemDTOSet)) {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Boolean.FALSE);
         }
-        AddressDTO addressDTO = addressService.getAddress(addressId);
+        AddressDTO addressDTO = addressService.getAddress(accountId, addressId).getData();
         if (addressDTO == null) {
             return ResponseDTO.build(CodeEnum.ADDRESS_NOT_FOUND, Boolean.FALSE);
         }

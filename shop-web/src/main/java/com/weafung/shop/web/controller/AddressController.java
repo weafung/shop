@@ -8,13 +8,11 @@ import com.weafung.shop.model.dto.ResponseDTO;
 import com.weafung.shop.model.vo.AddressVO;
 import com.weafung.shop.model.vo.ResponseVO;
 import com.weafung.shop.service.AddressService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,9 +22,28 @@ import java.util.stream.Collectors;
  */
 @Controller
 @RequestMapping("/api/mall/address")
+@Slf4j
 public class AddressController {
     @Autowired
     private AddressService addressService;
+
+    @RequestMapping(value = {"", "/"})
+    @ResponseBody
+    public ResponseVO<AddressVO> getAddress(@RequestParam(value = "addressId", required = false) Long addressId) {
+        String accountId = RequestHolder.getCurrentUser().getAccountId();
+        try {
+            ResponseDTO<AddressDTO> responseDTO = addressService.getAddress(accountId, addressId);
+            if (responseDTO.getData() == null) {
+                return ResponseVO.build(responseDTO.getCode(), null, responseDTO.getMsg());
+            }
+            AddressVO addressVO = new AddressVO();
+            BeanUtils.copyProperties(responseDTO.getData(), addressVO);
+            return ResponseVO.buildSuccess(addressVO);
+        } catch (Exception e) {
+            log.warn("get address failed.", e);
+        }
+        return ResponseVO.build(CodeEnum.ERROR);
+    }
 
     @RequestMapping(value = {"","/"}, method = RequestMethod.POST)
     @ResponseBody
@@ -70,7 +87,7 @@ public class AddressController {
         return ResponseVO.buildSuccess(Boolean.TRUE);
     }
 
-    @RequestMapping(value = {"/", ""}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/list/", "/list"}, method = RequestMethod.GET)
     @ResponseBody
     public ResponseVO<List<AddressVO>> listAddress() {
         String accountId = RequestHolder.getCurrentUser().getAccountId();
