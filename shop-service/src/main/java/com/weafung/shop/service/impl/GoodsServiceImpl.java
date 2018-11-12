@@ -1,13 +1,11 @@
 package com.weafung.shop.service.impl;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.dao.GoodsImageMapper;
 import com.weafung.shop.dao.GoodsMapper;
-import com.weafung.shop.model.dto.GoodsDTO;
-import com.weafung.shop.model.dto.GoodsImageDTO;
-import com.weafung.shop.model.dto.ResponseDTO;
-import com.weafung.shop.model.dto.SimpleGoodsDTO;
+import com.weafung.shop.model.dto.*;
 import com.weafung.shop.model.po.Goods;
 import com.weafung.shop.model.po.GoodsImage;
 import com.weafung.shop.service.GoodsService;
@@ -20,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -137,7 +136,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public ResponseDTO<List<SimpleGoodsDTO>> listGoodsByCategoryId(Long firstCategoryId, Long secondCategoryId, Long thirdCategoryId) {
-        List<Goods> goodsList = goodsMapper.listGoodsByCategoryId(firstCategoryId,secondCategoryId,thirdCategoryId);
+        List<Goods> goodsList = goodsMapper.listGoodsByCategoryId(firstCategoryId, secondCategoryId, thirdCategoryId);
         if (CollectionUtils.isEmpty(goodsList)) {
             return ResponseDTO.buildSuccess(Lists.newArrayList());
         }
@@ -145,5 +144,29 @@ public class GoodsServiceImpl implements GoodsService {
                 .map(goods -> getSimpleGoodsByGoodsId(goods.getGoodsId()))
                 .filter(Objects::nonNull).collect(Collectors.toList());
         return ResponseDTO.buildSuccess(simpleGoodsDTOList);
+    }
+
+    @Override
+    public SimpleGoodsSkuDTO getGoodsSku(Long skuId) {
+        SimpleGoodsSkuDTO simpleGoodsSkuDTO = new SimpleGoodsSkuDTO();
+
+        SimpleGoodsDTO simpleGoodsDTO = getSimpleGoodsBySkuId(skuId);
+        simpleGoodsSkuDTO.setGoods(simpleGoodsDTO);
+        SkuDTO skuDTO = skuService.getSkuDTOBySkuId(skuId);
+        simpleGoodsSkuDTO.setSku(skuDTO);
+
+        return simpleGoodsSkuDTO;
+    }
+
+    @Override
+    public ResponseDTO<Map<Long, SimpleGoodsSkuDTO>> listGoodsSku(List<Long> skuIdList) {
+        if (CollectionUtils.isEmpty(skuIdList)) {
+            return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Maps.newHashMap());
+        }
+        Map<Long, SimpleGoodsSkuDTO> map = Maps.newHashMapWithExpectedSize(skuIdList.size());
+        for (Long skuId : skuIdList) {
+            map.put(skuId, getGoodsSku(skuId));
+        }
+        return ResponseDTO.buildSuccess(map);
     }
 }

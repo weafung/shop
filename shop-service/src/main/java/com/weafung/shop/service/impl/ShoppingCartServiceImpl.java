@@ -47,10 +47,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
         List<ShoppingCartDetailDTO> shoppingCartDetailDTOList = shoppingCartList.stream().map(shoppingCart -> {
             ShoppingCartDetailDTO shoppingCartDetailDTO = new ShoppingCartDetailDTO();
-            SimpleGoodsDTO simpleGoodsDTO = goodsService.getSimpleGoodsByGoodsId(shoppingCart.getGoodsId());
-            shoppingCartDetailDTO.setGoods(simpleGoodsDTO);
-            SkuDTO skuDTO = skuService.getSkuDTOBySkuId(shoppingCart.getSkuId());
-            shoppingCartDetailDTO.setSku(skuDTO);
+            SimpleGoodsSkuDTO simpleGoodsSkuDTO = goodsService.getGoodsSku(shoppingCart.getSkuId());
+            shoppingCartDetailDTO.setGoods(simpleGoodsSkuDTO.getGoods());
+            shoppingCartDetailDTO.setSku(simpleGoodsSkuDTO.getSku());
             shoppingCartDetailDTO.setCount(shoppingCart.getCount());
             return shoppingCartDetailDTO;
         }).collect(Collectors.toList());
