@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weafung.shop.dao.ChinaRegionMapper">
+    <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.ChinaRegion">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+        <result column="region_id" jdbcType="INTEGER" property="regionId"/>
+        <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="level" jdbcType="BIT" property="level"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+      id, gmt_create, gmt_modified, is_deleted, region_id, parent_id, name, level
+    </sql>
+    <select id="getByRegionId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from china_region
+        where is_deleted = 0 and region_id = #{regionId}
+        limit 1
+    </select>
+    <select id="getByName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from china_region
+        where is_deleted = 0 and name = #{name}
+        limit 1
+    </select>
+    <select id="listByParentId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from china_region
+        where is_deleted = 0 and parent_id = #{parentId}
+    </select>
+</mapper>

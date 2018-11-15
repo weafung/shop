@@ -47,7 +47,7 @@ public class AddressController {
 
     @RequestMapping(value = {"","/"}, method = RequestMethod.POST)
     @ResponseBody
-    public ResponseVO<Boolean> addAddress(AddressDTO addressDTO) {
+    public ResponseVO<Boolean> addAddress(@RequestBody AddressDTO addressDTO) {
         String accountId = RequestHolder.getCurrentUser().getAccountId();
         ResponseDTO<Boolean> responseDTO = addressService.insertAddress(accountId, addressDTO);
         if (responseDTO == null) {
@@ -61,7 +61,7 @@ public class AddressController {
 
     @RequestMapping(value = {"","/"}, method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseVO<Boolean> updateAddress(AddressDTO addressDTO) {
+    public ResponseVO<Boolean> updateAddress(@RequestBody AddressDTO addressDTO) {
         String accountId = RequestHolder.getCurrentUser().getAccountId();
         ResponseDTO<Boolean> responseDTO = addressService.updateAddress(accountId, addressDTO);
         if (responseDTO == null) {

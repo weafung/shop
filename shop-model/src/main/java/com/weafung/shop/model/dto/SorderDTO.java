@@ -2,11 +2,16 @@ package com.weafung.shop.model.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author weifengshih
  */
 @Data
-public class SorderDTO {
+public class SorderDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private Long gorderId;
 
     private Long orderId;

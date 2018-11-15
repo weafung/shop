@@ -17,4 +17,6 @@ public interface AddressMapper {
     Address getAddressByAddressId(@Param("addressId") Long addressId);
 
     Address getDefaultAddress(@Param("accountId") String accountId);
+
+//    int updateFirstByAddressId(@Param("accountId") String accountId, @Param("addressId") Long addressId);
 }

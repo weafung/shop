@@ -21,7 +21,7 @@
 
     <select id="selectByAccountIdAndSkuId" resultMap="BaseResultMap">
       select * from shopping_cart
-      where is_deleted = 0 and account_id = #{accountId} and goods_id = #{goodsId} and sku_id = #{skuId}
+      where is_deleted = 0 and account_id = #{accountId} and sku_id = #{skuId}
       limit 1
     </select>
 
