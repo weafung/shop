@@ -25,4 +25,8 @@ public class GorderDTO implements Serializable {
     private Long payTime;
 
     private Long confirmTime;
+
+    private Long money;
+
+    private Integer count;
 }

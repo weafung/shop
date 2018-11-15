@@ -31,5 +31,7 @@ public class SkuDTO implements Serializable {
 
     private Boolean onsale;
 
+    private List<GoodsImageDTO> skuImages;
+
     private List<SkuAttributeDTO> attributes;
 }

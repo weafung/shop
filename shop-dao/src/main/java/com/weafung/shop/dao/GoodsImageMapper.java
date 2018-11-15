@@ -11,5 +11,7 @@ public interface GoodsImageMapper {
 
     List<GoodsImage> listByGoodsId(Long goodsId);
 
+    List<GoodsImage> listBySkuId(Long skuId);
+
     int insert(Long goodsId, String imageUrl);
 }

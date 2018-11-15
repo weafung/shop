@@ -27,6 +27,12 @@
     where is_deleted = 0 and goods_id = #{goodsId}
   </select>
 
+  <select id="listBySkuId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from  goods_image
+    where is_deleted = 0 and sku_id = #{skuId}
+  </select>
+
   <update id="deleteByGoodsId">
     update goods_image
     set is_deleted = 1

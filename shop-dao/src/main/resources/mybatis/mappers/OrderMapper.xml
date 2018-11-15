@@ -13,6 +13,7 @@
     <result column="count" jdbcType="INTEGER" property="count" />
     <result column="title" jdbcType="VARCHAR" property="title"/>
     <result column="introduce" jdbcType="VARCHAR" property="introduce"/>
+    <result column="attribute" jdbcType="VARCHAR" property="attribute"/>
     <result column="goods_detail_id" jdbcType="BIGINT" property="goodsDetailId"/>
     <result column="sale_price" jdbcType="BIGINT" property="salePrice" />
     <result column="market_price" jdbcType="BIGINT" property="marketPrice" />
@@ -21,11 +22,11 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, gmt_create, gmt_modified, is_deleted, gorder_id, order_id, goods_id, sku_id, 
-    count, title, introduce, goods_detail_id, sale_price, market_price, money, status
+    count, title, introduce, attribute, goods_detail_id, sale_price, market_price, money, status
   </sql>
   <insert id="insert" parameterType="com.weafung.shop.model.po.Sorder">
-    insert into sorder (gorder_id, order_id,goods_id, sku_id, count,title, introduce, goods_detail_id, sale_price, market_price, money)
-    values (#{gorderId}, #{orderId},#{goodsId}, #{skuId}, #{count},#{title}, #{introduce}, #{goodsDetailId},#{salePrice}, #{marketPrice}, #{money})
+    insert into sorder (gorder_id, order_id,goods_id, sku_id, count,title, introduce, attribute, goods_detail_id, sale_price, market_price, money)
+    values (#{gorderId}, #{orderId},#{goodsId}, #{skuId}, #{count},#{title}, #{introduce},#{attribute}, #{goodsDetailId},#{salePrice}, #{marketPrice}, #{money})
   </insert>
 
   <select id="listOrderByGorderId" resultMap="BaseResultMap">

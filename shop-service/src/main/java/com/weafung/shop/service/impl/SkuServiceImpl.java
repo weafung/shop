@@ -7,6 +7,7 @@ import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.dao.SkuMapper;
 import com.weafung.shop.model.dto.*;
 import com.weafung.shop.model.po.Sku;
+import com.weafung.shop.service.GoodsImageService;
 import com.weafung.shop.service.SkuAttributeNameService;
 import com.weafung.shop.service.SkuAttributeValueService;
 import com.weafung.shop.service.SkuService;
@@ -32,6 +33,8 @@ public class SkuServiceImpl implements SkuService {
 
     @Autowired
     private SkuAttributeValueService skuAttributeValueService;
+    @Autowired
+    private GoodsImageService goodsImageService;
 
     @Override
     public ResponseDTO<List<SkuDTO>> listSku(Long goodsId) {
@@ -43,7 +46,8 @@ public class SkuServiceImpl implements SkuService {
             return ResponseDTO.buildSuccess(Lists.newArrayList());
         }
         List<SkuDTO> skuDTOList = skuList.stream().filter(sku -> StringUtils.isNotBlank(sku.getAttribute()))
-                .map(this::sku2SkuDTO).collect(Collectors.toList());
+                .map(this::sku2SkuDTO)
+                .collect(Collectors.toList());
         return ResponseDTO.buildSuccess(skuDTOList);
     }
 
@@ -75,6 +79,8 @@ public class SkuServiceImpl implements SkuService {
                 skuAttributeDTO.setAttributeValue(valueDTOResponseDTO.getData().getAttributeValue());
             }
         });
+        List<GoodsImageDTO> list = goodsImageService.listBySkuId(skuDTO.getSkuId());
+        skuDTO.setSkuImages(list);
         skuDTO.setAttributes(skuAttributeDTOS);
         return skuDTO;
     }

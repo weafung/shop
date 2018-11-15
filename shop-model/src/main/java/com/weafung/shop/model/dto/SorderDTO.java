@@ -3,6 +3,7 @@ package com.weafung.shop.model.dto;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author weifengshih
@@ -19,6 +20,10 @@ public class SorderDTO implements Serializable {
     private Long goodsId;
 
     private Long skuId;
+
+    private String skuImage;
+
+    private List<SkuAttributeDTO> attributes;
 
     private Integer count;
 

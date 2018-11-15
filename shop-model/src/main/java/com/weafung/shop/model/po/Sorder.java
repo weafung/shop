@@ -29,6 +29,8 @@ public class Sorder implements Serializable {
 
     private String introduce;
 
+    private String attribute;
+
     private Long salePrice;
 
     private Long marketPrice;

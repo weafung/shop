@@ -85,6 +85,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<Boolean> updateGoods(String accountId, Long skuId, Integer count) {
         SimpleGoodsDTO simpleGoodsDTO = goodsService.getSimpleGoodsBySkuId(skuId);
         if (simpleGoodsDTO == null) {
@@ -107,6 +108,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<Boolean> deleteGoods(String accountId, Long skuId) {
         boolean result = shoppingCartMapper.delete(accountId, skuId) > 0;
         if (result) {
