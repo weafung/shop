@@ -17,6 +17,7 @@
     </modules>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>4.12</junit.version>
         <spring.version>5.0.9.RELEASE</spring.version>
         <mybatis.version>3.4.6</mybatis.version>

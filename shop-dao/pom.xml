@@ -100,7 +100,7 @@
         <dependency>
             <groupId>com.weafung</groupId>
             <artifactId>shop-model</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
