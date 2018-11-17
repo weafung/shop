@@ -39,4 +39,11 @@
         order by gorder_id desc
         limit 10
     </select>
+
+    <update id="updateGorderStatus">
+        update gorder
+        set status = #{status}
+        where gorder_id = #{gorderId} and account_id = #{accountId}
+        limit 1
+    </update>
 </mapper>

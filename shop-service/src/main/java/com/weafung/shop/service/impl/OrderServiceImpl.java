@@ -49,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
                     accountId, gorderId, skuId, count);
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Boolean.FALSE);
         }
-        Long orderId = snowFlakeService.nextOrderId();
+        Long orderId = snowFlakeService.nextId(OrderService.class);
 
         Sorder sorder = new Sorder();
         sorder.setGorderId(gorderId);

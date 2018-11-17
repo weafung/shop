@@ -23,4 +23,9 @@
     from sku_attribute_value
     where is_deleted = 0 and attribute_value_id = #{attributeValueId}
   </select>
+
+  <insert id="insert">
+    insert into sku_attribute_value (attribute_value_id, attribute_value, attribute_name_id)
+    values (#{attributeValueId}, #{attributeValue}, #{attributeNameId})
+  </insert>
 </mapper>

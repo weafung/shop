@@ -12,4 +12,7 @@ public interface GorderMapper {
     List<Gorder> listGorderPageByGorderIdAndStatus(@Param("accountId") String accountId,
                                                    @Param("gorderId") Long gorderId,
                                                    @Param("status") Integer status);
+
+    int updateGorderStatus(@Param("accountId") String accountId, @Param("gorderId") Long gorderId,
+                           @Param("status") Integer status);
 }

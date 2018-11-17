@@ -27,7 +27,7 @@ public class OrderController {
     @RequestMapping(value = {"/", ""}, method = RequestMethod.GET)
     @ResponseBody
     public ResponseVO<List<GorderDetailDTO>> listGorder(@RequestParam(value = "gorderId", required = false) Long gorderId,
-                                                      @RequestParam(value = "status", required = false) Integer status) {
+                                                        @RequestParam(value = "status", required = false) Integer status) {
         String accountId = RequestHolder.getCurrentUser().getAccountId();
         ResponseDTO<List<GorderDetailDTO>> responseDTO = gorderService.listGorderDetail(accountId, gorderId, status);
         return ResponseVO.buildSuccess(responseDTO.getData());
@@ -51,5 +51,41 @@ public class OrderController {
             return ResponseVO.build(CodeEnum.ORDER_INSERT_FAIL.getCode(), Boolean.FALSE, e.getMessage());
         }
         return ResponseVO.buildSuccess(Boolean.TRUE);
+    }
+
+    @RequestMapping(value = {"/pay/", "/pay"}, method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseVO<Boolean> pay(@RequestParam("gorderId") Long gorderId) {
+        String accountId = RequestHolder.getCurrentUser().getAccountId();
+        ResponseDTO<Boolean> responseDTO;
+        try {
+            responseDTO = gorderService.confirmPay(accountId, gorderId);
+            if (responseDTO.getData()) {
+                return ResponseVO.buildSuccess(Boolean.TRUE);
+            }
+            return ResponseVO.build(responseDTO.getCode(), Boolean.FALSE, responseDTO.getMsg());
+        } catch (Exception e) {
+            log.warn("pay failed. exception: {}", e);
+            return ResponseVO.build(CodeEnum.ORDER_INSERT_FAIL.getCode(), Boolean.FALSE, e.getMessage());
+        }
+
+    }
+
+    @RequestMapping(value = {"/received/", "/received"}, method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseVO<Boolean> received(@RequestParam("gorderId") Long gorderId) {
+        String accountId = RequestHolder.getCurrentUser().getAccountId();
+        ResponseDTO<Boolean> responseDTO;
+        try {
+            responseDTO = gorderService.confirmReceived(accountId, gorderId);
+            if (responseDTO.getData()) {
+                return ResponseVO.buildSuccess(Boolean.TRUE);
+            }
+            return ResponseVO.build(responseDTO.getCode(), Boolean.FALSE, responseDTO.getMsg());
+        } catch (Exception e) {
+            log.warn("received failed. exception: {}", e);
+            return ResponseVO.build(CodeEnum.ORDER_INSERT_FAIL.getCode(), Boolean.FALSE, e.getMessage());
+        }
+
     }
 }

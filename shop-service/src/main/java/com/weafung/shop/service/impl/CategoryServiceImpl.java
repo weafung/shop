@@ -75,7 +75,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (parentId == null || StringUtils.isBlank(title)) {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Boolean.FALSE);
         }
-        Long categoryId = snowFlakeService.nextCategoryId();
+        Long categoryId = snowFlakeService.nextId(CategoryService.class);
         title = StringUtils.trimToEmpty(title);
         image = StringUtils.trimToEmpty(image);
         rank = rank == null ? 0 : rank;

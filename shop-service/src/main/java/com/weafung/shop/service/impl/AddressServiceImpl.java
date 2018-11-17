@@ -52,7 +52,7 @@ public class AddressServiceImpl implements AddressService {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Boolean.FALSE);
         }
         addressDTO.setAccountId(accountId);
-        addressDTO.setAddressId(snowFlakeService.nextAddressId());
+        addressDTO.setAddressId(snowFlakeService.nextId(AddressService.class));
         Address address = new Address();
         BeanUtils.copyProperties(addressDTO, address);
         boolean insertSuccess = addressMapper.insertSelective(address) > 0;

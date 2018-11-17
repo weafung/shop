@@ -16,4 +16,10 @@ public interface GorderService {
     ResponseDTO<Boolean> checkOut(String accountId, Long addressId, Set<OrderItemDTO> orderItemDTOSet);
 
     ResponseDTO<List<GorderDetailDTO>> listGorderDetail(String accountId, Long gorderId, Integer status);
+
+    ResponseDTO<Boolean> confirmPay(String accountId, Long gorderId);
+
+    ResponseDTO<Boolean> confirmReceived(String accountId, Long gorderId);
+
+
 }

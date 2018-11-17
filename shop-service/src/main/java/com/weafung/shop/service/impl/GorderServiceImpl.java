@@ -2,6 +2,7 @@ package com.weafung.shop.service.impl;
 
 import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.dao.GorderMapper;
+import com.weafung.shop.model.constant.MallConstant;
 import com.weafung.shop.model.dto.*;
 import com.weafung.shop.model.po.Gorder;
 import com.weafung.shop.service.*;
@@ -47,13 +48,15 @@ public class GorderServiceImpl implements GorderService {
         if (addressDTO == null) {
             return ResponseDTO.build(CodeEnum.ADDRESS_NOT_FOUND, Boolean.FALSE);
         }
-        Long gorderId = snowFlakeService.nextGorderId();
+        Long gorderId = snowFlakeService.nextId(GorderService.class);
         Long currentTimeMillis = System.currentTimeMillis();
+        // 创建大订单
         if (gorderMapper.insert(gorderId, accountId, addressId, currentTimeMillis) <= 0) {
             log.error("create gorder failed. accountId: {}, addredssId: {}, orderItems: {}",
                     accountId, addressId, orderItemDTOSet);
             throw new RuntimeException("create gorder failed");
         }
+        // 创建小订单
         for (OrderItemDTO orderItemDTO : orderItemDTOSet) {
             ResponseDTO<Boolean> orderResponseDTO = orderService.createOrder(accountId, gorderId,
                     orderItemDTO.getSkuId(), orderItemDTO.getCount());
@@ -99,5 +102,25 @@ public class GorderServiceImpl implements GorderService {
             return gorderDetailDTO;
         }).collect(Collectors.toList());
         return ResponseDTO.buildSuccess(list);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseDTO<Boolean> confirmPay(String accountId, Long gorderId) {
+        boolean updateSuccess = gorderMapper.updateGorderStatus(accountId, gorderId, MallConstant.GORDER_STATUS_WAIT_SEND) > 0;
+        if (updateSuccess) {
+            return ResponseDTO.buildSuccess(Boolean.TRUE);
+        }
+        return ResponseDTO.build(CodeEnum.GORDER_PAY_FAIL);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseDTO<Boolean> confirmReceived(String accountId, Long gorderId) {
+        boolean updateSuccess = gorderMapper.updateGorderStatus(accountId, gorderId, MallConstant.GORDER_STATUS_WAIT_COMMENT) > 0;
+        if (updateSuccess) {
+            return ResponseDTO.buildSuccess(Boolean.TRUE);
+        }
+        return ResponseDTO.build(CodeEnum.GORDER_PAY_FAIL);
     }
 }
