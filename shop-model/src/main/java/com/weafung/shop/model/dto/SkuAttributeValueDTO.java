@@ -12,7 +12,11 @@ public class SkuAttributeValueDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String attributeValueId;
+    private Long attributeNameId;
+
+    private String attributeName;
+
+    private Long attributeValueId;
 
     private String attributeValue;
 }

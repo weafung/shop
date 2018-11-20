@@ -3,6 +3,8 @@ package com.weafung.shop.service;
 import com.weafung.shop.model.dto.ResponseDTO;
 import com.weafung.shop.model.dto.SkuAttributeValueDTO;
 
+import java.util.List;
+
 /**
  * @author weifeng
  */
@@ -22,5 +24,11 @@ public interface SkuAttributeValueService {
     ResponseDTO<SkuAttributeValueDTO> getByAttributeNameId(Long attributeNameId);
 
     ResponseDTO<Boolean> addSkuAttributeValue(Long attributeNameId, String value);
+
+    ResponseDTO<List<SkuAttributeValueDTO>> listSkuAttributeValue();
+
+    ResponseDTO<Boolean> deleteByAttributeValueId(Long attributeValueId);
+
+    ResponseDTO<Boolean> updateByAttributeValueId(Long attributeValueId, String attributeValue);
 
 }

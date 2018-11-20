@@ -1,31 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.weafung.shop.dao.SkuAttributeValueMapper">
-  <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.SkuAttributeValue">
-    <result column="id" jdbcType="BIGINT" property="id" />
-    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
-    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
-    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
-    <result column="attribute_value_id" jdbcType="BIGINT" property="attributeValueId" />
-    <result column="attribute_value" jdbcType="VARCHAR" property="attributeValue" />
-    <result column="attribute_name_id" jdbcType="BIGINT" property="attributeNameId" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.weafung.shop.model.po.SkuAttributeValue">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="BIT" property="isDeleted"/>
+        <result column="attribute_value_id" jdbcType="BIGINT" property="attributeValueId"/>
+        <result column="attribute_value" jdbcType="VARCHAR" property="attributeValue"/>
+        <result column="attribute_name_id" jdbcType="BIGINT" property="attributeNameId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, gmt_create, gmt_modified, is_deleted, attribute_value_id, attribute_value, attribute_name_id
   </sql>
-  <select id="listByAttributeNameId" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List" />
-    from sku_attribute_value
-    where is_deleted = 0 and attribute_name_id = #{attributeNameId}
-  </select>
-  <select id="listByAttributeValueId" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List" />
-    from sku_attribute_value
-    where is_deleted = 0 and attribute_value_id = #{attributeValueId}
-  </select>
 
-  <insert id="insert">
+    <select id="listSkuAttributeValue" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sku_attribute_value
+        where is_deleted = 0
+        limit 1000
+    </select>
+
+    <select id="listByAttributeNameId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sku_attribute_value
+        where is_deleted = 0 and attribute_name_id = #{attributeNameId}
+        order by attributeNameId desc, id asc
+    </select>
+
+    <select id="listByAttributeValueId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sku_attribute_value
+        where is_deleted = 0 and attribute_value_id = #{attributeValueId}
+        order by attributeNameId desc, id asc
+    </select>
+
+    <insert id="insert">
     insert into sku_attribute_value (attribute_value_id, attribute_value, attribute_name_id)
     values (#{attributeValueId}, #{attributeValue}, #{attributeNameId})
   </insert>
+
+    <update id="deleteByAttributeValueId">
+        update sku_attribute_value
+        set is_deleted = 1
+        where attribute_value_id = #{attributeValueId} and is_deleted = 0
+        limit 1
+    </update>
+
+    <update id="update">
+        update sku_attribute_value
+        set attribute_value = #{attributeValue}
+        where attribute_value_id = #{attributeValueId}
+        limit 1
+    </update>
 </mapper>

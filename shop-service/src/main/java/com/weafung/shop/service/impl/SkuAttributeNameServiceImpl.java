@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author weifeng
  */
@@ -43,6 +46,41 @@ public class SkuAttributeNameServiceImpl implements SkuAttributeNameService {
         Long attributeNameId = snowFlakeService.nextId(SkuAttributeName.class);
         boolean insertSuccess = skuAttributeNameMapper.insert(attributeNameId, name) > 0;
         if (insertSuccess) {
+            return ResponseDTO.buildSuccess(Boolean.TRUE);
+        }
+        return ResponseDTO.build(CodeEnum.ERROR, Boolean.FALSE);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseDTO<Boolean> deleteByAttributeNameId(Long attributeNameId) {
+        if (attributeNameId == null) {
+            return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Boolean.FALSE);
+        }
+        boolean success = skuAttributeNameMapper.deleteByAttributeNameId(attributeNameId) > 0;
+        if (success) {
+            return ResponseDTO.buildSuccess(Boolean.TRUE);
+        }
+        return ResponseDTO.build(CodeEnum.ERROR, Boolean.FALSE);
+    }
+
+    @Override
+    public ResponseDTO<List<SkuAttributeNameDTO>> listSku() {
+        return ResponseDTO.buildSuccess(skuAttributeNameMapper.listSku().stream().map(skuAttributeName -> {
+            SkuAttributeNameDTO skuAttributeNameDTO = new SkuAttributeNameDTO();
+            BeanUtils.copyProperties(skuAttributeName, skuAttributeNameDTO);
+            return skuAttributeNameDTO;
+        }).collect(Collectors.toList()));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseDTO<Boolean> updateByAttributeNameId(Long attributeNameId, String attributeName) {
+        if (attributeNameId == null || StringUtils.isBlank(attributeName)) {
+            return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Boolean.FALSE);
+        }
+        boolean success = skuAttributeNameMapper.update(attributeNameId, attributeName) > 0;
+        if (success) {
             return ResponseDTO.buildSuccess(Boolean.TRUE);
         }
         return ResponseDTO.build(CodeEnum.ERROR, Boolean.FALSE);
