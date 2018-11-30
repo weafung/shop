@@ -13,4 +13,10 @@ public interface CategoryMapper {
     int insert(@Param("categoryId") Long categoryId, @Param("parentId") Long parentId,
                @Param("title") String title, @Param("image") String image,
                @Param("rank") Integer rank);
+
+    int delete(@Param("categoryId") Long categoryId);
+
+    int update(@Param("categoryId") Long categoryId,
+               @Param("title") String title, @Param("image") String image,
+               @Param("rank") Integer rank);
 }

@@ -15,4 +15,8 @@ public interface CategoryService {
     ResponseDTO<GoodsDTO> listGoods(Long categoryId);
 
     ResponseDTO<Boolean> insertCategory(Long parentId, String title, String image, Integer rank);
+
+    ResponseDTO<Boolean> updateCategory(Long categoryId, String title, String image, Integer rank);
+
+    ResponseDTO<Boolean> deleteCategory(Long categoryId);
 }

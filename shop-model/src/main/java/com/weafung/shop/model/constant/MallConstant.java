@@ -12,4 +12,5 @@ public interface MallConstant {
 
     int GORDER_STATUS_WAIT_COMMENT = 3;
 
+    long ROOT_CATEGORY_ID = 0L;
 }

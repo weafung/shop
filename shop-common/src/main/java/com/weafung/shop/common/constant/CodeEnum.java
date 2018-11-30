@@ -31,6 +31,8 @@ public enum CodeEnum {
      * 商品类目相关 3*****
      */
     CATEGORY_NOT_FOUND(300404, "类目不存在"),
+    CATEGORY_DELETE_FAILED(301500, "类目删除失败"),
+    CATEGORY_UPDATE_FAILED(302500, "类目编辑失败"),
 
     /**
      * 订单相关 4*****
