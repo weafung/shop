@@ -9,18 +9,34 @@
         <result column="gorder_id" jdbcType="BIGINT" property="gorderId"/>
         <result column="account_id" jdbcType="VARCHAR" property="accountId"/>
         <result column="address_id" jdbcType="BIGINT" property="addressId"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="district" jdbcType="VARCHAR" property="district"/>
+        <result column="detail" jdbcType="VARCHAR" property="detail"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="package_code" jdbcType="VARCHAR" property="packageCode"/>
         <result column="order_time" jdbcType="BIGINT" property="orderTime"/>
         <result column="pay_time" jdbcType="BIGINT" property="payTime"/>
         <result column="confirm_time" jdbcType="BIGINT" property="confirmTime"/>
+        <result column="package_time" jdbcType="BIGINT" property="packageTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-      id, gmt_create, gmt_modified, is_deleted, gorder_id, account_id, address_id, status,
-      order_time, pay_time, confirm_time
+      id, gmt_create, gmt_modified, is_deleted, gorder_id, account_id, address_id, province, city,
+      district, detail, phone, name, status,
+      order_time, pay_time, confirm_time,package_code,package_time
     </sql>
     <insert id="insert">
-      insert into gorder (gorder_id, account_id, address_id, order_time)
-      values (#{gorderId,jdbcType=VARCHAR}, #{accountId,jdbcType=VARCHAR}, #{addressId,jdbcType=BIGINT}, #{orderTime,jdbcType=BIGINT})
+      insert into gorder (gorder_id, account_id, address_id, order_time,
+      province,city,district,detail,phone,name)
+      values (#{gorderId,jdbcType=VARCHAR}, #{accountId,jdbcType=VARCHAR}, #{addressId,jdbcType=BIGINT}, #{orderTime,jdbcType=BIGINT},
+        #{province,jdbcType=VARCHAR},
+        #{city,jdbcType=VARCHAR},
+        #{district,jdbcType=VARCHAR},
+        #{detail,jdbcType=VARCHAR},
+        #{phone,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR})
     </insert>
 
     <select id="listGorderPageByGorderIdAndStatus" resultMap="BaseResultMap">
@@ -44,6 +60,89 @@
         update gorder
         set status = #{status}
         where gorder_id = #{gorderId} and account_id = #{accountId}
+        limit 1
+    </update>
+
+    <update id="payGorder">
+        update gorder
+        set status = 1, pay_time = #{payTime}
+        where gorder_id = #{gorderId} and account_id = #{accountId}
+        limit 1
+    </update>
+
+    <update id="receiveGorder">
+        update gorder
+        set status = 3, confirm_time = #{confirmTime}
+        where gorder_id = #{gorderId} and account_id = #{accountId}
+        limit 1
+    </update>
+
+    <select id="listGorder" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from gorder
+        <where>
+            <if test="gorderId != null">
+                and gorder_id = #{gorderId}
+            </if>
+            <if test="phone != null">
+                and phone = #{phone}
+            </if>
+            <if test="name != null">
+                and name = #{name}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="orderTimeStart != null">
+                and order_time &gt;= #{orderTimeStart}
+            </if>
+            <if test="orderTimeEnd != null">
+                and order_time &lt;= #{orderTimeEnd}
+            </if>
+            <if test="payTimeStart != null">
+                and pay_time &gt;= #{payTimeStart}
+            </if>
+            <if test="payTimeEnd != null">
+                and pay_time &lt;= #{payTimeEnd}
+            </if>
+            <if test="packageTimeStart != null">
+                and package_time &gt;= #{packageTimeStart}
+            </if>
+            <if test="packageTimeEnd != null">
+                and package_time &lt;= #{packageTimeEnd}
+            </if>
+            <if test="confirmTimeStart != null">
+                and confirm_time &gt;= #{confirmTimeStart}
+            </if>
+            <if test="confirmTimeEnd != null">
+                and confirm_time &lt;= #{confirmTimeEnd}
+            </if>
+            <if test="startGorderId != null">
+                and gorder_id &lt;= #{startGorderId}
+            </if>
+            and is_deleted = 0
+        </where>
+        order by id desc
+        <if test="pageSize != null">
+            limit #{pageSize}
+        </if>
+        <if test="pageSize == null">
+            limit 100
+        </if>
+    </select>
+
+    <update id="packageGorder">
+        update gorder
+        set package_code = #{packageCode}, status = 2, package_time = #{packageTime}
+        where gorder_id = #{gorderId}
+        limit 1
+    </update>
+
+    <update id="adminDelete">
+        update gorder
+        set is_deleted = 1
+        where gorder_id = #{gorderId}
         limit 1
     </update>
 </mapper>

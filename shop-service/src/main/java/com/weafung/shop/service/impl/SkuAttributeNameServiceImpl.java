@@ -10,6 +10,8 @@ import com.weafung.shop.service.SnowFlakeService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +29,7 @@ public class SkuAttributeNameServiceImpl implements SkuAttributeNameService {
     private SnowFlakeService snowFlakeService;
 
     @Override
+    @Cacheable(value = "skuAttributeNameCache", key = "#attributeNameId")
     public ResponseDTO<SkuAttributeNameDTO> getByAttributeNameId(Long attributeNameId) {
         SkuAttributeName skuAttributeName = skuAttributeNameMapper.getByAttributeNameId(attributeNameId);
         if (skuAttributeName == null) {
@@ -53,6 +56,7 @@ public class SkuAttributeNameServiceImpl implements SkuAttributeNameService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = "skuAttributeNameCache", key = "#attributeNameId")
     public ResponseDTO<Boolean> deleteByAttributeNameId(Long attributeNameId) {
         if (attributeNameId == null) {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Boolean.FALSE);
@@ -75,6 +79,7 @@ public class SkuAttributeNameServiceImpl implements SkuAttributeNameService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = "skuAttributeNameCache", key = "#attributeNameId")
     public ResponseDTO<Boolean> updateByAttributeNameId(Long attributeNameId, String attributeName) {
         if (attributeNameId == null || StringUtils.isBlank(attributeName)) {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Boolean.FALSE);

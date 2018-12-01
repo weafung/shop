@@ -11,6 +11,8 @@ import com.weafung.shop.service.SkuService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +35,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private SkuService skuService;
 
     @Override
+    @Cacheable(value = "shoppingCartCache", key = "#accountId")
     public ResponseDTO<ShoppingCartDTO> getShoppingCart(String accountId) {
         if (StringUtils.isBlank(accountId)) {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY);
@@ -59,6 +62,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = "shoppingCartCache", key = "#accountId")
     public ResponseDTO<Boolean> addGoods(String accountId, Long goodsId, Long skuId, Integer count) {
         SimpleGoodsDTO simpleGoodsDTO = goodsService.getSimpleGoodsByGoodsId(goodsId);
         if (simpleGoodsDTO == null) {
@@ -86,6 +90,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = "shoppingCartCache", key = "#accountId")
     public ResponseDTO<Boolean> updateGoods(String accountId, Long skuId, Integer count) {
         SimpleGoodsDTO simpleGoodsDTO = goodsService.getSimpleGoodsBySkuId(skuId);
         if (simpleGoodsDTO == null) {
@@ -109,6 +114,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = "shoppingCartCache", key = "#accountId")
     public ResponseDTO<Boolean> deleteGoods(String accountId, Long skuId) {
         boolean result = shoppingCartMapper.delete(accountId, skuId) > 0;
         if (result) {

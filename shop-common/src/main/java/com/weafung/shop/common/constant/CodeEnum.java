@@ -42,6 +42,8 @@ public enum CodeEnum {
     ORDER_INSERT_FAIL(402500, "创建订单失败"),
 
     GORDER_PAY_FAIL(403500, "订单支付失败"),
+    GORDER_PACKAGE_FAIL(404500, "发货失败"),
+    GORDER_DELETE_FAIL(405500, "订单删除失败"),
 
     /**
      * 地址相关 5*****

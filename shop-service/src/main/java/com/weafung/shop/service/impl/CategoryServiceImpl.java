@@ -15,6 +15,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
     private SnowFlakeService snowFlakeService;
 
     @Override
-//    @Cacheable(value = "goodsCategory", key = "#categoryId")
+    @Cacheable(value = "categoryCache", key = "0")
     public ResponseDTO<CategoryDetailDTO> listCategories(Long categoryId) {
         List<Category> categoryList = categoryMapper.listByCategoryId(categoryId);
         if (CollectionUtils.isEmpty(categoryList)) {
@@ -74,6 +76,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = "categoryCache", key = "0")
     public ResponseDTO<Boolean> insertCategory(Long parentId, String title, String image, Integer rank) {
         if (parentId == null || StringUtils.isBlank(title)) {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Boolean.FALSE);
@@ -93,6 +96,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = "categoryCache", key = "0")
     public ResponseDTO<Boolean> deleteCategory(Long categoryId) {
         if (categoryId == null || categoryId == MallConstant.ROOT_CATEGORY_ID) {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Boolean.FALSE);
@@ -107,6 +111,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = "categoryCache", key = "0")
     public ResponseDTO<Boolean> updateCategory(Long categoryId, String title, String image, Integer rank) {
         if (categoryId == null || categoryId == MallConstant.ROOT_CATEGORY_ID) {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Boolean.FALSE);

@@ -1,9 +1,11 @@
 package com.weafung.shop.service;
 
 
+import com.weafung.shop.model.dto.AdminGorderDTO;
 import com.weafung.shop.model.dto.GorderDetailDTO;
 import com.weafung.shop.model.dto.OrderItemDTO;
 import com.weafung.shop.model.dto.ResponseDTO;
+import com.weafung.shop.model.query.AdminGorderQuery;
 
 import java.util.List;
 import java.util.Set;
@@ -21,5 +23,10 @@ public interface GorderService {
 
     ResponseDTO<Boolean> confirmReceived(String accountId, Long gorderId);
 
+    ResponseDTO<List<AdminGorderDTO>> listGorderByPage(AdminGorderQuery query);
+
+    ResponseDTO<Boolean> packageGorder(Long gorderId, String packageCode);
+
+    ResponseDTO<Boolean> deleteGorder(Long gorderId);
 
 }

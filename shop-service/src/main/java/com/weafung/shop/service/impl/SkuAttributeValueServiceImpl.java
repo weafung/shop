@@ -12,6 +12,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +34,7 @@ public class SkuAttributeValueServiceImpl implements SkuAttributeValueService {
     private SnowFlakeService snowFlakeService;
 
     @Override
+    @Cacheable(value = "skuAttributeValueCache", key = "#attributeValueId")
     public ResponseDTO<SkuAttributeValueDTO> getByAttributeValueId(Long attributeValueId) {
         List<SkuAttributeValue> skuAttributeValueList = skuAttributeValueMapper.listByAttributeValueId(attributeValueId);
         if (CollectionUtils.isEmpty(skuAttributeValueList)) {
@@ -42,6 +45,7 @@ public class SkuAttributeValueServiceImpl implements SkuAttributeValueService {
     }
 
     @Override
+    @Cacheable(value = "skuAttributeValueCache", key = "#attributeNameId")
     public ResponseDTO<SkuAttributeValueDTO> getByAttributeNameId(Long attributeNameId) {
         List<SkuAttributeValue> skuAttributeValueList = skuAttributeValueMapper.listByAttributeNameId(attributeNameId);
         if (CollectionUtils.isEmpty(skuAttributeValueList)) {
@@ -52,6 +56,7 @@ public class SkuAttributeValueServiceImpl implements SkuAttributeValueService {
     }
 
     @Override
+    @CacheEvict(value = "skuAttributeValueCache", key = "#attributeNameId")
     public ResponseDTO<Boolean> addSkuAttributeValue(Long attributeNameId, String value) {
         if (StringUtils.isBlank(value)) {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Boolean.FALSE);
@@ -87,6 +92,7 @@ public class SkuAttributeValueServiceImpl implements SkuAttributeValueService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = "skuAttributeValueCache", key = "#attributeValueId")
     public ResponseDTO<Boolean> deleteByAttributeValueId(Long attributeValueId) {
         if (attributeValueId == null) {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Boolean.FALSE);
@@ -100,6 +106,7 @@ public class SkuAttributeValueServiceImpl implements SkuAttributeValueService {
     }
 
     @Override
+    @CacheEvict(value = "skuAttributeValueCache", key = "#attributeValueId")
     public ResponseDTO<Boolean> updateByAttributeValueId(Long attributeValueId, String attributeValue) {
         if (attributeValueId == null || StringUtils.isBlank(attributeValue)) {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Boolean.FALSE);
