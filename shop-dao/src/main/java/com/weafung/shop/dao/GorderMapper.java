@@ -36,4 +36,7 @@ public interface GorderMapper {
     int packageGorder(@Param("gorderId") Long gorderId, @Param("packageCode") String packageCode, @Param("packageTime") Long packageTime);
 
     int adminDelete(@Param("gorderId") Long gorderId);
+
+    Gorder getGorder(@Param("gorderId") Long gorderId);
+
 }

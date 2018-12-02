@@ -45,6 +45,8 @@ public enum CodeEnum {
     GORDER_PACKAGE_FAIL(404500, "发货失败"),
     GORDER_DELETE_FAIL(405500, "订单删除失败"),
 
+    GORDER_NOT_FOUND(406404, "订单不存在"),
+
     /**
      * 地址相关 5*****
      */

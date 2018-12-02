@@ -40,6 +40,18 @@ public class GorderServiceImpl implements GorderService {
     private GorderMapper gorderMapper;
 
     @Override
+    public ResponseDTO<GorderDetailDTO> getGorderDetail(Long gorderId) {
+        if (gorderId == null) {
+            return ResponseDTO.build(CodeEnum.PARAM_EMPTY);
+        }
+        Gorder gorder = gorderMapper.getGorder(gorderId);
+        if (gorder == null) {
+            return ResponseDTO.build(CodeEnum.GORDER_NOT_FOUND);
+        }
+        return ResponseDTO.buildSuccess(gorder2GorderDetailDTO(gorder));
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseDTO<Boolean> checkOut(String accountId, Long addressId, Set<OrderItemDTO> orderItemDTOSet) {
         if (StringUtils.isBlank(accountId) || Objects.isNull(addressId) || CollectionUtils.isEmpty(orderItemDTOSet)) {
@@ -83,27 +95,7 @@ public class GorderServiceImpl implements GorderService {
     @Override
     public ResponseDTO<List<GorderDetailDTO>> listGorderDetail(String accountId, Long gorderId, Integer status) {
         List<Gorder> gorderList = gorderMapper.listGorderPageByGorderIdAndStatus(accountId, gorderId, status);
-        List<GorderDetailDTO> list = gorderList.stream().map(gorder -> {
-            GorderDetailDTO gorderDetailDTO = new GorderDetailDTO();
-
-            GorderDTO gorderDTO = new GorderDTO();
-            BeanUtils.copyProperties(gorder, gorderDTO);
-
-            List<SorderDTO> sorderDTOList = orderService.listSorderByGorderId(gorderDTO.getGorderId());
-            gorderDetailDTO.setSorderDTOList(sorderDTOList);
-
-            long money = 0L;
-            int count = 0;
-            for (SorderDTO sorderDTO : sorderDTOList) {
-                money += sorderDTO.getMoney();
-                count += sorderDTO.getCount();
-            }
-            gorderDTO.setCount(count);
-            gorderDTO.setMoney(money);
-            gorderDetailDTO.setGorderDTO(gorderDTO);
-
-            return gorderDetailDTO;
-        }).collect(Collectors.toList());
+        List<GorderDetailDTO> list = gorderList.stream().map(this::gorder2GorderDetailDTO).collect(Collectors.toList());
         return ResponseDTO.buildSuccess(list);
     }
 
@@ -185,5 +177,27 @@ public class GorderServiceImpl implements GorderService {
             return ResponseDTO.buildSuccess(Boolean.TRUE);
         }
         return ResponseDTO.build(CodeEnum.GORDER_DELETE_FAIL, Boolean.FALSE);
+    }
+
+    private GorderDetailDTO gorder2GorderDetailDTO(Gorder gorder) {
+        GorderDetailDTO gorderDetailDTO = new GorderDetailDTO();
+
+        GorderDTO gorderDTO = new GorderDTO();
+        BeanUtils.copyProperties(gorder, gorderDTO);
+
+        List<SorderDTO> sorderDTOList = orderService.listSorderByGorderId(gorderDTO.getGorderId());
+        gorderDetailDTO.setSorderDTOList(sorderDTOList);
+
+        long money = 0L;
+        int count = 0;
+        for (SorderDTO sorderDTO : sorderDTOList) {
+            money += sorderDTO.getMoney();
+            count += sorderDTO.getCount();
+        }
+        gorderDTO.setCount(count);
+        gorderDTO.setMoney(money);
+        gorderDetailDTO.setGorderDTO(gorderDTO);
+
+        return gorderDetailDTO;
     }
 }

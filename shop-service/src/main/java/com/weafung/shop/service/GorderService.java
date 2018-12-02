@@ -15,6 +15,8 @@ import java.util.Set;
  */
 public interface GorderService {
 
+    ResponseDTO<GorderDetailDTO> getGorderDetail(Long gorderId);
+
     ResponseDTO<Boolean> checkOut(String accountId, Long addressId, Set<OrderItemDTO> orderItemDTOSet);
 
     ResponseDTO<List<GorderDetailDTO>> listGorderDetail(String accountId, Long gorderId, Integer status);

@@ -2,6 +2,7 @@ package com.weafung.shop.web.controller;
 
 import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.model.dto.AdminGorderDTO;
+import com.weafung.shop.model.dto.GorderDetailDTO;
 import com.weafung.shop.model.dto.ResponseDTO;
 import com.weafung.shop.model.query.AdminGorderQuery;
 import com.weafung.shop.model.vo.ResponseVO;
@@ -31,6 +32,21 @@ public class AdminOrderController {
             return ResponseVO.buildSuccess(responseDTO.getData());
         } catch (Exception e) {
             log.error("list gorder failed.", e);
+        }
+        return ResponseVO.build(CodeEnum.ERROR);
+    }
+
+    @RequestMapping(value = {"/detail/", "/detail"}, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseVO<GorderDetailDTO> getDetail(@RequestParam("gorderId") Long gorderId) {
+        try {
+            ResponseDTO<GorderDetailDTO> responseDTO = gorderService.getGorderDetail(gorderId);
+            if (responseDTO.getData() != null) {
+                return ResponseVO.buildSuccess(responseDTO.getData());
+            }
+            return ResponseVO.build(responseDTO.getCode(), null, responseDTO.getMsg());
+        } catch (Exception e) {
+            log.error("get gorder detail failed.", e);
         }
         return ResponseVO.build(CodeEnum.ERROR);
     }

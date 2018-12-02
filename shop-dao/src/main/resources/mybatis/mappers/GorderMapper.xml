@@ -145,4 +145,11 @@
         where gorder_id = #{gorderId}
         limit 1
     </update>
+
+    <select id="getGorder" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from gorder
+        where is_deleted = 0 and gorder_id = #{gorderId}
+        limit 1
+    </select>
 </mapper>
