@@ -15,12 +15,11 @@
     <sql id="Base_Column_List">
     id, gmt_create, gmt_modified, is_deleted, category_id, parent_id, title, image, rank
   </sql>
-    <select id="listByCategoryId" resultMap="BaseResultMap">
+    <select id="getByCategoryId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from category
         where is_deleted = 0 and category_id = #{categoryId}
-        order by rank desc, id desc
     </select>
     <select id="listByParentId" resultMap="BaseResultMap">
         select

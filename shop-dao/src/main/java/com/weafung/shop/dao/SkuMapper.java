@@ -10,6 +10,8 @@ public interface SkuMapper {
 
     int countBySkuId(@Param("skuId") Long skuId);
 
+    int deleteBySkuId(@Param("skuId") Long skuId);
+
     Long selectMinSalePrice(@Param("goodsId") Long goodsId);
 
     List<Sku> listByGoodsId(@Param("goodsId") Long goodsId);

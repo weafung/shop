@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface CategoryMapper {
-    List<Category> listByCategoryId(Long categoryId);
+    Category getByCategoryId(Long categoryId);
 
     List<Category> listByParentId(Long parentId);
 

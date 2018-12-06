@@ -14,10 +14,12 @@
         <result column="introduce" jdbcType="VARCHAR" property="introduce"/>
         <result column="limit_per_order" jdbcType="INTEGER" property="limitPerOrder"/>
         <result column="free_delivery" jdbcType="BIT" property="freeDelivery"/>
+        <result column="hide" jdbcType="BIT" property="hide"/>
+
     </resultMap>
     <sql id="Base_Column_List">
       id, gmt_create, gmt_modified, is_deleted, goods_id, first_category_id, second_category_id,
-      third_category_id, title, introduce, limit_per_order, free_delivery
+      third_category_id, title, introduce, limit_per_order, free_delivery, hide
     </sql>
 
     <select id="listGoodsByCategoryId" resultMap="BaseResultMap">
@@ -80,4 +82,18 @@
         where s.is_deleted = 0 and s.sku_id = #{skuId} and s.goods_id = g.goods_id and g.is_deleted = 0
         limit 1
     </select>
+
+    <select id="listAdminGoods" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from goods as g
+        where is_deleted = 0
+        order by id desc
+    </select>
+
+    <update id="deleteGoods" >
+        update goods
+        set is_deleted = 1
+        where goods_id = #{goodsId} and is_deleted = 0
+        limit 1
+    </update>
 </mapper>

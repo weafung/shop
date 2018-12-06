@@ -1,5 +1,6 @@
 package com.weafung.shop.service;
 
+import com.weafung.shop.model.dto.CategoryDTO;
 import com.weafung.shop.model.dto.CategoryDetailDTO;
 import com.weafung.shop.model.dto.GoodsDTO;
 import com.weafung.shop.model.dto.ResponseDTO;
@@ -10,7 +11,7 @@ public interface CategoryService {
      * @param categoryId
      * @return
      */
-    ResponseDTO<CategoryDetailDTO> listCategories(Long categoryId);
+    ResponseDTO<CategoryDetailDTO> listAllCategories(Long categoryId);
 
     ResponseDTO<GoodsDTO> listGoods(Long categoryId);
 
@@ -19,4 +20,6 @@ public interface CategoryService {
     ResponseDTO<Boolean> updateCategory(Long categoryId, String title, String image, Integer rank);
 
     ResponseDTO<Boolean> deleteCategory(Long categoryId);
+
+    ResponseDTO<CategoryDTO> getCategory(Long categoryId);
 }

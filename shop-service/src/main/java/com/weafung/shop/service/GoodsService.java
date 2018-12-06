@@ -1,9 +1,6 @@
 package com.weafung.shop.service;
 
-import com.weafung.shop.model.dto.GoodsDTO;
-import com.weafung.shop.model.dto.ResponseDTO;
-import com.weafung.shop.model.dto.SimpleGoodsDTO;
-import com.weafung.shop.model.dto.SimpleGoodsSkuDTO;
+import com.weafung.shop.model.dto.*;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +15,9 @@ public interface GoodsService {
 
     ResponseDTO<Boolean> updateGoods(GoodsDTO goodsDTO);
 
+    ResponseDTO<Boolean> deleteGoods(Long goodsId);
+
+
     SimpleGoodsDTO getSimpleGoodsByGoodsId(Long goodsId);
 
     SimpleGoodsDTO getSimpleGoodsBySkuId(Long skuId);
@@ -27,4 +27,6 @@ public interface GoodsService {
     SimpleGoodsSkuDTO getGoodsSku(Long skuId);
 
     ResponseDTO<Map<Long, SimpleGoodsSkuDTO>> listGoodsSku(List<Long> skuIdList);
+
+    ResponseDTO<List<AdminGoodsDTO>> listAdminGoods();
 }

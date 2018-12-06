@@ -38,6 +38,10 @@
             <param-value>classpath:/spring/dispatcher-servlet.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
+        <multipart-config>
+            <max-file-size>2097152</max-file-size>
+            <max-request-size>4194304</max-request-size>
+        </multipart-config>
     </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>

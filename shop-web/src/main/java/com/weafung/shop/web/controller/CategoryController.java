@@ -32,7 +32,7 @@ public class CategoryController {
     @RequestMapping(value = {"/", ""}, method = RequestMethod.GET)
     @ResponseBody
     public ResponseVO<CategoryVO> listCategories(@RequestParam Long categoryId) {
-        ResponseDTO<CategoryDetailDTO> responseDTO = categoryService.listCategories(categoryId);
+        ResponseDTO<CategoryDetailDTO> responseDTO = categoryService.listAllCategories(categoryId);
         if (responseDTO == null) {
             return ResponseVO.build(CodeEnum.ERROR, null);
         }

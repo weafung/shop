@@ -27,6 +27,10 @@ public enum CodeEnum {
     SKU_ATTRIBUTE_NAME_NOT_FOUND(202404, "商品SKU属性名不存在"),
     SKU_ATTRIBUTE_VALUE_NOT_FOUND(203404, "商品SKU属性值不存在"),
     SKU_NOT_FOUND(204404, "商品SKU不存在"),
+    GOODS_DELETE_FAIL(205500, "商品删除失败"),
+    SKU_DELETE_FAIL(206500, "商品SKU删除失败"),
+
+
     /**
      * 商品类目相关 3*****
      */

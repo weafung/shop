@@ -15,4 +15,8 @@ public interface GoodsMapper {
     Goods updateSelective(@Param("goods") Goods goods);
 
     Goods getGoodsBySkuId(@Param("skuId") Long skuId);
+
+    List<Goods> listAdminGoods();
+
+    int deleteGoods(@Param("goodsId") Long goodsId);
 }

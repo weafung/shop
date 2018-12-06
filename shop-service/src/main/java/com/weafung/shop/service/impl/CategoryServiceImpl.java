@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.dao.CategoryMapper;
 import com.weafung.shop.model.constant.MallConstant;
+import com.weafung.shop.model.dto.CategoryDTO;
 import com.weafung.shop.model.dto.CategoryDetailDTO;
 import com.weafung.shop.model.dto.GoodsDTO;
 import com.weafung.shop.model.dto.ResponseDTO;
@@ -35,13 +36,23 @@ public class CategoryServiceImpl implements CategoryService {
     private SnowFlakeService snowFlakeService;
 
     @Override
-    @Cacheable(value = "categoryCache", key = "0")
-    public ResponseDTO<CategoryDetailDTO> listCategories(Long categoryId) {
-        List<Category> categoryList = categoryMapper.listByCategoryId(categoryId);
-        if (CollectionUtils.isEmpty(categoryList)) {
+    public ResponseDTO<CategoryDTO> getCategory(Long categoryId) {
+        Category category = categoryMapper.getByCategoryId(categoryId);
+        if (category == null) {
             return ResponseDTO.build(CodeEnum.CATEGORY_NOT_FOUND);
         }
-        Category category = categoryList.get(0);
+        CategoryDTO categoryDTO = new CategoryDTO();
+        BeanUtils.copyProperties(category, categoryDTO);
+        return ResponseDTO.buildSuccess(categoryDTO);
+    }
+
+    @Override
+    @Cacheable(value = "categoryCache", key = "0")
+    public ResponseDTO<CategoryDetailDTO> listAllCategories(Long categoryId) {
+        Category category = categoryMapper.getByCategoryId(categoryId);
+        if (category == null) {
+            return ResponseDTO.build(CodeEnum.CATEGORY_NOT_FOUND);
+        }
         CategoryDetailDTO categoryDetailDTO = new CategoryDetailDTO();
         BeanUtils.copyProperties(category, categoryDetailDTO);
         categoryDetailDTO.setChildren(getChildrenCategory(categoryId));
@@ -62,7 +73,8 @@ public class CategoryServiceImpl implements CategoryService {
             if (CollectionUtils.isNotEmpty(childrenCategoryDetailDTOS)) {
                 categoryDetailDTO.setChildren(childrenCategoryDetailDTOS);
             } else {
-                categoryDetailDTO.setChildren(Lists.newArrayList());
+//                categoryDetailDTO.setChildren(Lists.newArrayList());
+                categoryDetailDTO.setChildren(null);
             }
             childrenCategoryDetailDTOList.add(categoryDetailDTO);
         }

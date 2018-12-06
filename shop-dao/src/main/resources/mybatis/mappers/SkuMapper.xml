@@ -42,4 +42,11 @@
     select <include refid="Base_Column_List"/> from sku
     where is_deleted = 0 and goods_id = #{goodsId}
   </select>
+
+  <update id="deleteBySkuId">
+    update sku
+    set is_deleted = 1
+    where sku_id = #{skuId}
+    limit 1
+  </update>
 </mapper>

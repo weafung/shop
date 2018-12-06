@@ -8,6 +8,7 @@ import com.weafung.shop.dao.GoodsMapper;
 import com.weafung.shop.model.dto.*;
 import com.weafung.shop.model.po.Goods;
 import com.weafung.shop.model.po.GoodsImage;
+import com.weafung.shop.service.CategoryService;
 import com.weafung.shop.service.GoodsService;
 import com.weafung.shop.service.SkuService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,9 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     private SkuService skuService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @Override
     public ResponseDTO<GoodsDTO> getGoodsByGoodsId(Long goodsId) {
@@ -77,6 +81,21 @@ public class GoodsServiceImpl implements GoodsService {
         }
         return null;
     }
+
+    @Override
+    public ResponseDTO<Boolean> deleteGoods(Long goodsId) {
+        if (goodsId == null) {
+            return ResponseDTO.build(CodeEnum.PARAM_EMPTY);
+        }
+        boolean success = goodsMapper.deleteGoods(goodsId) > 0;
+        if (!success) {
+            log.warn("delete goods failed. goodsId:{}", goodsId);
+            return ResponseDTO.build(CodeEnum.GOODS_DELETE_FAIL, Boolean.FALSE);
+        }
+        return ResponseDTO.buildSuccess(Boolean.TRUE);
+    }
+
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -168,5 +187,40 @@ public class GoodsServiceImpl implements GoodsService {
             map.put(skuId, getGoodsSku(skuId));
         }
         return ResponseDTO.buildSuccess(map);
+    }
+
+    @Override
+    public ResponseDTO<List<AdminGoodsDTO>> listAdminGoods() {
+        List<AdminGoodsDTO> list = goodsMapper.listAdminGoods()
+                .stream().map(this::goods2AdminGoodsDTO).collect(Collectors.toList());
+        return ResponseDTO.buildSuccess(list);
+    }
+
+    private AdminGoodsDTO goods2AdminGoodsDTO(Goods goods) {
+        AdminGoodsDTO adminGoodsDTO = new AdminGoodsDTO();
+        adminGoodsDTO.setGoodsId(goods.getGoodsId());
+        adminGoodsDTO.setTitle(goods.getTitle());
+        adminGoodsDTO.setIntroduce(goods.getIntroduce());
+        adminGoodsDTO.setFirstCategoryId(goods.getFirstCategoryId());
+        adminGoodsDTO.setSecondCategoryId(goods.getSecondCategoryId());
+        adminGoodsDTO.setThirdCategoryId(goods.getThirdCategoryId());
+        try {
+            ResponseDTO<CategoryDTO> responseDTO = null;
+            responseDTO = categoryService.getCategory(goods.getFirstCategoryId());
+            if (Objects.equals(responseDTO.getCode(), CodeEnum.SUCCESS.getCode())) {
+                adminGoodsDTO.setFirstCategory(responseDTO.getData().getTitle());
+            }
+            responseDTO = categoryService.getCategory(goods.getSecondCategoryId());
+            if (Objects.equals(responseDTO.getCode(), CodeEnum.SUCCESS.getCode())) {
+                adminGoodsDTO.setSecondCategory(responseDTO.getData().getTitle());
+            }
+            responseDTO = categoryService.getCategory(goods.getThirdCategoryId());
+            if (Objects.equals(responseDTO.getCode(), CodeEnum.SUCCESS.getCode())) {
+                adminGoodsDTO.setThirdCategory(responseDTO.getData().getTitle());
+            }
+        } catch (Exception e) {
+            log.warn("get category detail failed. goods:{}", goods, e);
+        }
+        return adminGoodsDTO;
     }
 }

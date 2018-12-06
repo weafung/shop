@@ -27,7 +27,7 @@ public class AdminCategoryController {
     @ResponseBody
     public ResponseVO<CategoryVO> listCategories() {
         try {
-            ResponseDTO<CategoryDetailDTO> responseDTO = categoryService.listCategories(0L);
+            ResponseDTO<CategoryDetailDTO> responseDTO = categoryService.listAllCategories(0L);
             if (responseDTO.getData() == null) {
                 return ResponseVO.build(responseDTO.getCode(), null, responseDTO.getMsg());
             }

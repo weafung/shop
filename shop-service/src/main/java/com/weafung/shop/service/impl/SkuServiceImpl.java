@@ -11,6 +11,7 @@ import com.weafung.shop.service.GoodsImageService;
 import com.weafung.shop.service.SkuAttributeNameService;
 import com.weafung.shop.service.SkuAttributeValueService;
 import com.weafung.shop.service.SkuService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
  * @author weifeng
  */
 @Service
+@Slf4j
 public class SkuServiceImpl implements SkuService {
     @Autowired
     private SkuMapper skuMapper;
@@ -53,7 +55,7 @@ public class SkuServiceImpl implements SkuService {
 
     @Override
     public SkuDTO getSkuDTOBySkuId(Long skuId) {
-        if (skuId ==  null) {
+        if (skuId == null) {
             return null;
         }
         Sku sku = skuMapper.selectBySkuId(skuId);
@@ -61,6 +63,27 @@ public class SkuServiceImpl implements SkuService {
             return null;
         }
         return sku2SkuDTO(sku);
+    }
+
+    @Override
+    public boolean checkSkuId(Long skuId) {
+        return skuMapper.countBySkuId(skuId) > 0;
+    }
+
+    @Override
+    public Long getMinSalePrice(Long goodsId) {
+        Long minSalePrice = skuMapper.selectMinSalePrice(goodsId);
+        return minSalePrice != null ? minSalePrice : 99999999999L;
+    }
+
+    @Override
+    public ResponseDTO<Boolean> deleteSkuOfGoods(Long skuId) {
+        boolean success = skuMapper.deleteBySkuId(skuId) > 0;
+        if (!success) {
+            log.warn("delete sku failed. skuId:{}", skuId);
+            return ResponseDTO.build(CodeEnum.SKU_DELETE_FAIL, Boolean.FALSE);
+        }
+        return ResponseDTO.buildSuccess(Boolean.TRUE);
     }
 
     private SkuDTO sku2SkuDTO(Sku sku) {
@@ -85,14 +108,4 @@ public class SkuServiceImpl implements SkuService {
         return skuDTO;
     }
 
-    @Override
-    public boolean checkSkuId(Long skuId) {
-        return skuMapper.countBySkuId(skuId) > 0;
-    }
-
-    @Override
-    public Long getMinSalePrice(Long goodsId) {
-        Long minSalePrice = skuMapper.selectMinSalePrice(goodsId);
-        return minSalePrice != null ? minSalePrice : 99999999999L;
-    }
 }

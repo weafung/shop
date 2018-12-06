@@ -18,4 +18,7 @@ public interface SkuService {
     boolean checkSkuId(Long skuId);
 
     Long getMinSalePrice(Long goodsId);
+
+    ResponseDTO<Boolean> deleteSkuOfGoods(Long skuId);
+
 }

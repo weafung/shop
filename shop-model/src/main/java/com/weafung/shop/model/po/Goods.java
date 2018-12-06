@@ -28,6 +28,8 @@ public class Goods implements Serializable {
 
     private Boolean freeDelivery;
 
+    private Boolean hide;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -124,5 +126,13 @@ public class Goods implements Serializable {
 
     public void setFreeDelivery(Boolean freeDelivery) {
         this.freeDelivery = freeDelivery;
+    }
+
+    public Boolean getHide() {
+        return hide;
+    }
+
+    public void setHide(Boolean hide) {
+        this.hide = hide;
     }
 }
