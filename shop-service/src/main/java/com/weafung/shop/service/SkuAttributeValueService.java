@@ -21,7 +21,7 @@ public interface SkuAttributeValueService {
      * @param attributeNameId
      * @return
      */
-    ResponseDTO<SkuAttributeValueDTO> getByAttributeNameId(Long attributeNameId);
+    ResponseDTO<List<SkuAttributeValueDTO>> listByAttributeNameId(Long attributeNameId);
 
     ResponseDTO<Boolean> addSkuAttributeValue(Long attributeNameId, String value);
 

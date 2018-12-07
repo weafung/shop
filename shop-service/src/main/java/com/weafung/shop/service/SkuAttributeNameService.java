@@ -17,7 +17,7 @@ public interface SkuAttributeNameService {
 
     ResponseDTO<Boolean> deleteByAttributeNameId(Long attributeNameId);
 
-    ResponseDTO<List<SkuAttributeNameDTO>> listSku();
+    ResponseDTO<List<SkuAttributeNameDTO>> listSkuAttributeName();
 
     ResponseDTO<Boolean> updateByAttributeNameId(Long attributeNameId, String attributeName);
 

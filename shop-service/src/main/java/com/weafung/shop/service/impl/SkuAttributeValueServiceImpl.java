@@ -45,14 +45,12 @@ public class SkuAttributeValueServiceImpl implements SkuAttributeValueService {
     }
 
     @Override
-    @Cacheable(value = "skuAttributeValueCache", key = "#attributeNameId")
-    public ResponseDTO<SkuAttributeValueDTO> getByAttributeNameId(Long attributeNameId) {
+    public ResponseDTO<List<SkuAttributeValueDTO>> listByAttributeNameId(Long attributeNameId) {
         List<SkuAttributeValue> skuAttributeValueList = skuAttributeValueMapper.listByAttributeNameId(attributeNameId);
-        if (CollectionUtils.isEmpty(skuAttributeValueList)) {
-            return ResponseDTO.build(CodeEnum.SKU_ATTRIBUTE_VALUE_NOT_FOUND);
-        }
-        SkuAttributeValue skuAttributeValue = skuAttributeValueList.get(0);
-        return ResponseDTO.buildSuccess(skuAttributeValue2DTO(skuAttributeValue));
+        List<SkuAttributeValueDTO> skuAttributeValueDTOS = skuAttributeValueList.stream()
+                .map(this::skuAttributeValue2DTO)
+                .collect(Collectors.toList());
+        return ResponseDTO.buildSuccess(skuAttributeValueDTOS);
     }
 
     @Override

@@ -75,7 +75,7 @@ public class GoodsServiceImpl implements GoodsService {
             return goodsImageDTO;
         }).collect(Collectors.toList()));
         // 获取SKU信息
-        goodsDTO.setSkuList(skuService.listSku(goodsId).getData());
+        goodsDTO.setSkuList(skuService.listSkuOfGoods(goodsId).getData());
         return goodsDTO;
     }
 

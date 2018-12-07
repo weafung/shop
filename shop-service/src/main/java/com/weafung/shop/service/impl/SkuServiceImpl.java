@@ -39,7 +39,7 @@ public class SkuServiceImpl implements SkuService {
     private GoodsImageService goodsImageService;
 
     @Override
-    public ResponseDTO<List<SkuDTO>> listSku(Long goodsId) {
+    public ResponseDTO<List<SkuDTO>> listSkuOfGoods(Long goodsId) {
         if (goodsId == null) {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY);
         }
@@ -84,6 +84,26 @@ public class SkuServiceImpl implements SkuService {
             return ResponseDTO.build(CodeEnum.SKU_DELETE_FAIL, Boolean.FALSE);
         }
         return ResponseDTO.buildSuccess(Boolean.TRUE);
+    }
+
+    @Override
+    public ResponseDTO<List<SkuSpecDTO>> listSkuSpec() {
+        List<SkuAttributeNameDTO> skuAttributeNames = skuAttributeNameService.listSkuAttributeName().getData();
+        List<SkuSpecDTO> skuSpecDTOS = skuAttributeNames.stream().map(skuAttributeNameDTO -> {
+            SkuSpecDTO skuSpecDTO = new SkuSpecDTO();
+            skuSpecDTO.setId(skuAttributeNameDTO.getAttributeNameId());
+            skuSpecDTO.setLabel(skuAttributeNameDTO.getAttributeName());
+            List<SkuSpecDTO> children = skuAttributeValueService.listByAttributeNameId(skuAttributeNameDTO.getAttributeNameId())
+                    .getData().stream().map(skuAttributeValueDTO -> {
+                        SkuSpecDTO skuValueSpecDTO = new SkuSpecDTO();
+                        skuValueSpecDTO.setId(skuAttributeValueDTO.getAttributeValueId());
+                        skuValueSpecDTO.setLabel(skuAttributeValueDTO.getAttributeValue());
+                        return skuValueSpecDTO;
+                    }).collect(Collectors.toList());
+            skuSpecDTO.setChildren(children);
+            return skuSpecDTO;
+        }).collect(Collectors.toList());
+        return ResponseDTO.buildSuccess(skuSpecDTOS);
     }
 
     private SkuDTO sku2SkuDTO(Sku sku) {

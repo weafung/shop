@@ -2,6 +2,7 @@ package com.weafung.shop.service;
 
 import com.weafung.shop.model.dto.ResponseDTO;
 import com.weafung.shop.model.dto.SkuDTO;
+import com.weafung.shop.model.dto.SkuSpecDTO;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface SkuService {
      * @param goodsId
      * @return
      */
-    ResponseDTO<List<SkuDTO>> listSku(Long goodsId);
+    ResponseDTO<List<SkuDTO>> listSkuOfGoods(Long goodsId);
 
     SkuDTO getSkuDTOBySkuId(Long skuId);
 
@@ -21,4 +22,5 @@ public interface SkuService {
 
     ResponseDTO<Boolean> deleteSkuOfGoods(Long skuId);
 
+    ResponseDTO<List<SkuSpecDTO>> listSkuSpec();
 }

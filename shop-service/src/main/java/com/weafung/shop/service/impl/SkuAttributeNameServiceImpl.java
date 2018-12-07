@@ -69,7 +69,7 @@ public class SkuAttributeNameServiceImpl implements SkuAttributeNameService {
     }
 
     @Override
-    public ResponseDTO<List<SkuAttributeNameDTO>> listSku() {
+    public ResponseDTO<List<SkuAttributeNameDTO>> listSkuAttributeName() {
         return ResponseDTO.buildSuccess(skuAttributeNameMapper.listSku().stream().map(skuAttributeName -> {
             SkuAttributeNameDTO skuAttributeNameDTO = new SkuAttributeNameDTO();
             BeanUtils.copyProperties(skuAttributeName, skuAttributeNameDTO);

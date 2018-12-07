@@ -114,7 +114,7 @@ public class AdminGoodsController {
     @ResponseBody
     public ResponseVO<List<SkuDTO>> sku(@RequestParam("goodsId") Long goodsId) {
         try {
-            ResponseDTO<List<SkuDTO>> responseDTO = skuService.listSku(goodsId);
+            ResponseDTO<List<SkuDTO>> responseDTO = skuService.listSkuOfGoods(goodsId);
             return ResponseVO.buildSuccess(responseDTO.getData());
         } catch (Exception e) {
             log.error("list goods sku failed.", e);
