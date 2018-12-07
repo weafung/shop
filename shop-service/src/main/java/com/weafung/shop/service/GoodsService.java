@@ -1,6 +1,7 @@
 package com.weafung.shop.service;
 
 import com.weafung.shop.model.dto.*;
+import com.weafung.shop.model.query.AdminUpdateGoodsQuery;
 
 import java.util.List;
 import java.util.Map;
@@ -10,13 +11,6 @@ import java.util.Map;
  */
 public interface GoodsService {
     ResponseDTO<GoodsDTO> getGoodsByGoodsId(Long goodsId);
-
-    ResponseDTO<Boolean> saveGoods(GoodsDTO goodsDTO);
-
-    ResponseDTO<Boolean> updateGoods(GoodsDTO goodsDTO);
-
-    ResponseDTO<Boolean> deleteGoods(Long goodsId);
-
 
     SimpleGoodsDTO getSimpleGoodsByGoodsId(Long goodsId);
 
@@ -28,5 +22,15 @@ public interface GoodsService {
 
     ResponseDTO<Map<Long, SimpleGoodsSkuDTO>> listGoodsSku(List<Long> skuIdList);
 
-    ResponseDTO<List<AdminGoodsDTO>> listAdminGoods();
+    ResponseDTO<List<AdminGoodsDTO>> listGoodsForAdministrator();
+
+    ResponseDTO<List<String>> listImageOfGoods(Long goodsId);
+
+    ResponseDTO<Boolean> saveGoods(AdminUpdateGoodsQuery query);
+
+    ResponseDTO<Boolean> updateGoods(AdminUpdateGoodsQuery query);
+
+    ResponseDTO<Boolean> deleteGoods(Long goodsId);
+
+    ResponseDTO<Boolean> updateImagesOfGoods(Long goodsId, List<String> imageUrls);
 }

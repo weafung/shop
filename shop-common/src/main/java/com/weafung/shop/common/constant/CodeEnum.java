@@ -29,7 +29,9 @@ public enum CodeEnum {
     SKU_NOT_FOUND(204404, "商品SKU不存在"),
     GOODS_DELETE_FAIL(205500, "商品删除失败"),
     SKU_DELETE_FAIL(206500, "商品SKU删除失败"),
-
+    GOODS_UPDATE_FAIL(207500, "商品更新失败"),
+    IMAGE_OF_GOODS_UPDATE_FAIL(208500, "商品图片更新失败"),
+    GOODS_INSERT_FAIL(209500, "商品保存失败"),
 
     /**
      * 商品类目相关 3*****

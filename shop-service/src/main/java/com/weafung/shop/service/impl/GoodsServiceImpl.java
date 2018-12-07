@@ -8,11 +8,14 @@ import com.weafung.shop.dao.GoodsMapper;
 import com.weafung.shop.model.dto.*;
 import com.weafung.shop.model.po.Goods;
 import com.weafung.shop.model.po.GoodsImage;
+import com.weafung.shop.model.query.AdminUpdateGoodsQuery;
 import com.weafung.shop.service.CategoryService;
 import com.weafung.shop.service.GoodsService;
 import com.weafung.shop.service.SkuService;
+import com.weafung.shop.service.SnowFlakeService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +43,9 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private SnowFlakeService snowFlakeService;
 
     @Override
     public ResponseDTO<GoodsDTO> getGoodsByGoodsId(Long goodsId) {
@@ -75,11 +81,22 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResponseDTO<Boolean> saveGoods(GoodsDTO goodsDTO) {
-        if (goodsDTO == null) {
+    public ResponseDTO<Boolean> saveGoods(AdminUpdateGoodsQuery query) {
+        if (query == null || StringUtils.isBlank(query.getTitle())) {
             return ResponseDTO.build(CodeEnum.PARAM_EMPTY);
         }
-        return null;
+        query.setTitle(StringUtils.trimToEmpty(query.getTitle()));
+        query.setIntroduce(StringUtils.trimToEmpty(query.getIntroduce()));
+        Goods goods = new Goods();
+        BeanUtils.copyProperties(query, goods);
+        Long goodsId = snowFlakeService.nextId(GoodsService.class);
+        goods.setGoodsId(goodsId);
+        boolean success = goodsMapper.insertSelective(goods) > 0;
+        if (success) {
+            return ResponseDTO.buildSuccess(Boolean.TRUE);
+        }
+        log.warn("insert new goods failed. query: {}", query);
+        return ResponseDTO.build(CodeEnum.GOODS_INSERT_FAIL, Boolean.FALSE);
     }
 
     @Override
@@ -96,27 +113,42 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseDTO<Boolean> updateGoods(AdminUpdateGoodsQuery query) {
+        if (query == null || query.getGoodsId() == null) {
+            return ResponseDTO.build(CodeEnum.PARAM_EMPTY);
+        }
+        Goods goods = goodsMapper.getGoodsByGoodsId(query.getGoodsId());
+        if (goods == null) {
+            return ResponseDTO.build(CodeEnum.GOODS_NOT_FOUND, Boolean.FALSE);
+        }
+        BeanUtils.copyProperties(query, goods);
+        boolean success = goodsMapper.updateSelective(goods) > 0;
+        if (success) {
+            return ResponseDTO.buildSuccess(Boolean.TRUE);
+        }
+        return ResponseDTO.build(CodeEnum.GOODS_UPDATE_FAIL, Boolean.FALSE);
+
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResponseDTO<Boolean> updateGoods(GoodsDTO goodsDTO) {
-        if (goodsDTO == null || goodsDTO.getGoodsId() == null) {
-            return ResponseDTO.build(CodeEnum.PARAM_EMPTY);
+    public ResponseDTO<Boolean> updateImagesOfGoods(Long goodsId, List<String> imageUrls) {
+        try {
+            // 删除原来的照片
+            goodsImageMapper.deleteByGoodsId(goodsId);
+            // 添加新照片
+            if (CollectionUtils.isNotEmpty(imageUrls)) {
+                imageUrls.stream().map(StringUtils::trimToEmpty)
+                        .filter(StringUtils::isNotBlank)
+                        .forEach(url -> goodsImageMapper.insert(goodsId, url));
+            }
+            return ResponseDTO.buildSuccess(Boolean.TRUE);
+        } catch (Exception e) {
+            log.warn("update image of goods failed. goodsId: {}, urls: {}", goodsId, imageUrls, e);
+            throw new RuntimeException(e.getMessage());
         }
-        Goods goods = goodsMapper.getGoodsByGoodsId(goodsDTO.getGoodsId());
-        if (goods == null) {
-            return null;
-        }
-        BeanUtils.copyProperties(goodsDTO, goods);
-        goodsMapper.updateSelective(goods);
-        // 删除原来的照片
-        goodsImageMapper.deleteByGoodsId(goodsDTO.getGoodsId());
-        // 添加新照片
-        if (CollectionUtils.isNotEmpty(goodsDTO.getGoodsImageList())) {
-            goodsDTO.getGoodsImageList()
-                    .forEach(goodsImageDTO -> goodsImageMapper.insert(goodsDTO.getGoodsId(), goodsImageDTO.getImageUrl()));
-        }
-        return ResponseDTO.buildSuccess(Boolean.TRUE);
     }
 
     @Override
@@ -190,11 +222,22 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public ResponseDTO<List<AdminGoodsDTO>> listAdminGoods() {
+    public ResponseDTO<List<AdminGoodsDTO>> listGoodsForAdministrator() {
         List<AdminGoodsDTO> list = goodsMapper.listAdminGoods()
                 .stream().map(this::goods2AdminGoodsDTO).collect(Collectors.toList());
         return ResponseDTO.buildSuccess(list);
     }
+
+    @Override
+    public ResponseDTO<List<String>> listImageOfGoods(Long goodsId) {
+        if (goodsId == null) {
+            return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Lists.newArrayList());
+        }
+        List<GoodsImage> goodsImages = goodsImageMapper.listByGoodsId(goodsId);
+        List<String> goodsImageUrls = goodsImages.stream().map(GoodsImage::getImageUrl).collect(Collectors.toList());
+        return ResponseDTO.buildSuccess(goodsImageUrls);
+    }
+
 
     private AdminGoodsDTO goods2AdminGoodsDTO(Goods goods) {
         AdminGoodsDTO adminGoodsDTO = new AdminGoodsDTO();

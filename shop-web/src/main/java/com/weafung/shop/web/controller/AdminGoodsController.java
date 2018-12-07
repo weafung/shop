@@ -2,9 +2,10 @@ package com.weafung.shop.web.controller;
 
 import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.model.dto.AdminGoodsDTO;
-import com.weafung.shop.model.dto.GoodsDTO;
 import com.weafung.shop.model.dto.ResponseDTO;
 import com.weafung.shop.model.dto.SkuDTO;
+import com.weafung.shop.model.query.AdminUpdateGoodsQuery;
+import com.weafung.shop.model.query.AdminUpdateImagesOfGoodsQuery;
 import com.weafung.shop.model.vo.ResponseVO;
 import com.weafung.shop.service.GoodsService;
 import com.weafung.shop.service.SkuService;
@@ -27,17 +28,31 @@ public class AdminGoodsController {
     @Autowired
     private SkuService skuService;
 
-    @RequestMapping("/update")
+    @RequestMapping(value = {"/", ""},method = RequestMethod.POST)
     @ResponseBody
-    public ResponseVO<Boolean> update(@RequestBody GoodsDTO goodsDTO) {
-        if (goodsDTO == null) {
+    public ResponseVO<Boolean> newGoods(@RequestBody AdminUpdateGoodsQuery query) {
+        if (query == null) {
             return ResponseVO.build(CodeEnum.PARAM_EMPTY);
         }
-        ResponseDTO<Boolean> responseDTO = goodsService.updateGoods(goodsDTO);
+        ResponseDTO<Boolean> responseDTO = goodsService.saveGoods(query);
         if (responseDTO != null && responseDTO.getData() != null) {
             return ResponseVO.build(responseDTO.getCode(), responseDTO.getData(), responseDTO.getMsg());
         }
-        log.warn("execute goodsService#updateGoods failed. goodsDTO:{}, responseDTO:{}", goodsDTO, responseDTO);
+        log.warn("execute goodsService#saveGoods failed. query:{}, responseDTO:{}", query, responseDTO);
+        return ResponseVO.build(CodeEnum.ERROR);
+    }
+
+    @RequestMapping(value = {"/", ""},method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseVO<Boolean> update(@RequestBody AdminUpdateGoodsQuery query) {
+        if (query == null) {
+            return ResponseVO.build(CodeEnum.PARAM_EMPTY);
+        }
+        ResponseDTO<Boolean> responseDTO = goodsService.updateGoods(query);
+        if (responseDTO != null && responseDTO.getData() != null) {
+            return ResponseVO.build(responseDTO.getCode(), responseDTO.getData(), responseDTO.getMsg());
+        }
+        log.warn("execute goodsService#updateGoods failed. query:{}, responseDTO:{}", query, responseDTO);
         return ResponseVO.build(CodeEnum.ERROR);
     }
 
@@ -45,7 +60,7 @@ public class AdminGoodsController {
     @ResponseBody
     public ResponseVO<List<AdminGoodsDTO>> list() {
         try {
-            ResponseDTO<List<AdminGoodsDTO>> responseDTO = goodsService.listAdminGoods();
+            ResponseDTO<List<AdminGoodsDTO>> responseDTO = goodsService.listGoodsForAdministrator();
             return ResponseVO.buildSuccess(responseDTO.getData());
         } catch (Exception e) {
             log.error("list goods failed.", e);
@@ -53,6 +68,32 @@ public class AdminGoodsController {
         return ResponseVO.build(CodeEnum.ERROR);
     }
 
+    @RequestMapping(value = {"/images/", "/images"}, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseVO<List<String>> listImage(@RequestParam("goodsId") Long goodsId) {
+        try {
+            ResponseDTO<List<String>> responseDTO = goodsService.listImageOfGoods(goodsId);
+            return ResponseVO.buildSuccess(responseDTO.getData());
+        } catch (Exception e) {
+            log.error("list goods image failed.", e);
+        }
+        return ResponseVO.build(CodeEnum.ERROR);
+    }
+
+    @RequestMapping(value = {"/images/", "/images"}, method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseVO<Boolean> updateImagesOfGoods(@RequestBody AdminUpdateImagesOfGoodsQuery query) {
+        if (query == null || query.getGoodsId() == null || query.getImageUrls() == null) {
+            return ResponseVO.build(CodeEnum.PARAM_EMPTY, Boolean.FALSE);
+        }
+        try {
+            ResponseDTO<Boolean> responseDTO = goodsService.updateImagesOfGoods(query.getGoodsId(), query.getImageUrls());
+            return ResponseVO.buildSuccess(responseDTO.getData());
+        } catch (Exception e) {
+            log.error("update goods image failed.", e);
+        }
+        return ResponseVO.build(CodeEnum.ERROR);
+    }
 
     @RequestMapping(value = {"/", ""}, method = RequestMethod.DELETE)
     @ResponseBody

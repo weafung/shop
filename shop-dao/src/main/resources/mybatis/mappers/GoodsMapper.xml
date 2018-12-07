@@ -96,4 +96,38 @@
         where goods_id = #{goodsId} and is_deleted = 0
         limit 1
     </update>
+
+    <insert id="insertSelective" parameterType="com.weafung.shop.model.po.Goods">
+        insert into goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            goods_id, title,
+            <if test="goods.introduce != null">
+                introduce,
+            </if>
+            <if test="goods.firstCategoryId != null">
+                first_category_id,
+            </if>
+            <if test="goods.secondCategoryId != null">
+                second_category_id,
+            </if>
+            <if test="goods.thirdCategoryId != null">
+                third_category_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{goods.goodsId}, #{goods.title},
+            <if test="goods.introduce != null">
+                #{goods.introduce},
+            </if>
+            <if test="goods.firstCategoryId != null">
+                #{goods.firstCategoryId},
+            </if>
+            <if test="goods.secondCategoryId != null">
+                #{goods.secondCategoryId},
+            </if>
+            <if test="goods.thirdCategoryId != null">
+                #{goods.thirdCategoryId},
+            </if>
+        </trim>
+    </insert>
 </mapper>
