@@ -85,8 +85,16 @@
 
     <select id="listAdminGoods" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" />
-        from goods as g
-        where is_deleted = 0
+        from goods
+        <where>
+            <if test="goodsId != null">
+                and goods_id = #{goodsId}
+            </if>
+            <if test="title != null">
+                and title LIKE CONCAT(CONCAT('%', #{title}), '%')
+            </if>
+            and is_deleted = 0
+        </where>
         order by id desc
     </select>
 

@@ -32,7 +32,8 @@ public enum CodeEnum {
     GOODS_UPDATE_FAIL(207500, "商品更新失败"),
     IMAGE_OF_GOODS_UPDATE_FAIL(208500, "商品图片更新失败"),
     GOODS_INSERT_FAIL(209500, "商品保存失败"),
-
+    SKU_UPDATE_FAIL(210500, "商品SKU更新失败"),
+    SKU_SAVE_FAIL(211500, "商品SKU添加失败"),
     /**
      * 商品类目相关 3*****
      */

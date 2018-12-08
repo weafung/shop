@@ -4,8 +4,10 @@ import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.model.dto.AdminGoodsDTO;
 import com.weafung.shop.model.dto.ResponseDTO;
 import com.weafung.shop.model.dto.SkuDTO;
+import com.weafung.shop.model.query.AdminGoodsQuery;
 import com.weafung.shop.model.query.AdminUpdateGoodsQuery;
 import com.weafung.shop.model.query.AdminUpdateImagesOfGoodsQuery;
+import com.weafung.shop.model.query.AdminUpdateSkuOfGoodsQuery;
 import com.weafung.shop.model.vo.ResponseVO;
 import com.weafung.shop.service.GoodsService;
 import com.weafung.shop.service.SkuService;
@@ -28,9 +30,21 @@ public class AdminGoodsController {
     @Autowired
     private SkuService skuService;
 
+    @RequestMapping(value = {"/", ""}, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseVO<List<AdminGoodsDTO>> listGoods(AdminGoodsQuery query) {
+        try {
+            ResponseDTO<List<AdminGoodsDTO>> responseDTO = goodsService.listGoodsForAdministrator(query);
+            return ResponseVO.buildSuccess(responseDTO.getData());
+        } catch (Exception e) {
+            log.error("list goods failed.", e);
+        }
+        return ResponseVO.build(CodeEnum.ERROR);
+    }
+
     @RequestMapping(value = {"/", ""},method = RequestMethod.POST)
     @ResponseBody
-    public ResponseVO<Boolean> newGoods(@RequestBody AdminUpdateGoodsQuery query) {
+    public ResponseVO<Boolean> saveGoods(@RequestBody AdminUpdateGoodsQuery query) {
         if (query == null) {
             return ResponseVO.build(CodeEnum.PARAM_EMPTY);
         }
@@ -44,7 +58,7 @@ public class AdminGoodsController {
 
     @RequestMapping(value = {"/", ""},method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseVO<Boolean> update(@RequestBody AdminUpdateGoodsQuery query) {
+    public ResponseVO<Boolean> updateGoods(@RequestBody AdminUpdateGoodsQuery query) {
         if (query == null) {
             return ResponseVO.build(CodeEnum.PARAM_EMPTY);
         }
@@ -56,21 +70,24 @@ public class AdminGoodsController {
         return ResponseVO.build(CodeEnum.ERROR);
     }
 
-    @RequestMapping(value = {"/", ""}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/", ""}, method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseVO<List<AdminGoodsDTO>> list() {
+    public ResponseVO<Boolean> deleteGoods(@RequestParam("goodsId") Long goodsId) {
         try {
-            ResponseDTO<List<AdminGoodsDTO>> responseDTO = goodsService.listGoodsForAdministrator();
-            return ResponseVO.buildSuccess(responseDTO.getData());
+            ResponseDTO<Boolean> responseDTO = goodsService.deleteGoods(goodsId);
+            if (!responseDTO.getData()) {
+                return ResponseVO.build(responseDTO.getCode(), Boolean.FALSE, responseDTO.getMsg());
+            }
+            return ResponseVO.buildSuccess(Boolean.TRUE);
         } catch (Exception e) {
-            log.error("list goods failed.", e);
+            log.error("delete goods failed.", e);
         }
         return ResponseVO.build(CodeEnum.ERROR);
     }
 
     @RequestMapping(value = {"/images/", "/images"}, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseVO<List<String>> listImage(@RequestParam("goodsId") Long goodsId) {
+    public ResponseVO<List<String>> listImageOfGoods(@RequestParam("goodsId") Long goodsId) {
         try {
             ResponseDTO<List<String>> responseDTO = goodsService.listImageOfGoods(goodsId);
             return ResponseVO.buildSuccess(responseDTO.getData());
@@ -95,24 +112,9 @@ public class AdminGoodsController {
         return ResponseVO.build(CodeEnum.ERROR);
     }
 
-    @RequestMapping(value = {"/", ""}, method = RequestMethod.DELETE)
-    @ResponseBody
-    public ResponseVO<Boolean> delete(@RequestParam("goodsId") Long goodsId) {
-        try {
-            ResponseDTO<Boolean> responseDTO = goodsService.deleteGoods(goodsId);
-            if (!responseDTO.getData()) {
-                return ResponseVO.build(responseDTO.getCode(), Boolean.FALSE, responseDTO.getMsg());
-            }
-            return ResponseVO.buildSuccess(Boolean.TRUE);
-        } catch (Exception e) {
-            log.error("delete goods failed.", e);
-        }
-        return ResponseVO.build(CodeEnum.ERROR);
-    }
-
     @RequestMapping(value = {"/sku/", "/sku"}, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseVO<List<SkuDTO>> sku(@RequestParam("goodsId") Long goodsId) {
+    public ResponseVO<List<SkuDTO>> listSkuOfGoods(@RequestParam("goodsId") Long goodsId) {
         try {
             ResponseDTO<List<SkuDTO>> responseDTO = skuService.listSkuOfGoods(goodsId);
             return ResponseVO.buildSuccess(responseDTO.getData());
@@ -133,6 +135,36 @@ public class AdminGoodsController {
             return ResponseVO.buildSuccess(Boolean.TRUE);
         } catch (Exception e) {
             log.error("delete goods failed.", e);
+        }
+        return ResponseVO.build(CodeEnum.ERROR);
+    }
+
+    @RequestMapping(value = {"/sku/", "/sku"}, method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseVO<Boolean> updateSkuOfGoods(@RequestBody AdminUpdateSkuOfGoodsQuery query) {
+        try {
+            ResponseDTO<Boolean> responseDTO = skuService.updateSkuOfGoods(query);
+            if (!responseDTO.getData()) {
+                return ResponseVO.build(responseDTO.getCode(), Boolean.FALSE, responseDTO.getMsg());
+            }
+            return ResponseVO.buildSuccess(Boolean.TRUE);
+        } catch (Exception e) {
+            log.error("delete sku of goods failed.", e);
+        }
+        return ResponseVO.build(CodeEnum.ERROR);
+    }
+
+    @RequestMapping(value = {"/sku/", "/sku"}, method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseVO<Boolean> saveSkuOfGoods(@RequestBody AdminUpdateSkuOfGoodsQuery query) {
+        try {
+            ResponseDTO<Boolean> responseDTO = skuService.saveSkuOfGoods(query);
+            if (!responseDTO.getData()) {
+                return ResponseVO.build(responseDTO.getCode(), Boolean.FALSE, responseDTO.getMsg());
+            }
+            return ResponseVO.buildSuccess(Boolean.TRUE);
+        } catch (Exception e) {
+            log.error("save sku of goods failed.", e);
         }
         return ResponseVO.build(CodeEnum.ERROR);
     }

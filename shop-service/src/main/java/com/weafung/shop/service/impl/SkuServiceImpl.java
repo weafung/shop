@@ -7,10 +7,8 @@ import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.dao.SkuMapper;
 import com.weafung.shop.model.dto.*;
 import com.weafung.shop.model.po.Sku;
-import com.weafung.shop.service.GoodsImageService;
-import com.weafung.shop.service.SkuAttributeNameService;
-import com.weafung.shop.service.SkuAttributeValueService;
-import com.weafung.shop.service.SkuService;
+import com.weafung.shop.model.query.AdminUpdateSkuOfGoodsQuery;
+import com.weafung.shop.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -35,8 +33,12 @@ public class SkuServiceImpl implements SkuService {
 
     @Autowired
     private SkuAttributeValueService skuAttributeValueService;
+
     @Autowired
     private GoodsImageService goodsImageService;
+
+    @Autowired
+    private SnowFlakeService snowFlakeService;
 
     @Override
     public ResponseDTO<List<SkuDTO>> listSkuOfGoods(Long goodsId) {
@@ -51,6 +53,52 @@ public class SkuServiceImpl implements SkuService {
                 .map(this::sku2SkuDTO)
                 .collect(Collectors.toList());
         return ResponseDTO.buildSuccess(skuDTOList);
+    }
+
+    @Override
+    public ResponseDTO<Boolean> saveSkuOfGoods(AdminUpdateSkuOfGoodsQuery query) {
+        if (query == null || query.getGoodsId() == null) {
+            return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Boolean.FALSE);
+        }
+        long skuId = snowFlakeService.nextId(SkuService.class);
+        Sku sku = new Sku();
+        sku.setSkuId(skuId);
+        sku.setGoodsId(query.getGoodsId());
+        sku.setAttribute(JSON.toJSONString(query.getAttributes()));
+        sku.setStoreCount(query.getStoreCount());
+        sku.setSalePrice(query.getSalePrice());
+        sku.setMarketPrice(query.getMarketPrice());
+        sku.setBonusRatio(query.getBonusRatio());
+        sku.setHidden(query.getHidden());
+        sku.setOnsale(query.getOnsale());
+        boolean success = skuMapper.insert(sku) > 0;
+        if (success) {
+            return ResponseDTO.buildSuccess(Boolean.TRUE);
+        }
+        log.warn("insert sku of goods failed. query: {}", query);
+        return ResponseDTO.build(CodeEnum.SKU_UPDATE_FAIL, Boolean.FALSE);
+    }
+
+    @Override
+    public ResponseDTO<Boolean> updateSkuOfGoods(AdminUpdateSkuOfGoodsQuery query) {
+        if (query == null || query.getSkuId() == null) {
+            return ResponseDTO.build(CodeEnum.PARAM_EMPTY, Boolean.FALSE);
+        }
+        Sku sku = new Sku();
+        sku.setSkuId(query.getSkuId());
+        sku.setAttribute(JSON.toJSONString(query.getAttributes()));
+        sku.setStoreCount(query.getStoreCount());
+        sku.setSalePrice(query.getSalePrice());
+        sku.setMarketPrice(query.getMarketPrice());
+        sku.setBonusRatio(query.getBonusRatio());
+        sku.setHidden(query.getHidden());
+        sku.setOnsale(query.getOnsale());
+        boolean success = skuMapper.updateBySkuId(sku) > 0;
+        if (success) {
+            return ResponseDTO.buildSuccess(Boolean.TRUE);
+        }
+        log.warn("update sku of goods failed. query: {}", query);
+        return ResponseDTO.build(CodeEnum.SKU_UPDATE_FAIL, Boolean.FALSE);
     }
 
     @Override

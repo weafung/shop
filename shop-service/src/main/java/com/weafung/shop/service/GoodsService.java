@@ -1,6 +1,7 @@
 package com.weafung.shop.service;
 
 import com.weafung.shop.model.dto.*;
+import com.weafung.shop.model.query.AdminGoodsQuery;
 import com.weafung.shop.model.query.AdminUpdateGoodsQuery;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface GoodsService {
 
     ResponseDTO<Map<Long, SimpleGoodsSkuDTO>> listGoodsSku(List<Long> skuIdList);
 
-    ResponseDTO<List<AdminGoodsDTO>> listGoodsForAdministrator();
+    ResponseDTO<List<AdminGoodsDTO>> listGoodsForAdministrator(AdminGoodsQuery query);
 
     ResponseDTO<List<String>> listImageOfGoods(Long goodsId);
 

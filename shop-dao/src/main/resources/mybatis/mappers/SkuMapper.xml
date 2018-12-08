@@ -49,4 +49,88 @@
     where sku_id = #{skuId}
     limit 1
   </update>
+
+  <update id="updateBySkuId" parameterType="com.weafung.shop.model.po.Sku">
+    update sku
+    <set>
+      <if test="sku.attribute != null">
+        attribute = #{sku.attribute},
+      </if>
+      <if test="sku.storeCount != null">
+        store_count = #{sku.storeCount},
+      </if>
+      <if test="sku.saleCount != null">
+        sale_count = #{sku.saleCount},
+      </if>
+      <if test="sku.salePrice != null">
+        sale_price = #{sku.salePrice},
+      </if>
+      <if test="sku.marketPrice != null">
+        market_price = #{sku.marketPrice},
+      </if>
+      <if test="sku.bonusRatio != null">
+        bonus_ratio = #{sku.bonusRatio},
+      </if>
+      <if test="sku.hidden != null">
+        hidden = #{sku.hidden},
+      </if>
+      <if test="sku.onsale != null">
+        onsale = #{sku.onsale},
+      </if>
+    </set>
+    where sku_id = #{sku.skuId}
+    limit 1
+  </update>
+
+  <insert id="insert" parameterType="com.weafung.shop.model.po.Sku">
+    insert into sku
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      sku_id, goods_id,
+      <if test="sku.attribute != null">
+        attribute,
+      </if>
+      <if test="sku.storeCount != null">
+        store_count,
+      </if>
+      <if test="sku.salePrice != null">
+        sale_price,
+      </if>
+      <if test="sku.marketPrice != null">
+        market_price,
+      </if>
+      <if test="sku.bonusRatio != null">
+        bonus_ratio,
+      </if>
+      <if test="sku.hidden != null">
+        hidden,
+      </if>
+      <if test="sku.onsale != null">
+        onsale,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{sku.skuId}, #{sku.goodsId},
+      <if test="sku.attribute != null">
+        #{sku.attribute},
+      </if>
+      <if test="sku.storeCount != null">
+        #{sku.storeCount},
+      </if>
+      <if test="sku.salePrice != null">
+        #{sku.salePrice},
+      </if>
+      <if test="sku.marketPrice != null">
+        #{sku.marketPrice},
+      </if>
+      <if test="sku.bonusRatio != null">
+        #{sku.bonusRatio},
+      </if>
+      <if test="sku.hidden != null">
+        #{sku.hidden},
+      </if>
+      <if test="sku.onsale != null">
+        #{sku.onsale},
+      </if>
+    </trim>
+  </insert>
 </mapper>

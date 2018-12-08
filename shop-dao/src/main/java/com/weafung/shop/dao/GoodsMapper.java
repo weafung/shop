@@ -18,7 +18,7 @@ public interface GoodsMapper {
 
     Goods getGoodsBySkuId(@Param("skuId") Long skuId);
 
-    List<Goods> listAdminGoods();
+    List<Goods> listAdminGoods(@Param("goodsId") Long goodsId, @Param("title") String title);
 
     int deleteGoods(@Param("goodsId") Long goodsId);
 }

@@ -3,6 +3,7 @@ package com.weafung.shop.service;
 import com.weafung.shop.model.dto.ResponseDTO;
 import com.weafung.shop.model.dto.SkuDTO;
 import com.weafung.shop.model.dto.SkuSpecDTO;
+import com.weafung.shop.model.query.AdminUpdateSkuOfGoodsQuery;
 
 import java.util.List;
 
@@ -14,13 +15,17 @@ public interface SkuService {
      */
     ResponseDTO<List<SkuDTO>> listSkuOfGoods(Long goodsId);
 
+    ResponseDTO<Boolean> saveSkuOfGoods(AdminUpdateSkuOfGoodsQuery query);
+
+    ResponseDTO<Boolean> updateSkuOfGoods(AdminUpdateSkuOfGoodsQuery query);
+
+    ResponseDTO<Boolean> deleteSkuOfGoods(Long skuId);
+
     SkuDTO getSkuDTOBySkuId(Long skuId);
 
     boolean checkSkuId(Long skuId);
 
     Long getMinSalePrice(Long goodsId);
-
-    ResponseDTO<Boolean> deleteSkuOfGoods(Long skuId);
 
     ResponseDTO<List<SkuSpecDTO>> listSkuSpec();
 }

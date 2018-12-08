@@ -8,6 +8,7 @@ import com.weafung.shop.dao.GoodsMapper;
 import com.weafung.shop.model.dto.*;
 import com.weafung.shop.model.po.Goods;
 import com.weafung.shop.model.po.GoodsImage;
+import com.weafung.shop.model.query.AdminGoodsQuery;
 import com.weafung.shop.model.query.AdminUpdateGoodsQuery;
 import com.weafung.shop.service.CategoryService;
 import com.weafung.shop.service.GoodsService;
@@ -222,8 +223,8 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public ResponseDTO<List<AdminGoodsDTO>> listGoodsForAdministrator() {
-        List<AdminGoodsDTO> list = goodsMapper.listAdminGoods()
+    public ResponseDTO<List<AdminGoodsDTO>> listGoodsForAdministrator(AdminGoodsQuery query) {
+        List<AdminGoodsDTO> list = goodsMapper.listAdminGoods(query.getGoodsId(), StringUtils.trimToNull(query.getTitle()))
                 .stream().map(this::goods2AdminGoodsDTO).collect(Collectors.toList());
         return ResponseDTO.buildSuccess(list);
     }
