@@ -2,11 +2,14 @@ package com.weafung.shop.model.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author weifengshih
  */
 @Data
-public class AdminGoodsDTO {
+public class AdminGoodsDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Long goodsId;
     private Long firstCategoryId;
     private Long secondCategoryId;

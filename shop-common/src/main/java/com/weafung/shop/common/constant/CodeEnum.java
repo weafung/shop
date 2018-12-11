@@ -15,6 +15,9 @@ public enum CodeEnum {
     DELETE_FAIL(601, "删除失败"),
     SAVE_FAIL(602, "保存失败"),
 
+    FORBIDDEN(1403, "登录凭据无效"),
+    LOGIN_FAIL(1500, "登录失败, 请重新尝试"),
+
     /**
      * 参数配置相关 1*****
      */

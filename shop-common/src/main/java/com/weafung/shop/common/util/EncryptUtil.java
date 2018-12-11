@@ -30,6 +30,9 @@ public class EncryptUtil {
     }
 
     public static String md5(String s) {
+        if (s == null) {
+            s = "";
+        }
         try {
             byte[] btInput = s.getBytes();
             // 获得MD5摘要算法的 MessageDigest 对象
