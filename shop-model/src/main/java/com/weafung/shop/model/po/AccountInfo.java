@@ -18,7 +18,7 @@ public class AccountInfo implements Serializable {
 
     private Byte sex;
 
-    private String portrait;
+    private String avatar;
 
     private Byte state;
 
@@ -80,12 +80,12 @@ public class AccountInfo implements Serializable {
         this.sex = sex;
     }
 
-    public String getPortrait() {
-        return portrait;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setPortrait(String portrait) {
-        this.portrait = portrait == null ? null : portrait.trim();
+    public void setAvatar(String avatar) {
+        this.avatar = avatar == null ? null : avatar.trim();
     }
 
     public Byte getState() {

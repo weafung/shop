@@ -12,12 +12,15 @@ public enum CodeEnum {
     PARAM_EMPTY(400, "请求参数为空"),
     ERROR(500, "调用服务失败"),
 
+
+
     DELETE_FAIL(601, "删除失败"),
     SAVE_FAIL(602, "保存失败"),
 
     FORBIDDEN(1403, "登录凭据无效"),
     LOGIN_FAIL(1500, "登录失败, 请重新尝试"),
 
+    LOGIN_SUCCESS(2200, "登录成功"),
     /**
      * 参数配置相关 1*****
      */

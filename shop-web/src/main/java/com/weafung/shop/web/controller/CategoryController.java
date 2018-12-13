@@ -48,8 +48,9 @@ public class CategoryController {
     @ResponseBody
     public ResponseVO<List<SimpleGoodsDTO>> listGoods(@RequestParam(required = false) Long firstCategoryId,
                                                       @RequestParam(required = false) Long secondCategoryId,
-                                                      @RequestParam(required = false) Long thirdCategoryId) {
-        ResponseDTO<List<SimpleGoodsDTO>> responseDTO = goodsService.listGoodsByCategoryId(firstCategoryId, secondCategoryId, thirdCategoryId);
+                                                      @RequestParam(required = false) Long thirdCategoryId,
+                                                      @RequestParam(required = false) String title) {
+        ResponseDTO<List<SimpleGoodsDTO>> responseDTO = goodsService.listGoodsByKeyword(firstCategoryId, secondCategoryId, thirdCategoryId, title);
         return ResponseVO.buildSuccess(responseDTO.getData());
     }
 }

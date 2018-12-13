@@ -546,72 +546,72 @@ public class AccountInfoExample {
         }
 
         public Criteria andPortraitIsNull() {
-            addCriterion("portrait is null");
+            addCriterion("avatar is null");
             return (Criteria) this;
         }
 
         public Criteria andPortraitIsNotNull() {
-            addCriterion("portrait is not null");
+            addCriterion("avatar is not null");
             return (Criteria) this;
         }
 
         public Criteria andPortraitEqualTo(String value) {
-            addCriterion("portrait =", value, "portrait");
+            addCriterion("avatar =", value, "avatar");
             return (Criteria) this;
         }
 
         public Criteria andPortraitNotEqualTo(String value) {
-            addCriterion("portrait <>", value, "portrait");
+            addCriterion("avatar <>", value, "avatar");
             return (Criteria) this;
         }
 
         public Criteria andPortraitGreaterThan(String value) {
-            addCriterion("portrait >", value, "portrait");
+            addCriterion("avatar >", value, "avatar");
             return (Criteria) this;
         }
 
         public Criteria andPortraitGreaterThanOrEqualTo(String value) {
-            addCriterion("portrait >=", value, "portrait");
+            addCriterion("avatar >=", value, "avatar");
             return (Criteria) this;
         }
 
         public Criteria andPortraitLessThan(String value) {
-            addCriterion("portrait <", value, "portrait");
+            addCriterion("avatar <", value, "avatar");
             return (Criteria) this;
         }
 
         public Criteria andPortraitLessThanOrEqualTo(String value) {
-            addCriterion("portrait <=", value, "portrait");
+            addCriterion("avatar <=", value, "avatar");
             return (Criteria) this;
         }
 
         public Criteria andPortraitLike(String value) {
-            addCriterion("portrait like", value, "portrait");
+            addCriterion("avatar like", value, "avatar");
             return (Criteria) this;
         }
 
         public Criteria andPortraitNotLike(String value) {
-            addCriterion("portrait not like", value, "portrait");
+            addCriterion("avatar not like", value, "avatar");
             return (Criteria) this;
         }
 
         public Criteria andPortraitIn(List<String> values) {
-            addCriterion("portrait in", values, "portrait");
+            addCriterion("avatar in", values, "avatar");
             return (Criteria) this;
         }
 
         public Criteria andPortraitNotIn(List<String> values) {
-            addCriterion("portrait not in", values, "portrait");
+            addCriterion("avatar not in", values, "avatar");
             return (Criteria) this;
         }
 
         public Criteria andPortraitBetween(String value1, String value2) {
-            addCriterion("portrait between", value1, value2, "portrait");
+            addCriterion("avatar between", value1, value2, "avatar");
             return (Criteria) this;
         }
 
         public Criteria andPortraitNotBetween(String value1, String value2) {
-            addCriterion("portrait not between", value1, value2, "portrait");
+            addCriterion("avatar not between", value1, value2, "avatar");
             return (Criteria) this;
         }
 

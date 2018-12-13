@@ -187,8 +187,8 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public ResponseDTO<List<SimpleGoodsDTO>> listGoodsByCategoryId(Long firstCategoryId, Long secondCategoryId, Long thirdCategoryId) {
-        List<Goods> goodsList = goodsMapper.listGoodsByCategoryId(firstCategoryId, secondCategoryId, thirdCategoryId);
+    public ResponseDTO<List<SimpleGoodsDTO>> listGoodsByKeyword(Long firstCategoryId, Long secondCategoryId, Long thirdCategoryId, String title) {
+        List<Goods> goodsList = goodsMapper.listGoodsByKeyword(firstCategoryId, secondCategoryId, thirdCategoryId, title);
         if (CollectionUtils.isEmpty(goodsList)) {
             return ResponseDTO.buildSuccess(Lists.newArrayList());
         }

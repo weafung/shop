@@ -16,6 +16,8 @@ public class AccountToken implements Serializable {
 
     private String accountId;
 
+    private Integer type;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -64,5 +66,13 @@ public class AccountToken implements Serializable {
 
     public void setAccountId(String accountId) {
         this.accountId = accountId == null ? null : accountId.trim();
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 }

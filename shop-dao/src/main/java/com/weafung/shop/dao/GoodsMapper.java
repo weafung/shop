@@ -6,9 +6,10 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface GoodsMapper {
-    List<Goods> listGoodsByCategoryId(@Param("firstCategoryId") Long firstCategoryId,
-                                      @Param("secondCategoryId") Long secondCategoryId,
-                                      @Param("thirdCategoryId") Long thirdCategoryId);
+    List<Goods> listGoodsByKeyword(@Param("firstCategoryId") Long firstCategoryId,
+                                   @Param("secondCategoryId") Long secondCategoryId,
+                                   @Param("thirdCategoryId") Long thirdCategoryId,
+                                   @Param("title") String title);
 
     Goods getGoodsByGoodsId(@Param("goodsId") Long goodsId);
 

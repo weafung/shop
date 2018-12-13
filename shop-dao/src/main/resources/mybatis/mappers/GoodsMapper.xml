@@ -22,7 +22,7 @@
       third_category_id, title, introduce, limit_per_order, free_delivery, hide
     </sql>
 
-    <select id="listGoodsByCategoryId" resultMap="BaseResultMap">
+    <select id="listGoodsByKeyword" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from goods
@@ -36,6 +36,9 @@
             </if>
             <if test="thirdCategoryId != null">
                 and third_category_id = #{thirdCategoryId}
+            </if>
+            <if test="title != null">
+                and title LIKE CONCAT(CONCAT('%', #{title}), '%')
             </if>
         </where>
     </select>
