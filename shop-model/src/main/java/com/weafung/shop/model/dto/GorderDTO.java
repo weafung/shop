@@ -20,6 +20,8 @@ public class GorderDTO implements Serializable {
 
     private Byte status;
 
+    private String packageCode;
+
     private Long orderTime;
 
     private Long payTime;

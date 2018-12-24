@@ -3,12 +3,16 @@ package com.weafung.shop.model.dto;
 import com.weafung.shop.model.po.AccountInfo;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author weifengshih
  */
 
 @Data
-public class AccountInfoDTO {
+public class AccountInfoDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String accountId;
 

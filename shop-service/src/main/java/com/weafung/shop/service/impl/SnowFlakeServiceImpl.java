@@ -18,15 +18,15 @@ public class SnowFlakeServiceImpl implements SnowFlakeService {
     public SnowFlakeServiceImpl() {
         map = Maps.newHashMap();
         map.put(AddressService.class, new SnowFlake(1L, 1L));
-        map.put(GoodsService.class, new SnowFlake(2L, 1L));
-        map.put(GorderService.class, new SnowFlake(3L, 1L));
-        map.put(OrderService.class, new SnowFlake(4L, 1L));
-        map.put(CategoryService.class, new SnowFlake(5L, 1L));
-        map.put(SkuAttributeNameService.class, new SnowFlake(6L, 1L));
-        map.put(SkuAttributeValueService.class, new SnowFlake(7L, 1L));
+        map.put(GoodsService.class, new SnowFlake(1L, 2L));
+        map.put(GorderService.class, new SnowFlake(1L, 3L));
+        map.put(OrderService.class, new SnowFlake(1L, 4L));
+        map.put(CategoryService.class, new SnowFlake(1L, 5L));
+        map.put(SkuAttributeNameService.class, new SnowFlake(1L, 6L));
+        map.put(SkuAttributeValueService.class, new SnowFlake(1L, 7L));
 
         // dataCenterId maxValue : 31
-        map.put(this.getClass(), new SnowFlake(31L, 1L));
+        map.put(this.getClass(), new SnowFlake(1L, 31L));
     }
 
     @Override
