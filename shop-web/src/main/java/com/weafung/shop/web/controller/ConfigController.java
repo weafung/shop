@@ -1,7 +1,6 @@
 package com.weafung.shop.web.controller;
 
 import com.google.common.collect.Sets;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.model.dto.ResponseDTO;
 import com.weafung.shop.model.query.AdminUpdateConfigQuery;

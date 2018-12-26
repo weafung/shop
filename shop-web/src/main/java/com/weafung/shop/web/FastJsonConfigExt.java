@@ -1,4 +1,4 @@
-package com.weafung.shop.common;
+package com.weafung.shop.web;
 
 /**
  * @author weifengshih
