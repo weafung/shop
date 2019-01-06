@@ -20,4 +20,5 @@ public class AdminGoodsDTO implements Serializable {
     private String title;
     private String introduce;
     private Boolean hide;
+    private Integer limitPerOrder;
 }

@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author weifengshih
  */
@@ -76,5 +79,12 @@ public class AccountServiceImpl implements AccountService {
         }
 
         return ResponseDTO.buildSuccess(token);
+    }
+
+    @Override
+    public ResponseDTO<List<AccountInfoDTO>> listAccountInfo() {
+        List<AccountInfoDTO> accountInfoDTOS = accountInfoMapper.listAccount().stream()
+                .map(AccountInfoDTO::fromAccountInfo).collect(Collectors.toList());
+        return ResponseDTO.buildSuccess(accountInfoDTOS);
     }
 }

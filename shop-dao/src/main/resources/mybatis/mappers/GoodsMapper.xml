@@ -124,6 +124,9 @@
             <if test="goods.thirdCategoryId != null">
                 third_category_id,
             </if>
+            <if test="goods.limitPerOrder != null">
+                limit_per_order,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             #{goods.goodsId}, #{goods.title},
@@ -138,6 +141,9 @@
             </if>
             <if test="goods.thirdCategoryId != null">
                 #{goods.thirdCategoryId},
+            </if>
+            <if test="goods.limitPerOrder != null">
+                #{goods.limitPerOrder},
             </if>
         </trim>
     </insert>

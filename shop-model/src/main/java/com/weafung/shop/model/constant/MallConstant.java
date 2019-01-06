@@ -13,4 +13,6 @@ public interface MallConstant {
     int GORDER_STATUS_WAIT_COMMENT = 3;
 
     long ROOT_CATEGORY_ID = 0L;
+
+    String CONFIG_KEY_LIMIT_PER_ORDER = "limit_per_order";
 }

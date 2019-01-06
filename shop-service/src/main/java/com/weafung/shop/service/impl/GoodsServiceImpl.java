@@ -5,15 +5,13 @@ import com.google.common.collect.Maps;
 import com.weafung.shop.common.constant.CodeEnum;
 import com.weafung.shop.dao.GoodsImageMapper;
 import com.weafung.shop.dao.GoodsMapper;
+import com.weafung.shop.model.constant.MallConstant;
 import com.weafung.shop.model.dto.*;
 import com.weafung.shop.model.po.Goods;
 import com.weafung.shop.model.po.GoodsImage;
 import com.weafung.shop.model.query.AdminGoodsQuery;
 import com.weafung.shop.model.query.AdminUpdateGoodsQuery;
-import com.weafung.shop.service.CategoryService;
-import com.weafung.shop.service.GoodsService;
-import com.weafung.shop.service.SkuService;
-import com.weafung.shop.service.SnowFlakeService;
+import com.weafung.shop.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -47,6 +45,9 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     private SnowFlakeService snowFlakeService;
+
+    @Autowired
+    private WebsiteConfigService websiteConfigService;
 
     @Override
     public ResponseDTO<GoodsDTO> getGoodsByGoodsId(Long goodsId) {
@@ -88,6 +89,9 @@ public class GoodsServiceImpl implements GoodsService {
         }
         query.setTitle(StringUtils.trimToEmpty(query.getTitle()));
         query.setIntroduce(StringUtils.trimToEmpty(query.getIntroduce()));
+        if (query.getLimitPerOrder() == null) {
+            query.setLimitPerOrder(Integer.valueOf(websiteConfigService.getConfigValue(MallConstant.CONFIG_KEY_LIMIT_PER_ORDER).getData()));
+        }
         Goods goods = new Goods();
         BeanUtils.copyProperties(query, goods);
         Long goodsId = snowFlakeService.nextId(GoodsService.class);
@@ -248,6 +252,7 @@ public class GoodsServiceImpl implements GoodsService {
         adminGoodsDTO.setFirstCategoryId(goods.getFirstCategoryId());
         adminGoodsDTO.setSecondCategoryId(goods.getSecondCategoryId());
         adminGoodsDTO.setThirdCategoryId(goods.getThirdCategoryId());
+        adminGoodsDTO.setLimitPerOrder(goods.getLimitPerOrder());
         try {
             ResponseDTO<CategoryDTO> responseDTO = null;
             responseDTO = categoryService.getCategory(goods.getFirstCategoryId());

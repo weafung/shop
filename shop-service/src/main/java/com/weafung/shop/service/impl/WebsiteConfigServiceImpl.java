@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,7 +27,7 @@ public class WebsiteConfigServiceImpl implements WebsiteConfigService {
     private WebsiteConfigMapper websiteConfigMapper;
 
     @Override
-    @Cacheable(value = "websiteConfigCache", key = "#keys")
+    @Cacheable(value = "websiteConfigCache", key = "0")
     public ResponseDTO<Map<String, String>> listConfig(Set<String> keys) {
         Map<String, String> configMap = Maps.newHashMap();
         if (CollectionUtils.isEmpty(keys)) {
@@ -54,8 +55,10 @@ public class WebsiteConfigServiceImpl implements WebsiteConfigService {
     }
 
     @Override
-    @CacheEvict(value = "websiteConfigCache", key = "#key")
-    public ResponseDTO<Boolean>  insertOrUpdateConfig(String key, String value) {
+
+    @Caching(evict = {@CacheEvict(value = "websiteConfigCache", key = "#key"),
+            @CacheEvict(value = "websiteConfigCache", key = "0")})
+    public ResponseDTO<Boolean> insertOrUpdateConfig(String key, String value) {
         if (websiteConfigMapper.selectByKey(key) == null) {
             if (websiteConfigMapper.insert(key, value) > 0) {
                 return ResponseDTO.buildSuccess(Boolean.TRUE);

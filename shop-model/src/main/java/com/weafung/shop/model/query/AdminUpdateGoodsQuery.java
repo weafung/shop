@@ -13,4 +13,5 @@ public class AdminUpdateGoodsQuery {
     private Long firstCategoryId;
     private Long secondCategoryId;
     private Long thirdCategoryId;
+    private Integer limitPerOrder;
 }

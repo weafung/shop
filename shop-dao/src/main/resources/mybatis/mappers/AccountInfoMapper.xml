@@ -27,4 +27,10 @@
         insert into account_info (account_id, nickname, sex, avatar, state)
         values (#{accountInfo.accountId}, #{accountInfo.nickname}, #{accountInfo.sex}, #{accountInfo.avatar}, #{accountInfo.state})
     </insert>
+
+    <select id="listAccount" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from account_info
+        where is_deleted = 0
+    </select>
 </mapper>
